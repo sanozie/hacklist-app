@@ -1,0 +1,32 @@
+@mixin center {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center {
+    @include center;
+}
+
+@mixin center-vert {
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.center-vert {
+    @include center-vert;
+}
+
+@mixin poster {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.poster {
+    @include poster;
+}

@@ -1,0 +1,22 @@
+@import './variables.scss';
+#__next {
+    height: 100vh;
+}
+
+body,
+html {
+    height: 100%;
+}
+
+body {
+    background-color: $bgColor;
+}
+
+//text 
+h1 {
+    font-size: calc(20px + 2vw)
+}
+
+.row {
+    margin: 0;
+}

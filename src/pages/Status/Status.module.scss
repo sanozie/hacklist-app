@@ -1,0 +1,164 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+//misc
+#submit_data_line {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 5px;
+    border-radius: 5px;
+}
+
+.status_env {
+    padding: 1%;
+}
+
+.status_wrapper {
+    background-color: rgba(0, 0, 0, 0.35);
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.strong_number {
+    font-family: $headerFont;
+    font-size: 3rem;
+    color: white;
+    @include poster;
+    @include center;
+}
+
+.date {
+    color: $secColor;
+    font-weight: 600;
+}
+
+.submitter_name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.signup_circle {
+    stroke: white !important
+}
+
+.circle_root {
+    max-width: 100%;
+}
+
+//Submissions
+.submissions_graph_wrapper {
+    background-color: rgba(255, 255, 255, 0.116);
+    border-radius: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.submissions_graph_env {
+    border-radius: 10px;
+}
+
+.submissions_circle_wrapper {
+    padding: 0;
+}
+
+.submissions_circle {
+    margin: 0 20%;
+    height: 100%;
+    @include center;
+}
+
+.root_circle {
+    height: 100%;
+    width: auto;
+}
+
+.eng_graph {
+    background-color: $priColor;
+}
+
+.eng_circle {
+    stroke: $priColor !important;
+}
+
+.design_graph {
+    background-color: $tertColor;
+}
+
+.design_circle {
+    stroke: $tertColor !important;
+}
+
+.pm_graph {
+    background-color: $secColor;
+}
+
+.pm_circle {
+    stroke: $secColor !important;
+}
+
+//Misc
+.body {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+        color: white;
+        margin: 0;
+    }
+    h2,
+    h3,
+    p {
+        font-family: $paraFont;
+    }
+    h1 {
+        font-family: $headerFont;
+    }
+    h2 {
+        font-weight: 800;
+        font-size: calc(1.3rem + 0.6vw);
+        letter-spacing: calc(0.05rem + 0.04vw);
+        padding: 1rem 0 0.3rem 1rem;
+    }
+    h3 {
+        font-weight: 300;
+        font-size: calc(0.6rem + 0.6vw);
+        letter-spacing: calc(0.03rem + 0.04vw);
+    }
+    h4 {
+        font-weight: 700;
+        font-size: calc(0.5rem + 0.5vw);
+        letter-spacing: calc(0.03rem + 0.04vw);
+    }
+    h5 {
+        font-weight: 100;
+        font-size: calc(0.4rem + 0.5vw);
+        letter-spacing: calc(0.03rem + 0.04vw);
+        opacity: 0.7;
+    }
+    p {
+        font-weight: 100;
+        font-size: calc(0.4rem + 0.5vw);
+        letter-spacing: calc(0.03rem + 0.04vw);
+    }
+}
+
+.new_info {
+    opacity: 0.3;
+    text-align: center;
+}
+
+//lin prog
+.lin_progress_root {
+    background-color: #000000 !important;
+}
+
+.lin_progress_bar1 {
+    background-color: $priColor !important;
+}
+
+.lin_progress_bar2 {
+    background-color: $secColor !important;
+}
