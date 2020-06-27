@@ -13,13 +13,13 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 
 //react-calendar (has custom styles on github)
-import Calendar from 'react-calendar'
+//import Calendar from 'react-calendar'
 //Utils
 import fetcher from '../../utils/fetcher'
 //local
 import Layout from '../../components/Layout'
 import styles from './Status.module.scss'
-import { SubmissionGraph, SubmissionGraphOverflow, CircleGraph } from './ToolTippedComponenets'
+import { SubmissionGraph, SubmissionGraphOverflow, CircleGraph } from './ToolTippedComponents'
 
 let swrConfig = {
     revalidateOnFocus: false
@@ -169,7 +169,7 @@ let ActiveHacks = ({ data }) => {
 
             </Col>
             <Col lg="4" className="center">
-                <Calendar className={styles.diyhacks_calendar} tileClassName={styles.diyhacks_calendar_tiles} defaultValue={calendarData} nextLabel={null} next2Label={null} prevLabel={null} prev2Label={null} />
+                {/*<Calendar className={styles.diyhacks_calendar} tileClassName={styles.diyhacks_calendar_tiles} defaultValue={calendarData} nextLabel={null} next2Label={null} prevLabel={null} prev2Label={null} />*/}
             </Col>
             <Col lg="4">
                 <Row className="center">
