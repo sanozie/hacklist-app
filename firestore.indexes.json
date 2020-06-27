@@ -1,19 +1,16 @@
 {
-  "indexes": [
-    {
-      "collectionGroup": "Submissions",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "submitter",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "submit_date",
-          "order": "DESCENDING"
-        }
-      ]
-    }
-  ],
-  "fieldOverrides": []
+    "indexes": [{
+        "collectionGroup": "Submissions",
+        "queryScope": "COLLECTION",
+        "fields": [{
+                "fieldPath": "submitter",
+                "order": "ASCENDING"
+            },
+            {
+                "fieldPath": "submit_date",
+                "order": "DESCENDING"
+            }
+        ]
+    }],
+    "fieldOverrides": []
 }

@@ -1,4 +1,3 @@
-
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import styles from './navi.module.scss'
