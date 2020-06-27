@@ -8,6 +8,48 @@
     border-radius: 5px;
 }
 
+#overlay {
+    z-index: 100;
+}
+
+#blackspace {
+    background: #000000a1;
+    z-index: 50;
+}
+
+.overlay_option {
+    border-radius: 10px;
+    @include center;
+    height: 100%;
+    transition: 0.2s ease-in-out;
+    font-family: $headerFont;
+    color: white;
+    padding: 1rem;
+    h1 {
+        font-size: calc(1rem + 2vw);
+    }
+}
+
+.overlay_option:hover {
+    transform: translateY(-5px) translateX(2px)
+}
+
+.new_hack {
+    background-color: $priColor;
+}
+
+.new_hack:hover {
+    box-shadow: -5px 5px 10px rgba($priColor, .4)
+}
+
+.signup_hack {
+    background-color: $secColor;
+}
+
+.signup_hack:hover {
+    box-shadow: -5px 5px 10px rgba($secColor, .4)
+}
+
 .status_env {
     padding: 1%;
 }
@@ -161,4 +203,28 @@
 
 .lin_progress_bar2 {
     background-color: $secColor !important;
+}
+
+//Add button
+.add_btn_root {
+    position: fixed !important;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(100deg, $priColor, $secColor) !important;
+}
+
+.add_btn_root:focus {
+    border: none !important;
+    outline: none;
+}
+
+.close_btn_root {
+    background: black !important;
+    border: 1px solid white;
+    color: white;
+}
+
+.close_btn_root:focus {
+    outline: none;
+
 }

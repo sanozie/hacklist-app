@@ -8,9 +8,10 @@ let Layout = props => {
                 <title>{props.title}</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Navi />
+            {props.nav && (
+                <Navi />
+            )}
             {props.children}
-
         </>
     )
     

@@ -1,4 +1,5 @@
-import { Suspense } from 'react'
+
+import { useState, useEffect } from 'react'
 //swr (data-loading module)
 import useSWR from 'swr'
 //Bootstrap
@@ -8,6 +9,10 @@ import Col from 'react-bootstrap/Col'
 //Material UI
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
+
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
 
 //react-calendar (has custom styles on github)
 import Calendar from 'react-calendar'
@@ -45,53 +50,53 @@ let Submissions = ({ data }) => {
                         <Col lg="7"><h5>Minimums</h5></Col>
                         <Col lg="3"><h5>Maximums</h5></Col>
                     </Row>
-                    )}
+                )}
                 {data.length && data.map(item => {
-                        return (
-                            <Row className="py-1">
-                                <Col lg="2" className="d-flex align-items-center">
+                    return (
+                        <Row className="py-1">
+                            <Col lg="2" className="d-flex align-items-center">
 
-                                    <h4 className="submitted_hack_title flex-grow-1">
-                                        {item.title}
-                                    </h4>
+                                <h4 className="submitted_hack_title flex-grow-1">
+                                    {item.title}
+                                </h4>
 
-                                </Col>
-                                <Col lg="7" className=" align-items-center py-1">
-                                    <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative`}>
-                                        <SubmissionGraph classes={styles.eng_graph} width={`${item.sizeData.eng.width}%`} type="eng" signups={item.sizeData.eng.min_signup_num} />
-                                        <SubmissionGraph classes={styles.design_graph} width={`${item.sizeData.design.width}%`} type="design" signups={item.sizeData.design.min_signup_num} />
-                                        <SubmissionGraph classes={styles.pm_graph} width={`${item.sizeData.pm.width}%`} type="pm" signups={item.sizeData.pm.min_signup_num} />
-                                        <SubmissionGraphOverflow width={`${item.sizeData.overflow_width}%`} />
-                                    </Row>
-                                </Col>
-                                <Col lg="3">
-                                    <Row xs={3} className="justify-content-center h-100 py-1 py-lg-0">
-                                        {(item.sizeData.eng.circleFill != 0) && (
-                                            <Col className={styles.submissions_circle_wrapper}>
-                                                <div className={styles.submissions_circle}>
-                                                    <CircleGraph value={item.sizeData.eng.circleFill} type="eng" signups={item.sizeData.eng.total_signup_num} />
-                                                </div>
-                                            </Col>
-                                        )}
-                                        {(item.sizeData.design.circleFill != 0) && (
-                                            <Col className={styles.submissions_circle_wrapper}>
-                                                <div className={styles.submissions_circle}>
-                                                    <CircleGraph value={item.sizeData.design.circleFill} type="design" signups={item.sizeData.design.total_signup_num} />
-                                                </div>
-                                            </Col>
-                                        )}
-                                        {(item.sizeData.pm.circleFill != 0) && (
-                                            <Col className={styles.submissions_circle_wrapper}>
-                                                <div className={styles.submissions_circle}>
-                                                    <CircleGraph value={item.sizeData.pm.circleFill} type="pm" signups={item.sizeData.pm.total_signup_num} />
-                                                </div>
-                                            </Col>
-                                        )}
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )
-                    }
+                            </Col>
+                            <Col lg="7" className=" align-items-center py-1">
+                                <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative`}>
+                                    <SubmissionGraph classes={styles.eng_graph} width={`${item.sizeData.eng.width}%`} type="eng" signups={item.sizeData.eng.min_signup_num} />
+                                    <SubmissionGraph classes={styles.design_graph} width={`${item.sizeData.design.width}%`} type="design" signups={item.sizeData.design.min_signup_num} />
+                                    <SubmissionGraph classes={styles.pm_graph} width={`${item.sizeData.pm.width}%`} type="pm" signups={item.sizeData.pm.min_signup_num} />
+                                    <SubmissionGraphOverflow width={`${item.sizeData.overflow_width}%`} />
+                                </Row>
+                            </Col>
+                            <Col lg="3">
+                                <Row xs={3} className="justify-content-center h-100 py-1 py-lg-0">
+                                    {(item.sizeData.eng.circleFill != 0) && (
+                                        <Col className={styles.submissions_circle_wrapper}>
+                                            <div className={styles.submissions_circle}>
+                                                <CircleGraph value={item.sizeData.eng.circleFill} type="eng" signups={item.sizeData.eng.total_signup_num} />
+                                            </div>
+                                        </Col>
+                                    )}
+                                    {(item.sizeData.design.circleFill != 0) && (
+                                        <Col className={styles.submissions_circle_wrapper}>
+                                            <div className={styles.submissions_circle}>
+                                                <CircleGraph value={item.sizeData.design.circleFill} type="design" signups={item.sizeData.design.total_signup_num} />
+                                            </div>
+                                        </Col>
+                                    )}
+                                    {(item.sizeData.pm.circleFill != 0) && (
+                                        <Col className={styles.submissions_circle_wrapper}>
+                                            <div className={styles.submissions_circle}>
+                                                <CircleGraph value={item.sizeData.pm.circleFill} type="pm" signups={item.sizeData.pm.total_signup_num} />
+                                            </div>
+                                        </Col>
+                                    )}
+                                </Row>
+                            </Col>
+                        </Row>
+                    )
+                }
                 )}
             </Col>
         </Row>
@@ -260,26 +265,91 @@ let Signups = ({ data }) => {
     )
 }
 
+
+let Overlay = () => {
+    let [overlay, setOverlay] = useState(false);
+    const addbtn = {
+        root: styles.add_btn_root
+    }, closebtn = {
+        root: styles.close_btn_root
+    }
+
+    let display = overlay ? "block" : "none"
+    let opacity = overlay ? 1 : 0
+    let overlayStyle = {
+        display,
+        opacity,
+        transition: "0.3s ease-in-out"
+    }
+
+    useEffect(() => {
+        display = overlay ? "block" : "none"
+        opacity = overlay ? 1 : 0
+        overlayStyle = {
+            display,
+            opacity,
+            transition: "0.3s ease-in-out"
+        }
+        console.log(overlay)
+    }, [overlay])
+    return (
+        <>
+            <div id={styles.overlay} className="poster-fixed center " style={overlayStyle}>
+                <Container className="h-100 center">
+                    <div className="center-env">
+                        <Row className="h-xs-100 h-md-25">
+                            <Col md="6" className="h-xs-25 h-md-100 my-2">
+                                <Row className="h-100">
+                                    <Col xs="12" className={`text-center ${styles.overlay_option} ${styles.new_hack}`}>
+                                        <h1>Submit a Hack</h1>
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col md="6" className="h-xs-25 h-100 my-2">
+                                <Row className="h-md-100">
+                                    <Col xs="12" className={`text-center ${styles.overlay_option} ${styles.signup_hack}`}>
+                                        <h1>Sign up for a Hack</h1>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row className="justify-content-center">
+                            <Fab aria-label="close" classes={closebtn} onClick={() => setOverlay(false)}>
+                                <CloseIcon style={{ color: "white" }}/>
+                            </Fab>
+                        </Row>
+                    </div>
+
+                </Container>
+            </div>
+            <div id={styles.blackspace} className="poster-fixed center" style={overlayStyle} onClick={() => setOverlay(false)}>
+            </div>
+            <Fab aria-label="add" classes={addbtn} onClick={() => setOverlay(true)}>
+                <AddIcon style={{ color: "white" }} />
+            </Fab>
+        </>
+    )
+}
+
 let Status = () => {
     const useStyles = makeStyles((theme) => ({
         root: {
-          width: '70vw',
-          height: '2px',
+            width: '70vw',
+            height: '2px',
         },
-      }));
-    
+    }));
     const progressionStyles = {
         root: styles.lin_progress_root,
         bar1Indeterminate: styles.lin_progress_bar1,
         bar2Indeterminate: styles.lin_progress_bar2
     }
 
-    const classes=useStyles();
+    const classes = useStyles();
     const { data, error } = useSWR('/api/user', fetcher, swrConfig)
     if (error) return <div>failed to load</div>
     if (!data) return <div className="poster center"><div className={classes.root}><LinearProgress classes={progressionStyles} /></div></div>
     return (
-        <Layout title="Status | DIYHacks">
+        <Layout title="Status | DIYHacks" nav={true}>
             <Container className={styles.body}>
                 <Row className="my-5 pt-5 pb-3">
                     <Col className="text-center">
@@ -296,7 +366,7 @@ let Status = () => {
                                 <Row className="flex-grow-1">
                                     <Col xs="12" className="center-vert">
                                         <div className="center-vert-env w-100">
-                                            <Submissions data={data.submissions} />
+                                            <Submissions data={data.submissions} className={styles.status_component_wraper} />
                                         </div>
                                     </Col>
                                 </Row>
@@ -327,8 +397,8 @@ let Status = () => {
                     </Col>
                 </Row>
             </Container>
+            <Overlay />
         </Layout>
-
     )
 }
 

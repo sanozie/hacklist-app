@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+#logo {
+    color: white;
+    font-family: $headerFont;
+    font-size: calc(0.8rem + 0.8vw)
+}
+
+.left_design {
+    min-width: 60%;
+    background-image: url('./imgs/signin-back.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.right_design {
+    min-width: 40%;
+    background-color: lighten($bgColor, 10%);
+    box-shadow: -15px 0px 20px #00000023
+}
+
+.copy {
+    color: white;
+    font-size: calc(0.5rem + 0.5vw);
+    font-family: $paraFont;
+}
