@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+#navbar {
+    background: linear-gradient(100deg, $priColor, $priColor, $secColor, $secColor)
+}
+
+#logo {
+    color: white;
+    font-family: $headerFont;
+}
+
+.navlink {
+    color: white !important;
+    font-family: $paraFont;
+}
+
+.profpic {
+    height: 40px;
+}
+
+#support {
+    color: white;
+    border: 1px solid white;
+    background: none;
+}
+
+#navline {
+    height: 30px;
+    width: 1px;
+    opacity: 0.5;
+    background-color: $bgColor;
+}
