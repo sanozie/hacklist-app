@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react'
 //swr (data-loading module)
 import useSWR from 'swr'
@@ -8,6 +9,7 @@ import Col from 'react-bootstrap/Col'
 //Material UI
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
+
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
@@ -263,6 +265,7 @@ let Signups = ({ data }) => {
     )
 }
 
+
 let Overlay = () => {
     let [overlay, setOverlay] = useState(false);
     const addbtn = {
@@ -335,15 +338,11 @@ let Status = () => {
             height: '2px',
         },
     }));
-
     const progressionStyles = {
         root: styles.lin_progress_root,
         bar1Indeterminate: styles.lin_progress_bar1,
         bar2Indeterminate: styles.lin_progress_bar2
     }
-
-
-
 
     const classes = useStyles();
     const { data, error } = useSWR('/api/user', fetcher, swrConfig)
@@ -399,7 +398,6 @@ let Status = () => {
                 </Row>
             </Container>
             <Overlay />
-
         </Layout>
     )
 }
