@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react'
+import withAuth from '../helpers/withAuth';
 //swr (data-loading module)
 import useSWR from 'swr'
 //Bootstrap
@@ -402,4 +403,4 @@ let Status = () => {
     )
 }
 
-export default Status;
+export default withAuth(Status);

@@ -13,7 +13,7 @@ admin.initializeApp({
   databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseio.com`,
 });
 
-const OAUTH_SCOPES = ['r_basicprofile', 'r_emailaddress'];
+const OAUTH_SCOPES = ['r_liteprofile', 'r_emailaddress'];
 
 /**
  * Creates a configured LinkedIn API Client instance.
@@ -24,7 +24,7 @@ function linkedInClient() {
   return require('node-linkedin')(
       functions.config().linkedin.client_id,
       functions.config().linkedin.client_secret,
-      `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/popup.html`);
+      `https://diyhacks--stage.firebaseapp.com/popup.html`);
 }
 
 /**
