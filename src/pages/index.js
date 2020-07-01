@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import Status from './Status'
+
 import Signin from './Signin'
+import Dashboard from './Dashboard'
 
 
 export default function Home() {

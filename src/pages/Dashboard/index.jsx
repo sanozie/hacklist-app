@@ -1,6 +1,7 @@
 
-import { useState, useEffect } from 'react'
-import withAuth from '../helpers/withAuth';
+import { useState, useEffect, useMemo } from 'react'
+import { useRouter } from 'next/router'
+//import withAuth from '../helpers/withAuth';
 //swr (data-loading module)
 import useSWR from 'swr'
 //Bootstrap
@@ -21,8 +22,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import fetcher from '../../utils/fetcher'
 //local
 import Layout from '../../components/Layout'
-import styles from './Status.module.scss'
-import { SubmissionGraph, SubmissionGraphOverflow, CircleGraph } from './ToolTippedComponents'
+import styles from './Dashboard.module.scss'
+import { SubmissionGraph, SubmissionGraphOverflow, CircleGraph } from './ToolTippedComponenets'
 
 let swrConfig = {
     revalidateOnFocus: false
@@ -35,24 +36,24 @@ let Submissions = ({ data }) => {
     return (
         <Row className="py-2 w-100">
             <Col xs="2" className="position-relative">
-                {!data.length && (
+                {(data.length == 0) && (
                     <div className={styles.strong_number}>0</div>
                 )}
-                {data.length && (
+                {(data.length > 0) && (
                     <div className={styles.strong_number}>{data.length}</div>
                 )}
             </Col>
             <Col xs="10" className="align-items-center my-auto align-items-center">
-                {!data.length && (
-                    <p className={styles.new_info}>Data on hacks you submit will be here. <br /> You can submit up to hacks at once.</p>
+                {(data.length == 0)  && (
+                    <p className={styles.new_info}>Data on hacks you submit will be here. <br /> You can submit up to 3 hacks at once.</p>
                 )}
-                {data.length && (
+                {(data.length > 0) && (
                     <Row className="justify-content-end mt-n4 pb-2 d-none d-lg-flex">
                         <Col lg="7"><h5>Minimums</h5></Col>
                         <Col lg="3"><h5>Maximums</h5></Col>
                     </Row>
                 )}
-                {data.length && data.map(item => {
+                {(data.length > 0)  && data.map(item => {
                     return (
                         <Row className="py-1">
                             <Col lg="2" className="d-flex align-items-center">
@@ -118,11 +119,10 @@ let ActiveHacks = ({ data }) => {
         return new Date(item.date)
     })
 
-
     // eventualy use the difference between active and past calendar data
     // to have different styling
     // but for now, dump them together
-    let calendarData = [...activeCalendarData, ...pastCalendarData]
+    let calendarData = [...activeCalendarData]
 
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     return (
@@ -139,12 +139,12 @@ let ActiveHacks = ({ data }) => {
                         <h3>{data.active.length} Scheduled Hacks</h3>
                     )}
                 </Row>
-                {!data.active.length && (
+                {(data.active.length == 0) && (
                     <Row className="center flex-grow-1">
                         <p className={styles.new_info}>Once you are a part of an active hack, it's information will show up here!</p>
                     </Row>
                 )}
-                {data.active.length && (
+                {(data.active.length > 0) && (
                     <Row className="my-3">
                         <Col xs="12">
                             {data.active.map(item => {
@@ -186,7 +186,12 @@ let ActiveHacks = ({ data }) => {
                         <h3>{data.past.length} Past Hacks</h3>
                     )}
                 </Row>
-                {data.past.length && (
+                {(data.active.length == 0) && (
+                    <Row className="center flex-grow-1">
+                        <p className={styles.new_info}>Once you've completed a hack, it will be viewable here!</p>
+                    </Row>
+                )}
+                {(data.past.length > 0) && (
                     <Row className="my-3">
                         <Col xs="12">
                             {data.past.map(item => {
@@ -230,19 +235,19 @@ let Signups = ({ data }) => {
     return (
         <Row className="py-4">
             <Col xs="6">
-                {!data.length && (
-                    <img src={`/status/signup-0.png`} className="img-fluid" />
+                {(data.length == 0) && (
+                    <img src='/dashboard/signup-0.png' className="img-fluid" />
                 )}
-                {data.length && (
-                    <img src={`/status/signup-${data.length}.png`} className="img-fluid" />
+                {(data.length > 0) && (
+                    <img src={`/dashboard/signup-${data.length}.png`} className="img-fluid" />
                 )}
             </Col>
             <Col xs="6" className="center-vert h-100" style={{ padding: 0 }}>
                 <div className="center-vert-env">
-                    {!data.length && (
+                    {(data.length == 0) && (
                         <p className={styles.new_info}>Hacks you sign up for will be here. <br /> You can sign up for 3 hacks at once.</p>
                     )}
-                    {data.length && data.map(hack => {
+                    {(data.length > 0) && data.map(hack => {
                         return (
                             <Row key={hack.title}>
                                 <Col xs="10" style={{ padding: 0 }}>
@@ -332,7 +337,7 @@ let Overlay = () => {
     )
 }
 
-let Status = () => {
+let Dashboard = () => {
     const useStyles = makeStyles((theme) => ({
         root: {
             width: '70vw',
@@ -346,11 +351,20 @@ let Status = () => {
     }
 
     const classes = useStyles();
-    const { data, error } = useSWR('/api/user', fetcher, swrConfig)
-    if (error) return <div>failed to load</div>
+
+    let router = useRouter();
+    
+    let { uid } = router.query;
+    let param = useMemo(() => ({uid}), [uid])
+    console.log(param)
+    const { data, error } = useSWR(`/api/user?uid=${uid}`, fetcher, swrConfig)
+    if (error) {
+        console.log(error);
+        return <div>failed to load</div>
+    }
     if (!data) return <div className="poster center"><div className={classes.root}><LinearProgress classes={progressionStyles} /></div></div>
     return (
-        <Layout title="Status | DIYHacks" nav={true}>
+        <Layout title="Dashboard | DIYHacks" nav={true}>
             <Container className={styles.body}>
                 <Row className="my-5 pt-5 pb-3">
                     <Col className="text-center">
@@ -403,4 +417,5 @@ let Status = () => {
     )
 }
 
-export default withAuth(Status);
+//export default withAuth(Status);
+export default Dashboard

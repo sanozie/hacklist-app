@@ -1,8 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-let firebaseClient = firebase
-
 const config = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -12,11 +10,11 @@ const config = {
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
 };
 
-if (!firebaseClient.apps.length) {
-    firebaseClient.initializeApp(config);
+if (!firebase.apps.length) {
+    firebase.initializeApp(config);
 }
-const auth = firebaseClient.auth();
+const auth = firebase.auth();
 export {
     auth,
-    firebaseClient
+    firebase
 };

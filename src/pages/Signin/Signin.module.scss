@@ -24,3 +24,11 @@
     font-size: calc(0.5rem + 0.5vw);
     font-family: $paraFont;
 }
+
+.signin_icon {
+    transition: 0.2s ease-in-out
+}
+
+.signin_icon:hover {
+    transform: translateY("-3px")
+}
