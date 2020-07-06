@@ -55,10 +55,21 @@
 }
 
 .status_wrapper {
-    background-color: rgba(0, 0, 0, 0.35);
+    box-shadow: -3px 6px 6px rgba(0, 0, 0, 0.3);
     height: 100%;
     width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 15px;
+    transition: 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+$bgLighten: lighten($bgColor, 2%);
+.status_wrapper:hover {
+    box-shadow: -5px 13px 13px rgba(0, 0, 0, 0.17);
+    background-color: $bgLighten;
+    transform: translateY(-5px)
 }
 
 .strong_number {
@@ -190,19 +201,6 @@
 .new_info {
     opacity: 0.7;
     text-align: center;
-}
-
-//lin prog
-.lin_progress_root {
-    background-color: #000000 !important;
-}
-
-.lin_progress_bar1 {
-    background-color: $priColor !important;
-}
-
-.lin_progress_bar2 {
-    background-color: $secColor !important;
 }
 
 //Add button

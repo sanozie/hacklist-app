@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
-import { useRouter } from 'next/router'
-//import withAuth from '../helpers/withAuth';
+import Router, { useRouter } from 'next/router'
+
 //swr (data-loading module)
 import useSWR from 'swr'
 //Bootstrap
@@ -9,12 +9,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 //Material UI
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
-
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import CloseIcon from '@material-ui/icons/Close';
 
 //react-calendar (has custom styles on github)
 //import Calendar from 'react-calendar'
@@ -24,6 +19,8 @@ import fetcher from '../../utils/fetcher'
 import Layout from '../../components/Layout'
 import styles from './Dashboard.module.scss'
 import { SubmissionGraph, SubmissionGraphOverflow, CircleGraph } from './ToolTippedComponenets'
+import Progression from '../../components/Progression'
+import { AddBadge } from '../../components/DIYBadge'
 
 let swrConfig = {
     revalidateOnFocus: false
@@ -44,7 +41,7 @@ let Submissions = ({ data }) => {
                 )}
             </Col>
             <Col xs="10" className="align-items-center my-auto align-items-center">
-                {(data.length == 0)  && (
+                {(data.length == 0) && (
                     <p className={styles.new_info}>Data on hacks you submit will be here. <br /> You can submit up to 3 hacks at once.</p>
                 )}
                 {(data.length > 0) && (
@@ -53,7 +50,7 @@ let Submissions = ({ data }) => {
                         <Col lg="3"><h5>Maximums</h5></Col>
                     </Row>
                 )}
-                {(data.length > 0)  && data.map(item => {
+                {(data.length > 0) && data.map(item => {
                     return (
                         <Row className="py-1">
                             <Col lg="2" className="d-flex align-items-center">
@@ -234,6 +231,7 @@ let Signups = ({ data }) => {
     }
     return (
         <Row className="py-4">
+
             <Col xs="6">
                 {(data.length == 0) && (
                     <img src='/dashboard/signup-0.png' className="img-fluid" />
@@ -271,109 +269,40 @@ let Signups = ({ data }) => {
     )
 }
 
-
-let Overlay = () => {
-    let [overlay, setOverlay] = useState(false);
-    const addbtn = {
-        root: styles.add_btn_root
-    }, closebtn = {
-        root: styles.close_btn_root
-    }
-
-    let display = overlay ? "block" : "none"
-    let opacity = overlay ? 1 : 0
-    let overlayStyle = {
-        display,
-        opacity,
-        transition: "0.3s ease-in-out"
-    }
-
-    useEffect(() => {
-        display = overlay ? "block" : "none"
-        opacity = overlay ? 1 : 0
-        overlayStyle = {
-            display,
-            opacity,
-            transition: "0.3s ease-in-out"
-        }
-        console.log(overlay)
-    }, [overlay])
-    return (
-        <>
-            <div id={styles.overlay} className="poster-fixed center " style={overlayStyle}>
-                <Container className="h-100 center">
-                    <div className="center-env">
-                        <Row className="h-xs-100 h-md-25">
-                            <Col md="6" className="h-xs-25 h-md-100 my-2">
-                                <Row className="h-100">
-                                    <Col xs="12" className={`text-center ${styles.overlay_option} ${styles.new_hack}`}>
-                                        <h1>Submit a Hack</h1>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            <Col md="6" className="h-xs-25 h-100 my-2">
-                                <Row className="h-md-100">
-                                    <Col xs="12" className={`text-center ${styles.overlay_option} ${styles.signup_hack}`}>
-                                        <h1>Sign up for a Hack</h1>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                        <Row className="justify-content-center">
-                            <Fab aria-label="close" classes={closebtn} onClick={() => setOverlay(false)}>
-                                <CloseIcon style={{ color: "white" }}/>
-                            </Fab>
-                        </Row>
-                    </div>
-
-                </Container>
-            </div>
-            <div id={styles.blackspace} className="poster-fixed center" style={overlayStyle} onClick={() => setOverlay(false)}>
-            </div>
-            <Fab aria-label="add" classes={addbtn} onClick={() => setOverlay(true)}>
-                <AddIcon style={{ color: "white" }} />
-            </Fab>
-        </>
-    )
-}
-
 let Dashboard = () => {
+    let [addSubmission, setAddSubmission] = useState(false)
+    let [addSignup, setAddSignup] = useState(false)
+
     const useStyles = makeStyles((theme) => ({
         root: {
             width: '70vw',
             height: '2px',
         },
     }));
-    const progressionStyles = {
-        root: styles.lin_progress_root,
-        bar1Indeterminate: styles.lin_progress_bar1,
-        bar2Indeterminate: styles.lin_progress_bar2
-    }
 
     const classes = useStyles();
-
     let router = useRouter();
-    
+
     let { uid } = router.query;
-    let param = useMemo(() => ({uid}), [uid])
-    console.log(param)
+    let param = useMemo(() => ({ uid }), [uid]) 
     const { data, error } = useSWR(`/api/user?uid=${uid}`, fetcher, swrConfig)
     if (error) {
         console.log(error);
         return <div>failed to load</div>
     }
-    if (!data) return <div className="poster center"><div className={classes.root}><LinearProgress classes={progressionStyles} /></div></div>
+    if (!data) return <div className="poster center"><div className={classes.root}><Progression /></div></div>
     return (
         <Layout title="Dashboard | DIYHacks" nav={true}>
             <Container className={styles.body}>
-                <Row className="my-5 pt-5 pb-3">
+                <Row className="my-2 pt-5 pb-3">
                     <Col className="text-center">
                         <h1>YOUR STATS</h1>
                     </Col>
                 </Row>
                 <Row className="justify-content-center">
                     <Col md="8" className={styles.status_env}>
-                        <Row className={styles.status_wrapper}>
+                        <Row className={styles.status_wrapper} onMouseEnter={() => setAddSubmission(true)} onMouseLeave={() => setAddSubmission(false)}>
+                            <AddBadge title="Submit A Hack" display={addSubmission} link="/Submission/"/>
                             <Col className="d-flex flex-column">
                                 <Row>
                                     <h2>Hack Submissions</h2>
@@ -390,7 +319,8 @@ let Dashboard = () => {
                         </Row>
                     </Col>
                     <Col md="4" className={styles.status_env}>
-                        <Row className={styles.status_wrapper}>
+                        <Row className={styles.status_wrapper} onMouseEnter={() => setAddSignup(true)} onMouseLeave={() => setAddSignup(false)}>
+                            <AddBadge title="Signup For A Hack" display={addSignup} />
                             <Col>
                                 <Row>
                                     <h2>Signups</h2>
@@ -412,7 +342,6 @@ let Dashboard = () => {
                     </Col>
                 </Row>
             </Container>
-            <Overlay />
         </Layout>
     )
 }

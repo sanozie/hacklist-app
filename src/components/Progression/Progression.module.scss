@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+//lin prog
+.lin_progress_root {
+    background-color: #000000 !important;
+}
+
+.lin_progress_bar1 {
+    background-color: $priColor !important;
+}
+
+.lin_progress_bar2 {
+    background-color: $secColor !important;
+}

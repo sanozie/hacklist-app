@@ -1,6 +1,8 @@
 @import './variables.scss';
 #__next {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 body,
@@ -19,4 +21,20 @@ h1 {
 
 .row {
     margin: 0;
+}
+
+//btns
+.btn {
+    font-size: calc(0.4rem + 0.5vw);
+    letter-spacing: calc(0.03rem + 0.04vw);
+    color: white;
+    font-family: $headerFont;
+}
+
+.btn-primary {
+    background-color: $priColor;
+}
+
+.btn-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.2)
 }
