@@ -146,6 +146,16 @@ let explainer = {
 
 
 let Submission = () => {
+    // If the user not signed in yet
+    // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
+    firebase.auth().onAuthStateChanged(user => {
+        if(!user) {
+            Router.push({
+                pathname: "/Signin/",
+            })
+        }
+    })
+
     let [industry, setIndustry] = useState('')
     let [contribution, setContribution] = useState('')
     let [hackTitle, setHackTitle] = useState('')

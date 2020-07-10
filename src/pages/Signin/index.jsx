@@ -13,7 +13,16 @@ import styles from './Signin.module.scss'
 import { auth, firebase } from '../../firebase'
 
 let Signin = () => {
-    
+    // If the user has already signed in.
+    // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
+    firebase.auth().onAuthStateChanged(user => {
+        if(user) {
+            Router.push({
+                pathname: "/Dashboard/",
+                query: {uid: user.uid }
+            })
+        }
+    })
     let handleGoogleSignIn = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
@@ -71,7 +80,7 @@ let Signin = () => {
     }
     return (
         <Layout title="Signin | DIYHacks" nav={false} signin={true}>
-            <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=2695759943969584&autoLogAppEvents=1" nonce="Lzx3EyRM"></script>
+            <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=2695759943969584&autoLogAppEvents=1" nonce="Lzx3EyRM"/>
             <Container>
                 <Row className="poster">
                     <Col sm className={styles.left_design}></Col>
