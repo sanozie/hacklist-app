@@ -17,7 +17,6 @@ import fetcher from '../../utils/fetcher'
 //local
 import Layout from '../../components/Layout'
 import styles from './Dashboard.module.scss'
-import { SubmissionGraph, SubmissionGraphOverflow, CircleGraph } from './ToolTippedComponenets'
 import Progression from '../../components/Progression'
 import { AddBadge } from '../../components/DIYBadge'
 

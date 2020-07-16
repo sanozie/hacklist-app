@@ -22,6 +22,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Layout from '../../components/Layout'
 import styles from './Submission.module.scss'
 import Progression from '../../components/Progression'
+import { MaterialStyles } from '../../lib/MaterialStyles'
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -47,70 +48,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const useStylesInput = makeStyles({
-    root: {
-        minWidth: 200,
-        boxShadow: "0px 2px 3px rgba(0,0,0,0.2)",
-        transition: "0.3s ease-in-out",
-        "& .MuiOutlinedInput-input": {
-            color: "rgba(255,255,255,0.4)",
-            transition: "0.3s ease-in-out",
-        },
-        "& .MuiInputLabel-root": {
-            color: "rgba(255,255,255,0.4)",
-            transition: "0.3s ease-in-out",
-        },
-        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "rgba(255,255,255,0.4)",
-            transition: "0.3s ease-in-out",
-        },
-        "&:hover .MuiOutlinedInput-input": {
-            color: "rgba(255,255,255,0.5)"
-        },
-        "&:hover .MuiInputLabel-root": {
-            color: "rgba(255,255,255,0.5)"
-        },
-        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "rgba(255,255,255,0.5)"
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-            color: "#9D67E3"
-        },
-        "& .MuiInputLabel-root.Mui-focused": {
-            color: "#9D67E3"
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#9D67E3"
-        }
-    }
-});
-
-
-const useStyleSliderEng = makeStyles({
-    root: {
-        color: "#9D67E3"
-    }
-}), useStyleSliderDesign = makeStyles({
-    root: {
-        color: "#50E3C1"
-    }
-}), useStyleSliderPM = makeStyles({
-    root: {
-        color: "#FFE600"
-    }
-})
-
-const usePopupStyles = makeStyles(() => ({
-    paper: {
-        backgroundColor: "#2b2b2b",
-        color: 'white',
-        minWidth: 200
-    }
-})), useDialogueText = makeStyles({
-    root: {
-        color: "white"
-    }
-})
 
 
 let explainer = {
@@ -173,12 +110,6 @@ let Submission = () => {
     const [open, setOpen] = useState(false)
 
     const classes = useStyles();
-    const classesInput = useStylesInput();
-    const classesSliderEng = useStyleSliderEng();
-    const classesSliderDesign = useStyleSliderDesign();
-    const classesSliderPM = useStyleSliderPM();
-    const classesPopup = usePopupStyles();
-    const classesDialogText = useDialogueText();
 
     useEffect(() => {
         setTitle(explainer[focus].title)
@@ -231,7 +162,7 @@ let Submission = () => {
                                 <Row className="justify-content-center">
                                     <FormControl required variant="outlined" className={classes.formControl} onMouseDown={() => setFocus('industry')}>
                                         <TextField
-                                            className={classesInput.root}
+                                            className={MaterialStyles().classesInput.root}
                                             variant="outlined"
                                             value={industry}
                                             onChange={e => { setIndustry(e.target.value) }}
@@ -249,7 +180,7 @@ let Submission = () => {
                                     </FormControl>
                                     <FormControl required variant="outlined" className={classes.formControl} onMouseDown={() => setFocus('contribution')}>
                                         <TextField
-                                            className={classesInput.root}
+                                            className={MaterialStyles().classesInput.root}
                                             variant="outlined"
                                             value={contribution}
                                             onChange={e => { setContribution(e.target.value) }}
@@ -267,7 +198,7 @@ let Submission = () => {
                                     </FormControl>
                                     <FormControl variant="outlined" className={classes.formControl} onMouseDown={() => setFocus('title')}>
                                         <TextField
-                                            className={classesInput.root}
+                                            className={MaterialStyles().classesInput.root}
                                             variant="outlined"
                                             value={hackTitle}
                                             onChange={e => { setHackTitle(e.target.value) }}
@@ -287,7 +218,7 @@ let Submission = () => {
                                             valueLabelDisplay="auto"
                                             aria-labelledby="eng-range"
                                             onChange={(event, newVal) => setEngRange(newVal)}
-                                            className={classesSliderEng.root}
+                                            className={MaterialStyles().classesSliderEng.root}
                                         />
                                     </FormControl>
                                     <FormControl className={classes.formControl} onMouseDown={() => setFocus('design')}>
@@ -299,7 +230,7 @@ let Submission = () => {
                                             valueLabelDisplay="auto"
                                             aria-labelledby="design-range"
                                             onChange={(event, newVal) => setDesignRange(newVal)}
-                                            className={classesSliderDesign.root}
+                                            className={MaterialStyles().classesSliderDesign.root}
                                         />
                                     </FormControl>
                                     <FormControl className={classes.formControl} onMouseDown={() => setFocus('pm')}>
@@ -311,7 +242,7 @@ let Submission = () => {
                                             valueLabelDisplay="auto"
                                             aria-labelledby="pm-range"
                                             onChange={(event, newVal) => setPmRange(newVal)}
-                                            className={classesSliderPM.root}
+                                            className={MaterialStyles().classesSliderPM.root}
                                         />
                                     </FormControl>
                                 </Row>
@@ -343,21 +274,21 @@ let Submission = () => {
                     open={open}
                     onClose={() => setOpen(false)}
                     aria-labelledby="confirm"
-                    PaperProps={{ className: classesPopup.paper }}
+                    PaperProps={{ className: MaterialStyles().classesPopup.paper }}
                 >
-                    {(apiProgress == 'idle') && (
+                    {(apiProgress === 'idle') && (
                         <>
                             <DialogTitle id="confirm" className="text-center">Confirm</DialogTitle>
                             <DialogContent>
-                                <DialogContentText className={classesDialogText.root}>Yes? You're ready to submit?</DialogContentText>
+                                <DialogContentText className={MaterialStyles().classesDialogText.root}>Yes? You're ready to submit?</DialogContentText>
                             </DialogContent>
                             <DialogActions className="justify-content-center"><button className="btn btn-primary" onClick={handleSubmit}>SUBMIT</button></DialogActions>
                         </>
                     )}
-                    {(apiProgress == 'pending') && (
+                    {(apiProgress === 'pending') && (
                         <Progression />
                     )}
-                    {(apiProgress == 'success') && (
+                    {(apiProgress === 'success') && (
                         <>
                             <DialogTitle id="confirm" className="text-center">Success</DialogTitle>
                             <DialogActions className="justify-content-center"><button className="btn btn-primary" onClick={() => {

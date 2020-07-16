@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/diyhacks-app.iml" filepath="$PROJECT_DIR$/.idea/diyhacks-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../diyhacks-lp/.idea/diyhacks-lp.iml" filepath="$PROJECT_DIR$/../diyhacks-lp/.idea/diyhacks-lp.iml" />
     </modules>
   </component>
 </project>
