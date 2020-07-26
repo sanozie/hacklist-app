@@ -2,17 +2,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import withStyles from '@material-ui/core/styles/withStyles';
 //Material UI
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {HtmlTooltip} from '../../../lib/MaterialStyles'
 import styles from './index.module.scss'
 
-const HtmlTooltip = withStyles((theme) => ({
-    tooltip: {
-        backgroundColor: '#f5f5f9',
-        color: 'rgba(0, 0, 0, 0.87)',
-        maxWidth: 220,
-        fontSize: theme.typography.pxToRem(12),
-        border: '1px solid #dadde9',
-    },
-}))(Tooltip);
+
 
 const SubmissionGraph = (props) => {
     let classes = `${styles.submissions_graph} ${props.classes}`
@@ -31,9 +24,9 @@ const SubmissionGraph = (props) => {
     return (
         <HtmlTooltip
             title={
-                <React.Fragment>
+                <>
                     <b>{title}</b>{` ${props.signups}`}
-                </React.Fragment>
+                </>
             }
             placement="top"
         >
