@@ -52,25 +52,40 @@ let addIcon = makeStyles({
 
 
 let Signup = () => {
-    let classes=useStyles();
+    //Style Hooks
+    let classes = useStyles();
     let addIconClass = addIcon();
+
+    //Data Hooks
+    let [hacks, setHacks] = useState([])
+    let [filteredHacks, setFilteredHacks] = useState([])
 
     //Filter Hooks
     let [industry, setIndustry] = useState(['Marketing'])
     let [newIndustry, setNewIndustry] = useState('')
-    let [date, setDate] = useState('Past Week')
+    let [timeline, setTimeline] = useState('6mon')
     let [skills, setSkills] = useState([])
     let [tags, setTags] = useState(["Website", "Mobile App", "App"])
     let [newTag, setNewTag] = useState('')
 
-    //Popover Hooks
+    //Popover Hooks (tags)
     let addTagEl = useRef(null)
     let [openPopoverTag, setOpenPopoverTag] = useState(false)
     let [popoverAnchorTag, setPopoverAnchorTag] = useState(null)
-
+    //Popover Hooks (industry)
     let addIndustryEl = useRef(null)
     let [openPopoverIndustry, setOpenPopoverIndustry] = useState(false)
     let [popoverAnchorIndustry, setPopoverAnchorIndustry] = useState(null)
+
+    //Fetching initial data from Firebase
+    useEffect(() => {
+        fetch(`/api/submissions?timeline=${timeline}`)
+            .then(res => res.json())
+            .then(res => {
+                setHacks(res)
+                setFilteredHacks(res)
+            })
+    }, [])
 
 
     //Filter methods
@@ -150,15 +165,16 @@ let Signup = () => {
                                         <TextField
                                             className={MaterialStyles().classesInput.root}
                                             variant="outlined"
-                                            value={date}
-                                            onChange={e => { setDate(e.target.value) }}
-                                            label="Date"
+                                            value={timeline}
+                                            onChange={e => { setTimeline(e.target.value) }}
+                                            label="Timeline"
                                             size="small"
                                             select
                                         >
-                                            <MenuItem value="Past Week">Past Week</MenuItem>
-                                            <MenuItem value="Past Month">Past Month</MenuItem>
-                                            <MenuItem value="Past 3 Month">Past 3 Months</MenuItem>
+                                            <MenuItem value="week">Past Week</MenuItem>
+                                            <MenuItem value="mon">Past Month</MenuItem>
+                                            <MenuItem value="3mon">Past 3 Months</MenuItem>
+                                            <MenuItem value="6mon">Past 6 Months</MenuItem>
                                         </TextField>
                                     </FormControl>
                                 </Row>
@@ -273,7 +289,10 @@ let Signup = () => {
                         </Row>
                     </Col>
                     <Col xs="8">
-                        <Hack/>
+                        <Row>
+                            <Hack/>
+                        </Row>
+
                     </Col>
                 </Row>
             </Container>

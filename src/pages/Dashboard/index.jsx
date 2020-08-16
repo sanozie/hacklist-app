@@ -26,9 +26,7 @@ import ActiveHacks from './ActiveHacks'
 import Submissions from './Submissions'
 import {firebase} from "../../firebase";
 
-let swrConfig = {
-    revalidateOnFocus: false
-}
+let swrConfig = {}
 
 let Dashboard = () => {
     // If the user has already signed in.

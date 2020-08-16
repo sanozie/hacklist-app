@@ -25,8 +25,7 @@ import Progression from '../../components/Progression'
 import { MaterialStyles } from '../../lib/MaterialStyles'
 
 //Material UI
-import { makeStyles } from '@material-ui/core/styles';
-
+import { makeStyles } from '@material-ui/core/styles'
 import { auth, firebase } from '../../firebase'
 
 
@@ -117,12 +116,14 @@ let Submission = () => {
     }, [focus])
 
     let handleSubmit = () => {
+        let user = firebase.auth().currentUser, uid
         setApiProgress('pending')
-        let user = firebase.auth().currentUser
-        if (user != null) {
-            name = user.displayName, setID(user.uid)
+        setID(user.uid)
+        if (user) {
+            name = user.displayName
+            setID(user.uid)
+            uid = user.uid
         }
-        console.log(name)
         let data = JSON.stringify({
             industry,
             contribution,
@@ -131,9 +132,8 @@ let Submission = () => {
             designRange,
             pmRange,
             submitter_name: name,
-            submitter: id
+            submitter: uid
         })
-        console.log(data)
         fetch('/api/submit', {
             method: 'POST',
             body: data

@@ -9,6 +9,7 @@ export default async (req, res) => {
         submitter_skill: body.contribution,
         title: body.hackTitle,
         submit_date: new Date(),
+        industry: body.industry,
         limits: {
             max: body.engRange[1] + body.designRange[1] + body.pmRange[1],
             min: body.engRange[0] + body.designRange[0] + body.pmRange[0],
