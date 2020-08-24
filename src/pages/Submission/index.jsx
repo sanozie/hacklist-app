@@ -21,7 +21,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //Local
 import Layout from '../../components/Layout'
 import styles from './Submission.module.scss'
-import Progression from '../../components/Progression'
+import { Progression }  from '../../components/Progression'
 import { MaterialStyles } from '../../lib/MaterialStyles'
 
 //Material UI

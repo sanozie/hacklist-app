@@ -99,56 +99,6 @@ $bgLighten: lighten($bgColor, 2%);
     max-width: 100%;
 }
 
-//Submissions
-.submissions_graph_wrapper {
-    background-color: rgba(255, 255, 255, 0.116);
-    border-radius: 10px;
-    margin-right: 10px;
-    overflow: hidden;
-}
-
-.submissions_graph_env {
-    border-radius: 10px;
-}
-
-.submissions_circle_wrapper {
-    padding: 0;
-}
-
-.submissions_circle {
-    margin: 0 20%;
-    height: 100%;
-    @include center;
-}
-
-.root_circle {
-    height: 100%;
-    width: auto;
-}
-
-.eng_graph {
-    background-color: $priColor;
-}
-
-.eng_circle {
-    stroke: $priColor !important;
-}
-
-.design_graph {
-    background-color: $tertColor;
-}
-
-.design_circle {
-    stroke: $tertColor !important;
-}
-
-.pm_graph {
-    background-color: $secColor;
-}
-
-.pm_circle {
-    stroke: $secColor !important;
-}
 
 //Misc
 .body {

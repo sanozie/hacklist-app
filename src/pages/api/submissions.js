@@ -1,4 +1,5 @@
 import firebase from '../../lib/db'
+import { formatSubmissionData } from "../../utils/formatdata"
 
 export default async (req, res) => {
     let date = new Date()
@@ -22,7 +23,9 @@ export default async (req, res) => {
         .then(snapshot => {
             let data=[]
             snapshot.forEach(item => {
-                data.push(item.data())
+                let docData = item.data()
+                docData.submit_date = docData.submit_date.toDate()
+                data.push(formatSubmissionData(docData))
             })
             res.send(data)
         })

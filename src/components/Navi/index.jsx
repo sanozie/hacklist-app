@@ -6,7 +6,7 @@ import styles from './navi.module.scss'
 
 import Avatar from '@material-ui/core/Avatar';
 
-import { auth, firebase } from '../../firebase'
+import { firebase } from '../../firebase'
 
 let Navi = () => {
     let [avatar, setAvatar] = useState('')
@@ -15,11 +15,11 @@ let Navi = () => {
         if (user) {
             setAvatar(user.photoURL)  
         }
-      });
+    });
     
     return (
         <Navbar bg="light" expand="lg" id={styles.navbar}>
-            <Navbar.Brand href="#home" id={styles.logo}>DIYHACKS</Navbar.Brand>
+            <Navbar.Brand href="/Dashboard" id={styles.logo}>DIYHACKS</Navbar.Brand>
             <Navbar.Toggle className="ml-auto" aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto ">

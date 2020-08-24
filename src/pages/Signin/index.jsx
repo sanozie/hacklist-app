@@ -18,8 +18,7 @@ let Signin = () => {
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
             Router.push({
-                pathname: "/Dashboard/",
-                query: {uid: user.uid }
+                pathname: "/Dashboard/"
             })
         }
     })

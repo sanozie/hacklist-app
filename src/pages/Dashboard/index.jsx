@@ -17,7 +17,7 @@ import fetcher from '../../utils/fetcher'
 //local
 import Layout from '../../components/Layout'
 import styles from './Dashboard.module.scss'
-import Progression from '../../components/Progression'
+import { MainProgression } from '../../components/Progression'
 import { AddBadge } from '../../components/DIYBadge'
 
 //Page-Specific components
@@ -29,6 +29,7 @@ import {firebase} from "../../firebase";
 let swrConfig = {}
 
 let Dashboard = () => {
+    let [uid, setUid] = useState('')
     // If the user has already signed in.
     // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
     firebase.auth().onAuthStateChanged(user => {
@@ -37,26 +38,16 @@ let Dashboard = () => {
                 pathname: "/Signin/",
                 query: {uid: user.uid }
             })
+        } else {
+            setUid(firebase.auth().currentUser.uid)
         }
     })
     let [addSubmission, setAddSubmission] = useState(false)
     let [addSignup, setAddSignup] = useState(false)
 
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            width: '70vw',
-            height: '2px',
-        },
-    }));
-
-    const classes = useStyles();
-    let router = useRouter();
-
-    let { uid } = router.query;
-    let param = useMemo(() => ({ uid }), [uid]) 
     const { data, error } = useSWR(`/api/user?uid=${uid}`, fetcher, swrConfig)
-    if (error) return <div>failed to load</div>
-    if (!data) return <div className="poster center"><div className={classes.root}><Progression /></div></div>
+    // TODO: Set up error handling for this component, prefeably by making a form
+    if (error || !data) return <MainProgression />
 
     return (
         <Layout title="Dashboard | DIYHacks" nav={true}>
@@ -87,7 +78,7 @@ let Dashboard = () => {
                     </Col>
                     <Col md="4" className={styles.status_env}>
                         <Row className={styles.status_wrapper} onMouseEnter={() => setAddSignup(true)} onMouseLeave={() => setAddSignup(false)}>
-                            <AddBadge title="Signup For A Hack" display={addSignup} />
+                            <AddBadge title="Signup For A Hack" display={addSignup} link="/Signup/"/>
                             <Col>
                                 <Row>
                                     <h2>Signups</h2>

@@ -1,4 +1,14 @@
-@import '../../../styles/variables.scss';
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+//Submission Rows
+.submissions_graph_wrapper {
+    background-color: rgba(255, 255, 255, 0.116);
+    border-radius: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
 .submissions_graph {
     height: 13px;
     transition: 0.2s ease-in-out
@@ -16,7 +26,21 @@
     left: 0;
 }
 
-//Circles
+.submissions_graph_env {
+    border-radius: 10px;
+}
+
+.submissions_circle_wrapper {
+    padding: 0;
+}
+
+.submissions_circle {
+    margin: 0 20%;
+    height: 100%;
+    @include center;
+}
+
+//Submission & Signup Circles
 .circle_root {
     width: auto;
     transition: 0.2s ease-in-out;
@@ -31,6 +55,22 @@
 
 .circle_svg {
     height: 100%;
+}
+
+
+//Skill-Specific styles
+.eng_graph {
+    background-color: $priColor;
+}
+
+
+.design_graph {
+    background-color: $tertColor;
+}
+
+
+.pm_graph {
+    background-color: $secColor;
 }
 
 .pm_circle {
