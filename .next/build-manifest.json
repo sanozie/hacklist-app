@@ -13,10 +13,6 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/Dashboard": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
     "/Signup": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"

@@ -1,35 +1,22 @@
 import { useState, useEffect, useRef } from 'react'
-import Router, { useRouter } from 'next/router'
-
-//swr (data-loading module)
-import useSWR from 'swr'
-import fetcher from '../../utils/fetcher'
 
 //Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-//Material UI
-import AddIcon from '@material-ui/icons/Add';
-import Popover from '@material-ui/core/Popover';
-
 //Local
 import Layout from '../../components/Layout'
 import styles from './Signup.module.scss'
-import TextField from "@material-ui/core/TextField";
-import {DesignChip, EngChip, MaterialStyles, PMChip, Tag, HtmlTooltip} from "../../lib/MaterialStyles";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import {makeStyles} from "@material-ui/core/styles";
+
 import Hack from './Hack'
 import Filters from './Filters'
 
-let fetchHacks = timeline => [
-
-]
+//Firebase
+import { firebase } from '../../firebase'
 
 let Signup = () => {
+    let uid = firebase.auth().currentUser.uid
 
     //Data Hooks
     let [hacks, setHacks] = useState([])
@@ -69,7 +56,7 @@ let Signup = () => {
                     <Col xs="8">
                         <Row>
                             {hacks.map(hack => (
-                                    <Hack {...hack}/>
+                                    <Hack {...hack} id={uid}/>
                                 )
                             )}
                         </Row>

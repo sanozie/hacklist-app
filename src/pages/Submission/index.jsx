@@ -26,7 +26,9 @@ import { MaterialStyles } from '../../lib/MaterialStyles'
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles'
-import { auth, firebase } from '../../firebase'
+
+//Firebase
+import { firebase } from '../../firebase'
 
 
 const useStyles = makeStyles(theme => ({

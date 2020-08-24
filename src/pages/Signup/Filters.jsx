@@ -146,6 +146,29 @@ let Filters = ({setNewTimeline, setNewFilterData}) => {
                         </TextField>
                     </FormControl>
                 </Row>
+                <Row className="justify-content-center mt-4">
+                    <h4>Skills</h4>
+                </Row>
+                <Row className="justify-content-center">
+                    <EngChip
+                        label="Engineering"
+                        onClick={() => handleSkill('eng')}
+                        variant="outlined"
+                        color={skills.includes('eng') || (skills === []) ? 'secondary' : 'primary'}
+                    />
+                    <DesignChip
+                        label="Design"
+                        onClick={() => handleSkill('design')}
+                        variant="outlined"
+                        color={skills.includes('design') || (skills === []) ? 'secondary' : 'primary'}
+                    />
+                    <PMChip
+                        label="Product Management"
+                        onClick={() => handleSkill('pm')}
+                        variant="outlined"
+                        color={skills.includes('pm') || (skills === []) ? 'secondary' : 'primary'}
+                    />
+                </Row>
                 <Row className="justify-content-center mt-3 mb-1">
                     <h4>Industry</h4>
                     <AddIcon ref={addIndustryEl} onClick={handleAddIndustry} fontSize="small" className={addIconClass.root} aria-describedby="addindustry"/>
@@ -163,6 +186,8 @@ let Filters = ({setNewTimeline, setNewFilterData}) => {
                             horizontal: 'center',
                         }}
                     >
+
+                        <p>Add an industry (Enter)</p>
                         <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
                             <TextField
                                 variant="outlined"
@@ -190,29 +215,6 @@ let Filters = ({setNewTimeline, setNewFilterData}) => {
                         )
                     )}
                 </Row>
-                <Row className="justify-content-center mt-4">
-                    <h4>Skills</h4>
-                </Row>
-                <Row className="justify-content-center">
-                    <EngChip
-                        label="Engineering"
-                        onClick={() => handleSkill('eng')}
-                        variant="outlined"
-                        color={skills.includes('eng') || (skills === []) ? 'secondary' : 'primary'}
-                    />
-                    <DesignChip
-                        label="Design"
-                        onClick={() => handleSkill('design')}
-                        variant="outlined"
-                        color={skills.includes('design') || (skills === []) ? 'secondary' : 'primary'}
-                    />
-                    <PMChip
-                        label="Product Management"
-                        onClick={() => handleSkill('pm')}
-                        variant="outlined"
-                        color={skills.includes('pm') || (skills === []) ? 'secondary' : 'primary'}
-                    />
-                </Row>
                 <Row className="justify-content-center mt-3 mb-1">
                     <h4>Tags</h4>
                     <AddIcon ref = {addTagEl} onClick={handleAddTag} fontSize="small" className={addIconClass.root} aria-describedby="addtag"/>
@@ -230,6 +232,7 @@ let Filters = ({setNewTimeline, setNewFilterData}) => {
                             horizontal: 'center',
                         }}
                     >
+                        <p>Add a tag (enter)</p>
                         <FormControl required variant="outlined" className={classes.formControl}>
                             <TextField
                                 variant="outlined"
