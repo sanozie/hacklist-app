@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 //Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -20,27 +20,19 @@ let Signup = () => {
 
     //Data Hooks
     let [hacks, setHacks] = useState([])
+    const prevHacks = usePrevious(hacks)
     let [filteredHacks, setFilteredHacks] = useState([])
     let [timeline, setTimeline] = useState('6mon')
     let [filterData, setFilterData] = useState({})
 
-    let fetchHacks = timeline => {
+    //Fetching data everytime timeline is updated
+    useEffect(() => {
         fetch(`/api/submissions?timeline=${timeline}`)
             .then(res => res.json())
             .then(res => {
                 setHacks(res)
                 setFilteredHacks(res)
-                debugger
             })
-    }
-
-    //Fetching initial data from Firebase
-    useEffect(() => {
-        fetchHacks(timeline)
-    }, [])
-    //Fetching data everytime timeline is updated
-    useEffect(() => {
-        fetchHacks(timeline)
     }, [timeline])
 
     return (
@@ -55,7 +47,7 @@ let Signup = () => {
                     <Filters setNewTimeline={newTimeline => setTimeline(newTimeline)} setNewFilterData={newFilterData => setFilterData(newFilterData)}/>
                     <Col xs="8">
                         <Row>
-                            {hacks.map(hack => (
+                            {(hacks.length !== 0) && hacks.map(hack => (
                                     <Hack {...hack} id={uid}/>
                                 )
                             )}
@@ -69,3 +61,18 @@ let Signup = () => {
 }
 
 export default Signup
+
+// Hook
+function usePrevious(value) {
+    // The ref object is a generic container whose current property is mutable ...
+    // ... and can hold any value, similar to an instance property on a class
+    const ref = useRef();
+
+    // Store current value in ref
+    useEffect(() => {
+        ref.current = value;
+    }, [value]); // Only re-run if value changes
+
+    // Return previous value (happens before update in useEffect above)
+    return ref.current;
+}

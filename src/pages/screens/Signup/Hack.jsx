@@ -48,15 +48,16 @@ let Hack = props => {
         if(props.signups[props.uid]) {
             setAlreadySignedUp(true)
         }
-    })
+    }, [])
+
     let handleClose = () => {
-        console.log('closed')
+        setOpenSubmit(false)
+        setPopoverSubmitButton(null)
     }
 
     let handleSkill = () => {
         setOpenSubmit(true)
         setPopoverSubmitButton(submitButton.current)
-        debugger
     }
 
     let handleSkillEnter = el => {
@@ -98,7 +99,7 @@ let Hack = props => {
             <Row>
                 {!alreadySignedUp  && (
                     <>
-                        <Button ref={submitButton} onClick={handleSkill} variant="outline-light" aria-describedby="signupButton">SIGNUP</Button>
+                        <Button ref={submitButton} onClick={() => handleSkill} variant="outline-light" aria-describedby="signupButton">SIGNUP</Button>
                         <Popover
                         id="signupButton"
                         open={openSubmit}
@@ -113,22 +114,23 @@ let Hack = props => {
                         horizontal: 'center',
                     }}
                         >
-                        <p>Sign up as:</p>
-                        <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
-                        <TextField
-                        variant="outlined"
-                        value={skill}
-                        onChange={e => { setSkill(e.target.value) }}
-                        onKeyDown={e => {handleSkillEnter(e)}}
-                        label="Industry"
-                        size="small"
-                        select
-                        >
-                            <MenuItem value='eng'>Engineer</MenuItem>
-                            <MenuItem value='design'>Designer</MenuItem>
-                            <MenuItem value='pm'>Product Manager</MenuItem>
-                        </TextField>
-                        </FormControl>
+                            <p>Sign up as:</p>
+                            <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
+                            <TextField
+                            variant="outlined"
+                            value={skill}
+                            onChange={e => { setSkill(e.target.value) }}
+                            onKeyDown={e => {handleSkillEnter(e)}}
+                            label="Industry"
+                            size="small"
+                            select
+                            >
+                                <MenuItem value='eng'>Engineer</MenuItem>
+                                <MenuItem value='design'>Designer</MenuItem>
+                                <MenuItem value='pm'>Product Manager</MenuItem>
+                            </TextField>
+                            </FormControl>
+                            <Button variant="outline-success" color='success' onClick={handleClose()}>Select</Button>
                         </Popover>
                     </>
                 )}
