@@ -4,7 +4,7 @@ import styles from "./Dashboard.module.scss";
 import {
     SubmissionCircleRow,
     SubmissionGraphRow
-} from "../../components/SubmissionGraphs";
+} from "../../../components/SubmissionGraphs";
 
 /**
  * Graph   shows Hack Submission data

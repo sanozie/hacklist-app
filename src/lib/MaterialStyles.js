@@ -134,8 +134,6 @@ const Tag = withStyles({
     root: {
         transition: '0.2s ease-in-out',
         margin: '0.3rem',
-        border: '1px solid rgba(255,255,255,0.5)',
-        color: 'rgba(255,255,255,0.5)!important',
     },
     deletable: {
         "&:hover, $deletable&:hover": {

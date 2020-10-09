@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 
 //Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -19,16 +19,16 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 //Local
-import Layout from '../../components/Layout'
+import Layout from '../../../components/Layout'
 import styles from './Submission.module.scss'
-import { Progression }  from '../../components/Progression'
-import { MaterialStyles } from '../../lib/MaterialStyles'
+import { Progression }  from '../../../components/Progression'
+import { MaterialStyles } from '../../../lib/MaterialStyles'
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles'
 
 //Firebase
-import { firebase } from '../../firebase'
+import { firebase } from '../../../firebase'
 
 
 const useStyles = makeStyles(theme => ({
@@ -84,13 +84,12 @@ let explainer = {
 
 
 let Submission = () => {
+    const router = useRouter()
     // If the user not signed in yet
     // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
     firebase.auth().onAuthStateChanged(user => {
         if(!user) {
-            Router.push({
-                pathname: "/Signin/",
-            })
+            router.push('/[screen]', '/Signin')
         }
     })
 
@@ -294,10 +293,7 @@ let Submission = () => {
                         <>
                             <DialogTitle id="confirm" className="text-center">Success</DialogTitle>
                             <DialogActions className="justify-content-center"><button className="btn btn-primary" onClick={() => {
-                                Router.push({
-                                    pathname: "/Dashboard/",
-                                    query: { uid: id }
-                                })
+                                router.push('/[screen]', '/Dashboard')
                             }}>BACK TO DASHBOARD</button></DialogActions>
                         </>
                     )}

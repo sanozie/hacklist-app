@@ -13,18 +13,18 @@ import { makeStyles } from '@material-ui/core/styles';
 //react-calendar (has custom styles on github)
 //import Calendar from 'react-calendar'
 //Utils
-import fetcher from '../../utils/fetcher'
+import fetcher from '../../../utils/fetcher'
 //local
-import Layout from '../../components/Layout'
+import Layout from '../../../components/Layout'
 import styles from './Dashboard.module.scss'
-import { MainProgression } from '../../components/Progression'
-import { AddBadge } from '../../components/DIYBadge'
+import { MainProgression } from '../../../components/Progression'
+import { AddBadge } from '../../../components/DIYBadge'
 
 //Page-Specific components
 import Signups from './Signups'
 import ActiveHacks from './ActiveHacks'
 import Submissions from './Submissions'
-import {firebase} from "../../firebase";
+import {firebase} from "../../../firebase";
 
 let swrConfig = {}
 

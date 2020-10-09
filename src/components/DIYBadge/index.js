@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 //Material UI
 import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -26,6 +26,7 @@ const useIconStyle = makeStyles({
 })
 
 let AddBadge = props => {
+    const router = useRouter()
     let [display, setDisplay] = useState('none')
     let [opacity, setOpacity] = useState(0)
 
@@ -48,9 +49,7 @@ let AddBadge = props => {
     const iconStyle = useIconStyle();
     return (
         <span className={styles.badge} style={{ display, opacity }} onClick={() => {
-            Router.push({
-                pathname: props.link
-            })
+            router.push('/[screen]', props.link)
         }}>
             <HtmlTooltip
                 title={

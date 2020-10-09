@@ -1,25 +1,24 @@
 import { useState, useEffect } from 'react'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 //Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 //Local
-import Layout from '../../components/Layout'
+import Layout from '../../../components/Layout'
 import styles from './Signin.module.scss'
 
 //firebase
-import { auth, firebase } from '../../firebase'
+import { auth, firebase } from '../../../firebase'
 
 let Signin = () => {
+    const router = useRouter()
     // If the user has already signed in.
     // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
-            Router.push({
-                pathname: "/Dashboard/"
-            })
+            router.push('/[screen]', '/Dashboard')
         }
     })
     let handleGoogleSignIn = () => {
