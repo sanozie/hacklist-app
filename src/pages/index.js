@@ -7,5 +7,6 @@ import Signup from './screens/Signup'
 
 export default function Home() {
     let { pathname } = useRouter()
+    console.log('home')
     return <Signin/>
 }

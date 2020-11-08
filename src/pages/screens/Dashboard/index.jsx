@@ -7,12 +7,10 @@ import useSWR from 'swr'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-//Material UI
-import { makeStyles } from '@material-ui/core/styles';
 
 //react-calendar (has custom styles on github)
 //import Calendar from 'react-calendar'
-//Utils
+// Utils
 import fetcher from '../../../utils/fetcher'
 //local
 import Layout from '../../../components/Layout'
@@ -30,6 +28,7 @@ let swrConfig = {}
 
 let Dashboard = () => {
     let [uid, setUid] = useState('')
+    console.log('dashboard')
     // If the user has already signed in.
     // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
     firebase.auth().onAuthStateChanged(user => {
@@ -42,11 +41,19 @@ let Dashboard = () => {
             setUid(firebase.auth().currentUser.uid)
         }
     })
+
+    // MANDATORY LOCAL STORAGE SETTING OF LAST PAGE VISITED. Should seriously think of a way to do this better.
+    useEffect(() => {
+        localStorage.setItem('lastVisited', 'Dashboard')
+    }, [])
+
     let [addSubmission, setAddSubmission] = useState(false)
     let [addSignup, setAddSignup] = useState(false)
 
     const { data, error } = useSWR(`/api/user?uid=${uid}`, fetcher, swrConfig)
-    // TODO: Set up error handling for this component, prefeably by making a form
+    /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
+    it will probably just have a loading screen forever.
+     */
     if (error || !data) return <MainProgression />
 
     return (
@@ -59,7 +66,9 @@ let Dashboard = () => {
                 </Row>
                 <Row className="justify-content-center">
                     <Col md="8" className={styles.status_env}>
-                        <Row className={styles.status_wrapper} onMouseEnter={() => setAddSubmission(true)} onMouseLeave={() => setAddSubmission(false)}>
+                        <Row className={styles.status_wrapper}
+                             onMouseEnter={() => setAddSubmission(true)}
+                             onMouseLeave={() => setAddSubmission(false)}>
                             <AddBadge title="Submit A Hack" display={addSubmission} link="/Submission/"/>
                             <Col className="d-flex flex-column">
                                 <Row>
@@ -77,7 +86,8 @@ let Dashboard = () => {
                         </Row>
                     </Col>
                     <Col md="4" className={styles.status_env}>
-                        <Row className={styles.status_wrapper} onMouseEnter={() => setAddSignup(true)} onMouseLeave={() => setAddSignup(false)}>
+                        <Row className={styles.status_wrapper} onMouseEnter={() => setAddSignup(true)}
+                             onMouseLeave={() => setAddSignup(false)}>
                             <AddBadge title="Signup For A Hack" display={addSignup} link="/Signup/"/>
                             <Col>
                                 <Row>

@@ -7,6 +7,7 @@ import Submission from "./screens/Submission";
 const Screen = () => {
     const router = useRouter()
     const { screen } = router.query
+    console.log("screens")
     switch(screen) {
         case '/':
             return <Signin/>

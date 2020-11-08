@@ -85,6 +85,7 @@ let explainer = {
 
 let Submission = () => {
     const router = useRouter()
+    console.log('submission')
     // If the user not signed in yet
     // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
     firebase.auth().onAuthStateChanged(user => {
@@ -92,6 +93,10 @@ let Submission = () => {
             router.push('/[screen]', '/Signin')
         }
     })
+
+    useEffect(() => {
+        localStorage.setItem('lastVisited', 'Submission')
+    }, [])
 
     let [industry, setIndustry] = useState('')
     let [contribution, setContribution] = useState('')
@@ -116,7 +121,7 @@ let Submission = () => {
         setDesc(explainer[focus].desc)
     }, [focus])
 
-    let handleSubmit = () => {
+    const handleSubmit = () => {
         let user = firebase.auth().currentUser, uid
         setApiProgress('pending')
         setID(user.uid)
@@ -135,6 +140,7 @@ let Submission = () => {
             submitter_name: name,
             submitter: uid
         })
+        debugger
         fetch('/api/submit', {
             method: 'POST',
             body: data

@@ -25,6 +25,11 @@ let Signup = () => {
     let [timeline, setTimeline] = useState('6mon')
     let [filterData, setFilterData] = useState({})
 
+    // MANDATORY LOCAL STORAGE SETTING OF LAST PAGE VISITED
+    useEffect(() => {
+        localStorage.setItem('lastVisited', 'Signup')
+    }, [])
+
     //Fetching data everytime timeline is updated
     useEffect(() => {
         fetch(`/api/submissions?timeline=${timeline}`)

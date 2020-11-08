@@ -14,11 +14,20 @@ import { auth, firebase } from '../../../firebase'
 
 let Signin = () => {
     const router = useRouter()
+    console.log('signin')
     // If the user has already signed in.
     // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
-            router.push('/[screen]', '/Dashboard')
+            let startPage = 'Dashboard'
+            let lastVisited = localStorage.getItem('lastVisited')
+            if(lastVisited) {
+                startPage = lastVisited
+            }
+            // Development console
+            router.push('/[screen]', `/${lastVisited}`).then(() => {
+                console.log(`routed to ${lastVisited}`)
+            })
         }
     })
     let handleGoogleSignIn = () => {
