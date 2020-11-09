@@ -1,6 +1,7 @@
 import firebase from '../../lib/db'
 import { formatSignupData, formatSubmissionData } from "../../utils/formatdata";
 
+// TODO: RETURN THE DATA FROM EACH PROMISE AND CHAIN THE NEXT PROMISE, INSTEAD OF NESTING
 export default async (req, res) => {
     let uid = req.query.uid
     if(uid) {
