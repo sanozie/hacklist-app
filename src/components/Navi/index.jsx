@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -6,16 +6,19 @@ import styles from './navi.module.scss'
 
 import Avatar from '@material-ui/core/Avatar';
 
-import { firebase } from '../../firebase'
+import { firebase } from 'db/client'
 
 let Navi = () => {
     let [avatar, setAvatar] = useState('')
-    firebase.auth().onAuthStateChanged(function(user) {
-        console.log("auth stage chang hting")
-        if (user) {
-            setAvatar(user.photoURL)  
-        }
-    });
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(function(user) {
+            console.log("auth stage chang hting")
+            if (user) {
+                setAvatar(user.photoURL)
+            }
+        });
+    }, [])
     
     return (
         <Navbar bg="light" expand="lg" id={styles.navbar}>

@@ -1,5 +1,5 @@
-import firebase from '../../lib/db'
-import { formatSubmissionData } from "../../utils/formatdata"
+import firebase from 'db/server'
+import { formatSubmissionData } from "utils/formatdata"
 
 export default async (req, res) => {
     let date = new Date()

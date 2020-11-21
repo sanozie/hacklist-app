@@ -1,5 +1,5 @@
 [debug] [2020-06-27T21:18:17.061Z] ----------------------------------------------------------------------
-[debug] [2020-06-27T21:18:17.063Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Sam\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-06-27T21:18:17.063Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Sam\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\bin\client.js deploy
 [debug] [2020-06-27T21:18:17.063Z] CLI Version:   8.4.2
 [debug] [2020-06-27T21:18:17.064Z] Platform:      win32
 [debug] [2020-06-27T21:18:17.064Z] Node Version:  v12.18.0

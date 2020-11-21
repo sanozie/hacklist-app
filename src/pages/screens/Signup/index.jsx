@@ -6,14 +6,14 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 //Local
-import Layout from '../../../components/Layout'
+import Layout from 'components/Layout'
 import styles from './Signup.module.scss'
 
 import Hack from './Hack'
 import Filters from './Filters'
 
 //Firebase
-import { firebase } from '../../../firebase'
+import { firebase } from 'db/client'
 
 let Signup = () => {
     let uid = firebase.auth().currentUser.uid
@@ -53,11 +53,9 @@ let Signup = () => {
                     <Col xs="8">
                         <Row>
                             {(hacks.length !== 0) && hacks.map(hack => (
-                                    <Hack {...hack} id={uid}/>
-                                )
-                            )}
+                                <Hack {...hack} id={uid}/>
+                            ))}
                         </Row>
-
                     </Col>
                 </Row>
             </Container>

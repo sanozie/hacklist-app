@@ -19,17 +19,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 //Local
-import Layout from '../../../components/Layout'
+import Layout from 'components/Layout'
 import styles from './Submission.module.scss'
-import { Progression }  from '../../../components/Progression'
-import { MaterialStyles } from '../../../lib/MaterialStyles'
+import { Progression }  from 'components/Progression'
+import { MaterialStyles } from 'lib/MaterialStyles'
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles'
-
-//Firebase
-import { firebase } from '../../../firebase'
-
+import {firebase} from "../../../db/client";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -85,18 +82,6 @@ let explainer = {
 
 let Submission = () => {
     const router = useRouter()
-    console.log('submission')
-    // If the user not signed in yet
-    // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
-    firebase.auth().onAuthStateChanged(user => {
-        if(!user) {
-            router.push('/[screen]', '/Signin')
-        }
-    })
-
-    useEffect(() => {
-        localStorage.setItem('lastVisited', 'Submission')
-    }, [])
 
     let [industry, setIndustry] = useState('')
     let [contribution, setContribution] = useState('')
@@ -110,6 +95,7 @@ let Submission = () => {
     let [desc, setDesc] = useState('')
 
     let [apiProgress, setApiProgress] = useState('idle')
+    let [fetchComplete, setFetchComplete] = useState(false)
 
     let name, [id, setID] = useState('')
     const [open, setOpen] = useState(false)
@@ -117,19 +103,17 @@ let Submission = () => {
     const classes = useStyles();
 
     useEffect(() => {
+        localStorage.setItem('lastVisited', 'Submission')
+    }, [])
+
+    useEffect(() => {
         setTitle(explainer[focus].title)
         setDesc(explainer[focus].desc)
     }, [focus])
 
-    const handleSubmit = () => {
-        let user = firebase.auth().currentUser, uid
+    const handleSubmit = async () => {
         setApiProgress('pending')
-        setID(user.uid)
-        if (user) {
-            name = user.displayName
-            setID(user.uid)
-            uid = user.uid
-        }
+        let { displayName, uid } = firebase.auth().currentUser
         let data = JSON.stringify({
             industry,
             contribution,
@@ -137,23 +121,20 @@ let Submission = () => {
             engRange,
             designRange,
             pmRange,
-            submitter_name: name,
+            submitter_name: displayName,
             submitter: uid
         })
-        debugger
-        fetch('/api/submit', {
+
+        await fetch('/api/submit', {
             method: 'POST',
             body: data
-        }).then(res => {
-            return res.json()
-        }).then(res => {
-            setApiProgress('success')
-        }).catch(err => {
-            setApiProgress('error')
         })
+        setApiProgress('success')
     }
 
-
+    const getProgress = state =>  {
+        return { display: apiProgress === state ? 'block' : 'none' }
+    }
     return (
         <Layout title="Submission | DIYHacks" nav={true}>
             <Container className={styles.body}>
@@ -283,26 +264,30 @@ let Submission = () => {
                     aria-labelledby="confirm"
                     PaperProps={{ className: MaterialStyles().classesPopup.paper }}
                 >
-                    {(apiProgress === 'idle') && (
-                        <>
-                            <DialogTitle id="confirm" className="text-center">Confirm</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText className={MaterialStyles().classesDialogText.root}>Yes? You're ready to submit?</DialogContentText>
-                            </DialogContent>
-                            <DialogActions className="justify-content-center"><button className="btn btn-primary" onClick={handleSubmit}>SUBMIT</button></DialogActions>
-                        </>
-                    )}
-                    {(apiProgress === 'pending') && (
+                    <div style={getProgress('idle')}>
+                        <DialogTitle id="confirm" className="text-center">Confirm</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText className={MaterialStyles().classesDialogText.root}>Yes? You're ready to submit?</DialogContentText>
+                        </DialogContent>
+                        <DialogActions className="justify-content-center">
+                            <button className="btn btn-primary" onClick={handleSubmit}>SUBMIT</button>
+                        </DialogActions>
+                    </div>
+
+                    <div style={getProgress('pending')} >
                         <Progression />
-                    )}
-                    {(apiProgress === 'success') && (
-                        <>
-                            <DialogTitle id="confirm" className="text-center">Success</DialogTitle>
-                            <DialogActions className="justify-content-center"><button className="btn btn-primary" onClick={() => {
-                                router.push('/[screen]', '/Dashboard')
-                            }}>BACK TO DASHBOARD</button></DialogActions>
-                        </>
-                    )}
+                    </div>
+
+
+                    <div style={getProgress('success')}>
+                        <DialogTitle id="confirm" className="text-center">Submissions Updated</DialogTitle>
+                        <DialogActions className="justify-content-center">
+                            <button className="btn btn-primary"
+                                    onClick={() => {router.push('/[screen]', '/Dashboard')}}>
+                                BACK TO DASHBOARD
+                            </button>
+                        </DialogActions>
+                    </div>
                 </Dialog>
             </Container>
         </Layout>

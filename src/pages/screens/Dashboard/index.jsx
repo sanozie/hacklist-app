@@ -1,55 +1,54 @@
 
-import { useState, useEffect, useMemo } from 'react'
-import Router, { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
+
 //swr (data-loading module)
 import useSWR from 'swr'
-//Bootstrap
+// Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 //react-calendar (has custom styles on github)
 //import Calendar from 'react-calendar'
-// Utils
-import fetcher from '../../../utils/fetcher'
-//local
-import Layout from '../../../components/Layout'
-import styles from './Dashboard.module.scss'
-import { MainProgression } from '../../../components/Progression'
-import { AddBadge } from '../../../components/DIYBadge'
 
-//Page-Specific components
+// Utils
+import fetcher from 'utils/fetcher'
+
+// Local
+import Layout from 'components/Layout'
+import styles from './Dashboard.module.scss'
+import { MainProgression } from 'components/Progression'
+import { AddBadge } from 'components/DIYBadge'
+
+// Page-Specific components
 import Signups from './Signups'
 import ActiveHacks from './ActiveHacks'
 import Submissions from './Submissions'
-import {firebase} from "../../../firebase";
+
+// Firebase
+import { firebase } from "db/client";
 
 let swrConfig = {}
 
+/**
+ * Parent component for Dashboard
+ */
 let Dashboard = () => {
-    let [uid, setUid] = useState('')
-    console.log('dashboard')
+    let [uid, setUid] = useState(null)
     // If the user has already signed in.
-    // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
     firebase.auth().onAuthStateChanged(user => {
-        if(!user) {
-            Router.push({
-                pathname: "/Signin/",
-                query: {uid: user.uid }
-            })
-        } else {
+        if(user) {
             setUid(firebase.auth().currentUser.uid)
         }
     })
 
-    // MANDATORY LOCAL STORAGE SETTING OF LAST PAGE VISITED. Should seriously think of a way to do this better.
+    // TODO: Replace all of these with history API eventually if needed
     useEffect(() => {
         localStorage.setItem('lastVisited', 'Dashboard')
     }, [])
 
     let [addSubmission, setAddSubmission] = useState(false)
     let [addSignup, setAddSignup] = useState(false)
-
     const { data, error } = useSWR(`/api/user?uid=${uid}`, fetcher, swrConfig)
     /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
     it will probably just have a loading screen forever.

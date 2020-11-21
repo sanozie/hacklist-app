@@ -1,4 +1,4 @@
-import firebase from '../../lib/db'
+import firebase from 'db/server'
 
 export default async (req, res) => {
     let body = JSON.parse(req.body)

@@ -6,39 +6,22 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 //Local
-import Layout from '../../../components/Layout'
+import Layout from 'components/Layout'
 import styles from './Signin.module.scss'
 
-//firebase
-import { auth, firebase } from '../../../firebase'
+// Firebase
+import { auth, firebase } from 'db/client'
 
 let Signin = () => {
-    const router = useRouter()
-    console.log('signin')
-    // If the user has already signed in.
-    // TODO: Make some kind of function that does this automatically instead of copy and pasting in files.
-    // firebase.auth().onAuthStateChanged(user => {
-    //     if(user) {
-    //         let startPage = 'Dashboard'
-    //         let lastVisited = localStorage.getItem('lastVisited')
-    //         if(lastVisited) {
-    //             startPage = lastVisited
-    //         }
-    //         // Development console
-    //         router.push('/[screen]', `/${lastVisited}`).then(() => {
-    //             console.log(`routed to ${lastVisited}`)
-    //         })
-    //     }
-    // })
+    useEffect(() => {
+        localStorage.setItem('lastVisited', 'Signin')
+    }, [])
+
     let handleGoogleSignIn = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
             .then((result) => {
-                console.log(result.user.uid)
-                Router.push({
-                    pathname: "/Dashboard/",  
-                    query: {uid: result.user.uid }
-                })
+                Router.push('/[screen]', '/Dashboard')
             })
             .catch(err => {
                 alert('OOps something went wrong check your console');
@@ -99,13 +82,13 @@ let Signin = () => {
                                 </Row>
                                 <Row className="justify-content-center w-100 px-5 py-2">
                                     <Col md="3" className="text-center">
-                                        <img src='signin/google.png' alt="Google SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={() => {handleGoogleSignIn()}}/>
+                                        <img src='signin/google.png' alt="Google SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleGoogleSignIn}/>
                                     </Col>
                                     <Col md="3" className="text-center">
-                                        <img src='signin/facebook.png' alt="Facebook SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={() => {handleFacebookSignIn()}}/>
+                                        <img src='signin/facebook.png' alt="Facebook SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleFacebookSignIn}/>
                                     </Col>
                                     <Col md="3" className="text-center">
-                                        <img src='signin/github.png' alt="Github SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={() => {handleGithubSignIn()}}/>
+                                        <img src='signin/github.png' alt="Github SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleGithubSignIn}/>
                                     </Col>
                                 </Row>
                                 <Row className="justify-content-center">
