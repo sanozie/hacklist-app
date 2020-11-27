@@ -13,7 +13,6 @@ let Navi = () => {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function(user) {
-            console.log("auth stage chang hting")
             if (user) {
                 setAvatar(user.photoURL)
             }
