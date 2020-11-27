@@ -21,18 +21,19 @@ const Screen = () => {
         return <Signin />
     }
 
-    // Private path wall
+    // Private path wall (no unauthenticated users access paths below)
     if (!user && !router.query.deepRoute) {
         return <AuthReroute />
     }
 
+    // Private paths
     switch(screen) {
         case '/':
             return <Signin/>
         case 'Dashboard':
             return <Dashboard/>
         case 'Signup':
-            return <Signup/>
+            return <Signup user={user}/>
         case 'Submission':
             return <Submission/>
         default:

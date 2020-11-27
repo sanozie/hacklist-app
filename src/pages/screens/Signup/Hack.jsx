@@ -50,12 +50,17 @@ let Hack = props => {
         }
     }, [])
 
+    let handleAddIndustry = () => {
+        setOpenPopoverIndustry(true)
+        setPopoverAnchorIndustry(addIndustryEl.current)
+    }
+
     let handleClose = () => {
         setOpenSubmit(false)
         setPopoverSubmitButton(null)
     }
 
-    let handleSkill = () => {
+    let handleSubmit = () => {
         setOpenSubmit(true)
         setPopoverSubmitButton(submitButton.current)
     }
@@ -69,7 +74,7 @@ let Hack = props => {
 
 
     return (
-        <Col md={4}>
+        <Col md={12}>
             <Row>
                 <h2>{props.title}</h2>
             </Row>
@@ -97,43 +102,41 @@ let Hack = props => {
                 </Col>
             </Row>
             <Row>
-                {!alreadySignedUp  && (
-                    <>
-                        <Button ref={submitButton} onClick={() => handleSkill} variant="outline-light" aria-describedby="signupButton">SIGNUP</Button>
-                        <Popover
-                        id="signupButton"
-                        open={openSubmit}
-                        anchorEl={popoverSubmitButton}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'center',
-                    }}
-                        transformOrigin={{
-                        vertical: 'center',
-                        horizontal: 'center',
-                    }}
+                <>
+                    <Button ref={submitButton} onClick={handleSubmit} variant="outline-light" aria-describedby="signupButton">SIGNUP</Button>
+                    <Popover
+                    id="signupButton"
+                    open={openSubmit}
+                    anchorEl={popoverSubmitButton}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                    transformOrigin={{
+                    vertical: 'center',
+                    horizontal: 'center',
+                }}
+                    >
+                        <p>Sign up as:</p>
+                        <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
+                        <TextField
+                        variant="outlined"
+                        value={skill}
+                        onChange={e => { setSkill(e.target.value) }}
+                        onKeyDown={handleSkillEnter}
+                        label="Industry"
+                        size="small"
+                        select
                         >
-                            <p>Sign up as:</p>
-                            <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
-                            <TextField
-                            variant="outlined"
-                            value={skill}
-                            onChange={e => { setSkill(e.target.value) }}
-                            onKeyDown={e => {handleSkillEnter(e)}}
-                            label="Industry"
-                            size="small"
-                            select
-                            >
-                                <MenuItem value='eng'>Engineer</MenuItem>
-                                <MenuItem value='design'>Designer</MenuItem>
-                                <MenuItem value='pm'>Product Manager</MenuItem>
-                            </TextField>
-                            </FormControl>
-                            <Button variant="outline-success" color='success' onClick={handleClose()}>Select</Button>
-                        </Popover>
-                    </>
-                )}
+                            <MenuItem value='eng'>Engineer</MenuItem>
+                            <MenuItem value='design'>Designer</MenuItem>
+                            <MenuItem value='pm'>Product Manager</MenuItem>
+                        </TextField>
+                        </FormControl>
+                        <Button variant="outline-success" color='success' onClick={handleClose}>Select</Button>
+                    </Popover>
+                </>
                 {alreadySignedUp && (
                     <Button variant="outline-success">Signed Up</Button>
                 )}

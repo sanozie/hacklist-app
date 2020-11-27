@@ -15,9 +15,7 @@ import Filters from './Filters'
 //Firebase
 import { firebase } from 'db/client'
 
-let Signup = () => {
-    let uid = firebase.auth().currentUser.uid
-
+let Signup = ({uid}) => {
     //Data Hooks
     let [hacks, setHacks] = useState([])
     const prevHacks = usePrevious(hacks)
