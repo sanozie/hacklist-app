@@ -8,6 +8,7 @@ import {CircleGraph} from "../../../components/SubmissionGraphs";
  * @param {*} data
  */
 let Signups = ({ data }) => {
+    console.log(data)
 
     let signupCircle = {
         circle: styles.signup_circle,
@@ -15,7 +16,6 @@ let Signups = ({ data }) => {
     }
     return (
         <Row className="py-4">
-
             <Col xs="6">
                 {(data.length == 0) && (
                     <img src='/dashboard/signup-0.png' className="img-fluid" />

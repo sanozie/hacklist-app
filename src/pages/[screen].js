@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 import Router, { useRouter } from 'next/router'
 
 // Auth
-import  { useUser } from 'utils/auth/useUser'
+import { useUser } from 'utils/auth/useUser'
 
 // Components
 import Signin from "./screens/Signin";

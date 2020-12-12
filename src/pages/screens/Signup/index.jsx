@@ -12,10 +12,8 @@ import styles from './Signup.module.scss'
 import Hack from './Hack'
 import Filters from './Filters'
 
-//Firebase
-import { firebase } from 'db/client'
 
-let Signup = ({uid}) => {
+let Signup = ({user}) => {
     //Data Hooks
     let [hacks, setHacks] = useState([])
     const prevHacks = usePrevious(hacks)
@@ -47,11 +45,12 @@ let Signup = ({uid}) => {
                     </Col>
                 </Row>
                 <Row className="flex-grow-1">
-                    <Filters setNewTimeline={newTimeline => setTimeline(newTimeline)} setNewFilterData={newFilterData => setFilterData(newFilterData)}/>
+                    <Filters setNewTimeline={newTimeline => setTimeline(newTimeline)}
+                             setNewFilterData={newFilterData => setFilterData(newFilterData)} />
                     <Col xs="8">
                         <Row>
-                            {(hacks.length !== 0) && hacks.map(hack => (
-                                <Hack {...hack} id={uid}/>
+                            {(filteredHacks.length !== 0) && hacks.map(hack => (
+                                <Hack {...hack} uid={user.id} />
                             ))}
                         </Row>
                     </Col>

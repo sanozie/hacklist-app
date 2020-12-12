@@ -27,8 +27,10 @@ export default async (req, res) => {
             snapshot.forEach(item => {
                 let docData = item.data()
                 docData.submit_date = docData.submit_date.toDate()
+                docData.hackId = item.id
                 data.push(formatSubmissionData(docData))
             })
+            console.log(data)
             res.send(data)
         })
 }

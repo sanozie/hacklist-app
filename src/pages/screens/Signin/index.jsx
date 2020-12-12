@@ -51,29 +51,21 @@ let Signin = () => {
 
     let handleGithubSignIn = () => {
         var provider = new firebase.auth.GithubAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function(result) {
-            // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-            var token = result.credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-          }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-          });
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                Router.push('/[screen]', '/Dashboard')
+            })
+            .catch(err => {
+                alert(err.message);
+                console.log(err);
+            });
     }
     return (
         <Layout title="Signin | DIYHacks" nav={false} signin={true}>
             <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=2695759943969584&autoLogAppEvents=1" nonce="Lzx3EyRM"/>
             <Container>
                 <Row className="poster">
-                    <Col sm className={styles.left_design}></Col>
+                    <Col sm className={styles.left_design }/>
                     <Col sm className={`${styles.right_design} h-100 center-vert`}>
                         <Row className="w-100">
                             <Col>

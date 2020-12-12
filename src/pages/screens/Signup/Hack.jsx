@@ -1,5 +1,6 @@
 //React
 import { useState, useEffect, useRef } from 'react'
+
 // Local
 import styles from './Signup.module.scss'
 import dateFormatter from "../../../utils/dateformatter";
@@ -37,6 +38,7 @@ let Hack = props => {
     //Style Hooks
     let classes = useStyles();
     let [alreadySignedUp, setAlreadySignedUp] = useState(false)
+    let [hackOwner, setHackOwner] = useState(false)
     let [skill, setSkill] = useState('')
 
 
@@ -45,36 +47,46 @@ let Hack = props => {
     let [openSubmit, setOpenSubmit] = useState(false)
 
     useEffect(() => {
-        if(props.signups[props.uid]) {
+        if (props.signups[props.uid]) {
             setAlreadySignedUp(true)
         }
-    }, [])
 
-    let handleAddIndustry = () => {
-        setOpenPopoverIndustry(true)
-        setPopoverAnchorIndustry(addIndustryEl.current)
-    }
+        if (props.submitter === props.uid) {
+            setHackOwner(true)
+        }
+    }, [props.uid])
 
     let handleClose = () => {
         setOpenSubmit(false)
         setPopoverSubmitButton(null)
     }
 
-    let handleSubmit = () => {
+    let handleSignup = () => {
         setOpenSubmit(true)
         setPopoverSubmitButton(submitButton.current)
     }
 
-    let handleSkillEnter = el => {
-        //keyCode 13 is the Enter key
-        if(el.keyCode === 13) {
-            handleClose()
-        }
+    let handleSubmit = el => {
+        const body = JSON.stringify({
+            hackId: props.hackId,
+            uid: props.uid,
+            skill
+        })
+        fetch('/api/signup', {
+            method: 'PUT',
+            body
+        }).then(res => {
+            switch(res.status) {
+                case '202':
+                    setAlreadySignedUp(true)
+            }
+        })
+        handleClose()
     }
 
 
     return (
-        <Col md={12}>
+        <Col md={12} className="m-3">
             <Row>
                 <h2>{props.title}</h2>
             </Row>
@@ -102,8 +114,12 @@ let Hack = props => {
                 </Col>
             </Row>
             <Row>
+                {/*{!alreadySignedUp && !hackOwner && (*/}
+
+                {/*)}*/}
                 <>
-                    <Button ref={submitButton} onClick={handleSubmit} variant="outline-light" aria-describedby="signupButton">SIGNUP</Button>
+                    <Button ref={submitButton} onClick={handleSignup}
+                            variant="outline-light" aria-describedby="signupButton">SIGNUP</Button>
                     <Popover
                     id="signupButton"
                     open={openSubmit}
@@ -111,34 +127,36 @@ let Hack = props => {
                     onClose={handleClose}
                     anchorOrigin={{
                     vertical: 'top',
-                    horizontal: 'center',
+                    horizontal: 'left',
                 }}
                     transformOrigin={{
                     vertical: 'center',
                     horizontal: 'center',
-                }}
-                    >
+                }}>
                         <p>Sign up as:</p>
-                        <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
+                        <FormControl required variant="outlined"
+                                     className={`${classes.formControl} w-100`}>
                         <TextField
-                        variant="outlined"
-                        value={skill}
-                        onChange={e => { setSkill(e.target.value) }}
-                        onKeyDown={handleSkillEnter}
-                        label="Industry"
-                        size="small"
-                        select
-                        >
+                            variant="outlined"
+                            value={skill}
+                            onChange={e => { setSkill(e.target.value) }}
+                            label="Skill"
+                            size="small"
+                            select>
                             <MenuItem value='eng'>Engineer</MenuItem>
                             <MenuItem value='design'>Designer</MenuItem>
                             <MenuItem value='pm'>Product Manager</MenuItem>
                         </TextField>
                         </FormControl>
-                        <Button variant="outline-success" color='success' onClick={handleClose}>Select</Button>
+                        <Button variant="outline-success" color='primary' onClick={handleSubmit}>Confirm</Button>
                     </Popover>
                 </>
                 {alreadySignedUp && (
                     <Button variant="outline-success">Signed Up</Button>
+                )}
+
+                {hackOwner && (
+                    <Button variant="outlined" disabled>Owner</Button>
                 )}
             </Row>
         </Col>

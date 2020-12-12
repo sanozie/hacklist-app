@@ -148,13 +148,15 @@ let Submission = () => {
                         <Row>
                             <Col>
                                 <Row className="justify-content-center">
-                                    <FormControl required variant="outlined" className={classes.formControl} onMouseDown={() => setFocus('industry')}>
+                                    <FormControl required variant="outlined"
+                                                 className={classes.formControl}
+                                                 onMouseDown={() => setFocus('industry')}>
                                         <TextField
-                                            className={MaterialStyles().classesInput.root}
                                             variant="outlined"
                                             value={industry}
                                             onChange={e => { setIndustry(e.target.value) }}
                                             label="Industry"
+                                            color="primary"
                                             select
                                             required
                                         >
@@ -166,13 +168,15 @@ let Submission = () => {
                                             <MenuItem value={30}>Thirty</MenuItem>
                                         </TextField>
                                     </FormControl>
-                                    <FormControl required variant="outlined" className={classes.formControl} onMouseDown={() => setFocus('contribution')}>
+                                    <FormControl required variant="outlined"
+                                                 className={classes.formControl}
+                                                 onMouseDown={() => setFocus('contribution')}>
                                         <TextField
-                                            className={MaterialStyles().classesInput.root}
                                             variant="outlined"
                                             value={contribution}
                                             onChange={e => { setContribution(e.target.value) }}
                                             label="Contribution"
+                                            color="primary"
                                             select
                                             required
                                         >
@@ -186,10 +190,10 @@ let Submission = () => {
                                     </FormControl>
                                     <FormControl variant="outlined" className={classes.formControl} onMouseDown={() => setFocus('title')}>
                                         <TextField
-                                            className={MaterialStyles().classesInput.root}
                                             variant="outlined"
                                             value={hackTitle}
                                             onChange={e => { setHackTitle(e.target.value) }}
+                                            color="primary"
                                             label="Title"
                                         >
                                         </TextField>
@@ -206,7 +210,7 @@ let Submission = () => {
                                             valueLabelDisplay="auto"
                                             aria-labelledby="eng-range"
                                             onChange={(event, newVal) => setEngRange(newVal)}
-                                            className={MaterialStyles().classesSliderEng.root}
+                                            color="primary"
                                         />
                                     </FormControl>
                                     <FormControl className={classes.formControl} onMouseDown={() => setFocus('design')}>
@@ -218,7 +222,7 @@ let Submission = () => {
                                             valueLabelDisplay="auto"
                                             aria-labelledby="design-range"
                                             onChange={(event, newVal) => setDesignRange(newVal)}
-                                            className={MaterialStyles().classesSliderDesign.root}
+                                            color='secondary'
                                         />
                                     </FormControl>
                                     <FormControl className={classes.formControl} onMouseDown={() => setFocus('pm')}>
@@ -230,7 +234,7 @@ let Submission = () => {
                                             valueLabelDisplay="auto"
                                             aria-labelledby="pm-range"
                                             onChange={(event, newVal) => setPmRange(newVal)}
-                                            className={MaterialStyles().classesSliderPM.root}
+                                            color="tertiary"
                                         />
                                     </FormControl>
                                 </Row>

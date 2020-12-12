@@ -2,7 +2,7 @@ import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import Tooltip from "@material-ui/core/Tooltip";
 
-const useStylesInput = makeStyles({
+const useStylesInput = makeStyles(theme => ({
     root: {
         minWidth: 200,
         boxShadow: "0px 2px 3px rgba(0,0,0,0.2)",
@@ -29,27 +29,27 @@ const useStylesInput = makeStyles({
             borderColor: "rgba(255,255,255,0.5)"
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-            color: "#9D67E3"
+            color: theme.primary
         },
         "& .MuiInputLabel-root.Mui-focused": {
-            color: "#9D67E3"
+            color: theme.primary
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#9D67E3"
+            borderColor: theme.primary
         }
     }
-});
+}));
 
 
-const useStyleSliderEng = makeStyles({
+const useStyleSliderEng = makeStyles(theme => ({
     root: {
-        color: "#9D67E3"
+        color: theme.primary
     }
-}), useStyleSliderDesign = makeStyles({
+})), useStyleSliderDesign = makeStyles(theme => ({
     root: {
-        color: "#50E3C1"
+        color: theme.secondary
     }
-}), useStyleSliderPM = makeStyles({
+})), useStyleSliderPM = makeStyles({
     root: {
         color: "#FFE600"
     }

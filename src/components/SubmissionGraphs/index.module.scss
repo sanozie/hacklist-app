@@ -65,26 +65,26 @@
 
 
 .design_graph {
-    background-color: $tertColor;
+    background-color: $secColor;
 }
 
 
 .pm_graph {
-    background-color: $secColor;
-}
-
-.pm_circle {
-    stroke: $secColor !important;
-    stroke-width: 5;
-}
-
-.design_circle {
-    stroke: $tertColor !important;
-    stroke-width: 5;
+    background-color: $tertColor;
 }
 
 .eng_circle {
     stroke: $priColor !important;
+    stroke-width: 5;
+}
+
+.design_circle {
+    stroke: $secColor !important;
+    stroke-width: 5;
+}
+
+.pm_circle {
+    stroke: $tertColor !important;
     stroke-width: 5;
 }
 
