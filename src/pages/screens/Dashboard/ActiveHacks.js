@@ -2,6 +2,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styles from "./Dashboard.module.scss";
 
+// react-calendar (with custom styles on Github).
+import Calendar from 'react-calendar'
+
 /**
  * Information on current and past hacks of user.
  * @param {*} data
@@ -18,7 +21,9 @@ let ActiveHacks = ({ data }) => {
     // eventualy use the difference between active and past calendar data
     // to have different styling
     // but for now, dump them together
-    let calendarData = [...activeCalendarData]
+    let calendarData = [...activeCalendarData].sort((a, b) => b.date - a.date)
+
+    console.log(calendarData)
 
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     return (
@@ -68,7 +73,11 @@ let ActiveHacks = ({ data }) => {
 
             </Col>
             <Col lg="4" className="center">
-                {/*<Calendar className={styles.diyhacks_calendar} tileClassName={styles.diyhacks_calendar_tiles} defaultValue={calendarData} nextLabel={null} next2Label={null} prevLabel={null} prev2Label={null} />*/}
+                <Calendar className={styles.diyhacks_calendar}
+                          tileClassName={styles.diyhacks_calendar_tiles}
+                          value={calendarData[0]}
+                          nextLabel={null} next2Label={null}
+                          prevLabel={null} prev2Label={null} />
             </Col>
             <Col lg="4">
                 <Row className="center">

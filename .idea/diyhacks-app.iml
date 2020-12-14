@@ -8,5 +8,6 @@
     <orderEntry type="module" module-name="newprofile" />
     <orderEntry type="module" module-name="sanozie.github.io" />
     <orderEntry type="module" module-name="semscreen-component" />
+    <orderEntry type="module" module-name="react-calendar" />
   </component>
 </module>

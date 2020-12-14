@@ -8,9 +8,8 @@ import 'styles/index.scss';
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from 'lib/AppTheme'
 
-
 //calendar styles
-//import 'react-calendar/dist/Calendar.css';
+import 'react-calendar/dist/Calendar.css';
 
 export default function MyApp({ Component, pageProps }) {
     return (

@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "react-calendar": {
+      "signature": "99ef70c2dcffa0d5308d5f8020133fa4",
+      "file": true,
+      "replaced": "link:.yalc/react-calendar"
+    }
+  }
+}
