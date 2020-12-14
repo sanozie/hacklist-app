@@ -1,7 +1,7 @@
 import styles from "./Dashboard.module.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {CircleGraph} from "../../../components/SubmissionGraphs";
+import {CircleGraph} from "components/SubmissionGraphs";
 
 /**
  * Graph and info for signups

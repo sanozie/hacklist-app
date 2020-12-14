@@ -3,18 +3,18 @@ import { useState, useEffect, useRef } from 'react'
 
 // Local
 import styles from './Signup.module.scss'
-import dateFormatter from "../../../utils/dateformatter";
+import dateFormatter from "utils/dateformatter";
 
 //Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import {SubmissionCircleRow, SubmissionGraphRow} from "../../../components/SubmissionGraphs";
+import { SubmissionCircleRow, SubmissionGraphRow } from "components/SubmissionGraphs";
 import Popover from "@material-ui/core/Popover";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
     root: {

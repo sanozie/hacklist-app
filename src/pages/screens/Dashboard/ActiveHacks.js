@@ -20,10 +20,8 @@ let ActiveHacks = ({ data }) => {
 
     // eventualy use the difference between active and past calendar data
     // to have different styling
-    // but for now, dump them together
-    let calendarData = [...activeCalendarData].sort((a, b) => b.date - a.date)
-
-    console.log(calendarData)
+    // but for now, dump them together. Watch to make sure sort is working
+    let calendarData = [...activeCalendarData]
 
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     return (

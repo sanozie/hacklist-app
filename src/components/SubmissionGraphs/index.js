@@ -1,9 +1,8 @@
 import React from 'react'
 import Tooltip from '@material-ui/core/Tooltip';
-import withStyles from '@material-ui/core/styles/withStyles';
 //Material UI
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {HtmlTooltip} from '../../lib/MaterialStyles'
+import { HtmlTooltip } from 'lib/MaterialStyles'
 import styles from './index.module.scss'
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -85,6 +84,8 @@ const CircleGraph = (props) => {
             title = "Signups:"
             style = signupCircle
     }
+
+    // TODO: Create a backdrop circle component that goes behind colored one.
 
     return (
         <HtmlTooltip
