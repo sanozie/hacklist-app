@@ -2,41 +2,28 @@ import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import Tooltip from "@material-ui/core/Tooltip";
 
-const useStylesInput = makeStyles(theme => ({
+const useFormControl = makeStyles(theme => ({
+    root: {
+        flexWrap: "wrap",
+        minWidth: "200px !important",
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 50,
+        transition: '0.2s ease-in-out',
+        "& .slider-label": {
+            color: "rgba(255,255,255,0.5)"
+        }
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2)
+    }
+}));
+
+const useStylesInput = makeStyles(() => ({
     root: {
         minWidth: 200,
         boxShadow: "0px 2px 3px rgba(0,0,0,0.2)",
-        transition: "0.3s ease-in-out",
-        "& .MuiOutlinedInput-input": {
-            color: "rgba(255,255,255,0.4)",
-            transition: "0.3s ease-in-out",
-        },
-        "& .MuiInputLabel-root": {
-            color: "rgba(255,255,255,0.4)",
-            transition: "0.3s ease-in-out",
-        },
-        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "rgba(255,255,255,0.4)",
-            transition: "0.3s ease-in-out",
-        },
-        "&:hover .MuiOutlinedInput-input": {
-            color: "rgba(255,255,255,0.5)"
-        },
-        "&:hover .MuiInputLabel-root": {
-            color: "rgba(255,255,255,0.5)"
-        },
-        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "rgba(255,255,255,0.5)"
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-            color: theme.primary
-        },
-        "& .MuiInputLabel-root.Mui-focused": {
-            color: theme.primary
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.primary
-        }
     }
 }));
 
@@ -155,8 +142,9 @@ const HtmlTooltip = withStyles((theme) => ({
     },
 }))(Tooltip);
 
-
+// TODO: Potentially make this a functional class
 let MaterialStyles = () => {
+    const classesFormControl = useFormControl();
     const classesInput = useStylesInput();
     const classesSliderEng = useStyleSliderEng();
     const classesSliderDesign = useStyleSliderDesign();
@@ -165,7 +153,7 @@ let MaterialStyles = () => {
     const classesDialogText = useDialogueText();
 
 
-    return { classesInput, classesSliderEng, classesSliderDesign, classesSliderPM, classesPopup, classesDialogText }
+    return { classesFormControl, classesInput, classesSliderEng, classesSliderDesign, classesSliderPM, classesPopup, classesDialogText }
 }
 
 

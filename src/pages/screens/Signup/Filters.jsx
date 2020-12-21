@@ -1,31 +1,17 @@
 import { useRef, useState, useEffect } from "react";
+
+// Bootstrap
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FormControl from "@material-ui/core/FormControl";
+
+// Material UI
 import TextField from "@material-ui/core/TextField";
-import { DesignChip, EngChip, MaterialStyles, PMChip, Tag } from "../../../lib/MaterialStyles";
+import { DesignChip, EngChip, MaterialStyles, PMChip, Tag } from "lib/MaterialStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import AddIcon from "@material-ui/icons/Add";
 import Popover from "@material-ui/core/Popover";
-import {makeStyles} from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: "flex",
-        flexWrap: "wrap"
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-        transition: '0.2s ease-in-out',
-        "& .slider-label": {
-            color: "rgba(255,255,255,0.5)"
-        }
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    }
-}));
+import { makeStyles } from "@material-ui/core/styles";
 
 //Styles
 let addIcon = makeStyles({
@@ -37,7 +23,7 @@ let addIcon = makeStyles({
 
 let Filters = ({setNewTimeline, setNewFilterData}) => {
     //Style Hooks
-    let classes = useStyles();
+    let classes = MaterialStyles().classesFormControl;
     let addIconClass = addIcon();
 
     //Filter Hooks

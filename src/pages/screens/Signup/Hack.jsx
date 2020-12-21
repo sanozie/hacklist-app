@@ -10,33 +10,18 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { SubmissionCircleRow, SubmissionGraphRow } from "components/SubmissionGraphs";
+
+// Material UI
 import Popover from "@material-ui/core/Popover";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: "flex",
-        flexWrap: "wrap"
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-        transition: '0.2s ease-in-out',
-        "& .slider-label": {
-            color: "rgba(255,255,255,0.5)"
-        }
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    }
-}));
+import { MaterialStyles } from "lib/MaterialStyles";
 
 let Hack = props => {
     //Style Hooks
-    let classes = useStyles();
+    let classes = MaterialStyles().classesFormControl
     let [alreadySignedUp, setAlreadySignedUp] = useState(false)
     let [hackOwner, setHackOwner] = useState(false)
     let [skill, setSkill] = useState('')

@@ -1,5 +1,4 @@
-import { useEffect, useContext } from "react";
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 // Auth
 import { useUser } from 'utils/auth/useUser'
@@ -8,8 +7,9 @@ import { useUser } from 'utils/auth/useUser'
 import Signin from "./screens/Signin";
 import Dashboard from "./screens/Dashboard";
 import Signup from "./screens/Signup";
-import Submission from "./screens/Submission";
+import AddSubmission from "./screens/AddSubmission";
 import AuthReroute from 'components/AuthReroute'
+import SubmissionDash from './screens/SubmissionDash'
 
 const Screen = () => {
     const router = useRouter()
@@ -29,13 +29,15 @@ const Screen = () => {
     // Private paths
     switch(screen) {
         case '/':
-            return <Signin/>
+            return <Signin />
         case 'Dashboard':
-            return <Dashboard/>
+            return <Dashboard user={user}/>
         case 'Signup':
-            return <Signup user={user}/>
-        case 'Submission':
-            return <Submission/>
+            return <Signup user={user} />
+        case 'AddSubmission':
+            return <AddSubmission />
+        case 'SubmissionDash':
+            return <SubmissionDash />
         default:
             return <Signin/>
     }

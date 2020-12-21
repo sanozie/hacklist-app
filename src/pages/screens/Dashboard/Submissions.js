@@ -9,7 +9,7 @@ import { SubmissionCircleRow, SubmissionGraphRow } from "components/SubmissionGr
  */
 let Submissions = ({ data }) => {
     return (
-        <Row className="py-2 w-100">
+        <Row className="py-2 w-100" onClick={() => {router.push('/[screen]', '/SubmissionDash')}}>
             <Col xs="2" className="position-relative">
                 {(data.length === 0) && (
                     <div className={styles.strong_number}>0</div>

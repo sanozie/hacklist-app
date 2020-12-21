@@ -1,19 +1,19 @@
 import styles from "./Dashboard.module.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {CircleGraph} from "components/SubmissionGraphs";
+import { CircleGraph } from "components/SubmissionGraphs";
 
 /**
  * Graph and info for signups
  * @param {*} data
  */
 let Signups = ({ data }) => {
-    console.log(data)
-
     let signupCircle = {
         circle: styles.signup_circle,
         root: styles.circle_root
     }
+
+
     return (
         <Row className="py-4">
             <Col xs="6">

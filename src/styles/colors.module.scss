@@ -1,0 +1,12 @@
+$bgColor: #2B2B2B;
+$priColor: #9D67E3;
+$secColor: #50E3C1;
+$tertColor: #FFD100;
+
+// Eventually we'll be able to export colors to javascript
+:export {
+  priColor: $priColor;
+  secColor: $secColor;
+  tertColor: $tertColor;
+  bgColor: $bgColor;
+}

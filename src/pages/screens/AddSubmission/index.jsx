@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import Router, { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 //Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -22,30 +22,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Layout from 'components/Layout'
 import styles from './Submission.module.scss'
 import { Progression }  from 'components/Progression'
-import { MaterialStyles } from 'lib/MaterialStyles'
 
 //Material UI
-import { makeStyles } from '@material-ui/core/styles'
-import {firebase} from "../../../db/client";
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: "flex",
-        flexWrap: "wrap"
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-        transition: '0.2s ease-in-out',
-        "& .slider-label": {
-            color: "rgba(255,255,255,0.5)"
-        }
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    }
-}));
-
+import { firebase } from "db/client"
+import { MaterialStyles } from 'lib/MaterialStyles'
 
 
 let explainer = {
@@ -79,8 +59,7 @@ let explainer = {
     }
 }
 
-
-let Submission = () => {
+let AddSubmission = () => {
     const router = useRouter()
 
     let [industry, setIndustry] = useState('')
@@ -95,12 +74,12 @@ let Submission = () => {
     let [desc, setDesc] = useState('')
 
     let [apiProgress, setApiProgress] = useState('idle')
-    let [fetchComplete, setFetchComplete] = useState(false)
 
-    let name, [id, setID] = useState('')
     const [open, setOpen] = useState(false)
 
-    const classes = useStyles();
+    const formControlClasses = MaterialStyles().classesFormControl
+    const inputsClasses = MaterialStyles().classesInput
+    const classes = MaterialStyles().classesFormControl
 
     useEffect(() => {
         localStorage.setItem('lastVisited', 'Submission')
@@ -149,7 +128,7 @@ let Submission = () => {
                             <Col>
                                 <Row className="justify-content-center">
                                     <FormControl required variant="outlined"
-                                                 className={classes.formControl}
+                                                 classes={formControlClasses}
                                                  onMouseDown={() => setFocus('industry')}>
                                         <TextField
                                             variant="outlined"
@@ -157,6 +136,7 @@ let Submission = () => {
                                             onChange={e => { setIndustry(e.target.value) }}
                                             label="Industry"
                                             color="primary"
+                                            classes={inputsClasses}
                                             select
                                             required
                                         >
@@ -169,7 +149,7 @@ let Submission = () => {
                                         </TextField>
                                     </FormControl>
                                     <FormControl required variant="outlined"
-                                                 className={classes.formControl}
+                                                 classes={formControlClasses}
                                                  onMouseDown={() => setFocus('contribution')}>
                                         <TextField
                                             variant="outlined"
@@ -178,8 +158,7 @@ let Submission = () => {
                                             label="Contribution"
                                             color="primary"
                                             select
-                                            required
-                                        >
+                                            required>
                                             <MenuItem value="">
                                                 <em>None</em>
                                             </MenuItem>
@@ -188,20 +167,18 @@ let Submission = () => {
                                             <MenuItem value={30}>Thirty</MenuItem>
                                         </TextField>
                                     </FormControl>
-                                    <FormControl variant="outlined" className={classes.formControl} onMouseDown={() => setFocus('title')}>
+                                    <FormControl variant="outlined" classes={formControlClasses} onMouseDown={() => setFocus('title')}>
                                         <TextField
                                             variant="outlined"
                                             value={hackTitle}
                                             onChange={e => { setHackTitle(e.target.value) }}
                                             color="primary"
-                                            label="Title"
-                                        >
-                                        </TextField>
+                                            label="Title" />
                                         <FormHelperText>Optional</FormHelperText>
                                     </FormControl>
                                 </Row>
                                 <Row className="justify-content-center">
-                                    <FormControl className={classes.formControl} onMouseDown={() => setFocus('eng')}>
+                                    <FormControl classes={formControlClasses} onMouseDown={() => setFocus('eng')}>
                                         <label id="eng-range" className="slider-label">Engineering</label>
                                         <Slider
                                             max={5}
@@ -213,7 +190,7 @@ let Submission = () => {
                                             color="primary"
                                         />
                                     </FormControl>
-                                    <FormControl className={classes.formControl} onMouseDown={() => setFocus('design')}>
+                                    <FormControl classes={formControlClasses} onMouseDown={() => setFocus('design')}>
                                         <label id="design-range" className="slider-label">Design</label>
                                         <Slider
                                             max={5}
@@ -225,7 +202,7 @@ let Submission = () => {
                                             color='secondary'
                                         />
                                     </FormControl>
-                                    <FormControl className={classes.formControl} onMouseDown={() => setFocus('pm')}>
+                                    <FormControl classes={formControlClasses} onMouseDown={() => setFocus('pm')}>
                                         <label id="pm-range" className="slider-label">Product Managers</label>
                                         <Slider
                                             max={5}
@@ -298,4 +275,4 @@ let Submission = () => {
     )
 }
 
-export default Submission
+export default AddSubmission
