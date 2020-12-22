@@ -22,7 +22,11 @@ const SubmissionDash = () => {
     return (
         <Layout title="Submissions | DIYHacks" nav={true}>
             <Container>
-                <h1>hello</h1>
+                <Row className="my-2 pt-5 pb-3">
+                    <Col className="text-center">
+                        <h1>Your Submissions</h1>
+                    </Col>
+                </Row>
             </Container>
         </Layout>
     )
