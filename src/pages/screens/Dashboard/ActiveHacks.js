@@ -10,11 +10,16 @@ import Calendar from 'react-calendar'
  * @param {*} data
  */
 let ActiveHacks = ({ data }) => {
-    let activeCalendarData = data.active.map(item => {
+    let activeHackValues = Object.values(data.active)
+    let activeHackCount = activeHackValues.length
+    let pastHackValues = Object.values(data.past)
+    let pastHackCount = pastHackValues.length
+
+    let activeCalendarData = activeHackValues.map(item => {
         return new Date(item.date)
     })
 
-    let pastCalendarData = data.past.map(item => {
+    let pastCalendarData = pastHackValues.map(item => {
         return new Date(item.date)
     })
 
@@ -28,25 +33,25 @@ let ActiveHacks = ({ data }) => {
         <Row className="py-4">
             <Col lg="4" className="d-flex flex-column text-center">
                 <Row className="justify-content-center">
-                    {(data.active.length == 0) && (
+                    {(activeHackCount === 0) && (
                         <h3>No Scheduled Hacks</h3>
                     )}
-                    {(data.active.length == 1) && (
+                    {(activeHackCount === 1) && (
                         <h3>1 Scheduled Hack</h3>
                     )}
-                    {(data.active.length > 1) && (
+                    {(activeHackCount > 1) && (
                         <h3>{data.active.length} Scheduled Hacks</h3>
                     )}
                 </Row>
-                {(data.active.length == 0) && (
+                {(activeHackCount === 0) && (
                     <Row className="center flex-grow-1">
                         <p className={styles.new_info}>Once you are a part of an active hack, it's information will show up here!</p>
                     </Row>
                 )}
-                {(data.active.length > 0) && (
+                {(activeHackCount > 0) && (
                     <Row className="my-3">
                         <Col xs="12">
-                            {data.active.map(item => {
+                            {activeHackValues.map(item => {
                                 let newDate = new Date(item.date)
                                 let monthNum = newDate.getMonth();
                                 return (
@@ -79,25 +84,25 @@ let ActiveHacks = ({ data }) => {
             </Col>
             <Col lg="4">
                 <Row className="center">
-                    {(data.past.length == 0) && (
+                    {(pastHackCount === 0) && (
                         <h3>No Past Hacks</h3>
                     )}
-                    {(data.past.length == 1) && (
+                    {(pastHackCount === 1) && (
                         <h3>1 Past Hack</h3>
                     )}
-                    {(data.past.length > 1) && (
-                        <h3>{data.past.length} Past Hacks</h3>
+                    {(pastHackCount > 1) && (
+                        <h3>{pastHackCount} Past Hacks</h3>
                     )}
                 </Row>
-                {(data.active.length == 0) && (
+                {(pastHackCount == 0) && (
                     <Row className="center flex-grow-1">
                         <p className={styles.new_info}>Once you've completed a hack, it will be viewable here!</p>
                     </Row>
                 )}
-                {(data.past.length > 0) && (
+                {(pastHackCount > 0) && (
                     <Row className="my-3">
                         <Col xs="12">
-                            {data.past.map(item => {
+                            {pastHackValues.map(item => {
                                 let newDate = new Date(item.date)
                                 let monthNum = newDate.getMonth();
                                 return (

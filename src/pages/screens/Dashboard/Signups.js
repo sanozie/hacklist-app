@@ -8,6 +8,9 @@ import { CircleGraph } from "components/SubmissionGraphs";
  * @param {*} data
  */
 let Signups = ({ data }) => {
+    let signupValues = Object.values(data)
+    let signupCount = signupValues.length
+
     let signupCircle = {
         circle: styles.signup_circle,
         root: styles.circle_root
@@ -17,19 +20,19 @@ let Signups = ({ data }) => {
     return (
         <Row className="py-4">
             <Col xs="6">
-                {(data.length == 0) && (
+                {(signupCount == 0) && (
                     <img src='/dashboard/signup-0.png' className="img-fluid" />
                 )}
-                {(data.length > 0) && (
-                    <img src={`/dashboard/signup-${data.length}.png`} className="img-fluid" />
+                {(signupCount > 0) && (
+                    <img src={`/dashboard/signup-${signupCount}.png`} className="img-fluid" />
                 )}
             </Col>
             <Col xs="6" className="center-vert h-100" style={{ padding: 0 }}>
                 <div className="center-vert-env">
-                    {(data.length == 0) && (
+                    {(signupCount == 0) && (
                         <p className={styles.new_info}>Hacks you sign up for will be here. <br /> You can sign up for 3 hacks at once.</p>
                     )}
-                    {(data.length > 0) && data.map(hack => {
+                    {(signupCount > 0) && signupValues.map(hack => {
                         return (
                             <Row key={hack.title}>
                                 <Col xs="10" style={{ padding: 0 }}>
