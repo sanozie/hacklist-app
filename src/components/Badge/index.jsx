@@ -88,4 +88,4 @@ let Badge = props => {
     )
 }
 
-export { Badge }
+export default Badge

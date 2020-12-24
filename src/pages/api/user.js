@@ -26,7 +26,9 @@ export default async (req, res) => {
         .orderBy('submit_date', 'desc').get().then(snapshot => {
             let submissionData = {}
             snapshot.forEach(doc => {
-                submissionData[doc.id] = formatSubmissionData(doc.data())
+                let docData = doc.data()
+                docData.hackId = doc.id
+                submissionData[doc.id] = formatSubmissionData(docData)
             })
 
             // Adding Submissions to global data

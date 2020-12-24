@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 
 //swr (data-loading module)
@@ -20,11 +20,11 @@ import Signups from './Signups'
 import ActiveHacks from './ActiveHacks'
 import Submissions from './Submissions'
 import { MainProgression } from 'components/Progression'
-import { Badge } from 'components/Badge'
+import Badge from 'components/Badge'
 import Layout from 'components/Layout'
 
-// Firebase
-import { firebase } from "db/client";
+// Context
+import { Submissions as SubmissionContext } from 'store'
 
 let swrConfig = {}
 
@@ -34,27 +34,32 @@ let swrConfig = {}
 let Dashboard = ({ user }) => {
     let router = useRouter()
 
-    // TODO: Replace all of these with history API eventually if needed
-    useEffect(() => {
-        localStorage.setItem('lastVisited', 'Dashboard')
-    }, [])
-
     let [addSubmission, setAddSubmission] = useState(false)
     let [addSignup, setAddSignup] = useState(false)
+
+    useEffect(() => {
+        // TODO: Replace this with history API eventually if needed
+        localStorage.setItem('lastVisited', 'Dashboard')
+    }, [])
 
     const { data, error } = useSWR(`/api/user?uid=${user.id}`, fetcher, swrConfig)
     /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
         it will probably just have a loading screen forever.
      */
+
     if (error || !data) return <MainProgression />
+
+    // Set global context for submissions
+    const submissionsDispatch = useContext(SubmissionContext.Dispatch)
+    submissionsDispatch({type: 'replace', data: data.submissions })
+
+    localStorage.setItem('submissions', JSON.stringify(data.submissions))
 
     return (
         <Layout title="Dashboard | DIYHacks" nav={true}>
             <Container className={styles.body}>
                 <Row className="my-2 pt-5 pb-3">
-                    <Col className="text-center">
-                        <h1>YOUR STATS</h1>
-                    </Col>
+                    <h1 className="pl-2">YOUR STATS</h1>
                 </Row>
                 <Row className="justify-content-center">
                     <Col md="8" className={styles.status_env}>

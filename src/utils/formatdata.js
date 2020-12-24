@@ -17,6 +17,7 @@ function formatSubmissionData(data) {
     }
     sizeData.overflow_width = (Object.keys(data.signups).length - limits.min) / limits.max * 100
     data.sizeData = sizeData;
+    data.submit_date = data.submit_date.toDate()
     return data
 }
 
