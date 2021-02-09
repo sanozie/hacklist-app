@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -9,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { firebase } from 'db/client'
 
 let Navi = () => {
+    let router = useRouter()
     let [avatar, setAvatar] = useState('')
 
     useEffect(() => {
@@ -21,7 +23,7 @@ let Navi = () => {
     
     return (
         <Navbar bg="light" expand="lg" id={styles.navbar}>
-            <Navbar.Brand href="/Dashboard" id={styles.logo}>DIYHACKS</Navbar.Brand>
+            <Navbar.Brand onClick={() => router.push('/[screen]', '/Dashboard')} id={styles.logo}>DIYHACKS</Navbar.Brand>
             <Navbar.Toggle className="ml-auto" aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto ">

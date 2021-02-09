@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react'
-import { useRouter } from 'next/router'
 
 //swr (data-loading module)
 import useSWR from 'swr'
@@ -32,9 +31,7 @@ let swrConfig = {}
  * Parent component for Dashboard
  */
 let Dashboard = ({ user }) => {
-    let router = useRouter()
-
-    let [addSubmission, setAddSubmission] = useState(false)
+    let [submissionBadges, setSubmissionBadges] = useState(false)
     let [addSignup, setAddSignup] = useState(false)
 
     // Set global context for submissions
@@ -68,11 +65,13 @@ let Dashboard = ({ user }) => {
                         <Col md="8" className={styles.status_env}>
                             {/* Figure out a better way to update this hover */}
                             <Row className="status-wrapper"
-                                 onMouseEnter={() => setAddSubmission(true)}
-                                 onMouseLeave={() => setAddSubmission(false)}>
-                                <Badge title="Edit Submissions" display={addSubmission} type="edit" link="/SubmissionDash/"
+                                 onMouseEnter={() => setSubmissionBadges(true)}
+                                 onMouseLeave={() => setSubmissionBadges(false)}>
+                                <Badge title="Edit Submissions" display={submissionBadges} type="edit" link="/SubmissionDash/"
                                        placement="tr" />
-                                <Col className="d-flex flex-column" onClick={() => router.push('/[screen]', '/AddSubmission/')}>
+                                <Badge title="Add Submissions" display={submissionBadges} type="add" link="/AddSubmission/"
+                                       placement="br" />
+                                <Col className="d-flex flex-column">
                                     <Row>
                                         <h2>Hack Submissions</h2>
                                     </Row>
