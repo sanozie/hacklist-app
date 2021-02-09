@@ -9,7 +9,7 @@ export default function Home() {
         if(lastVisited) {
             startPage = lastVisited
         }
-        console.log('was here')
+
         router.push('/[screen]', `/${startPage}`)
     }, [])
 

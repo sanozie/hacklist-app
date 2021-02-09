@@ -82,7 +82,7 @@ let AddSubmission = () => {
     const classes = MaterialStyles().classesFormControl
 
     useEffect(() => {
-        localStorage.setItem('lastVisited', 'Submission')
+        localStorage.setItem('lastVisited', 'AddSubmission')
     }, [])
 
     useEffect(() => {
@@ -114,6 +114,7 @@ let AddSubmission = () => {
     const getProgress = state =>  {
         return { display: apiProgress === state ? 'block' : 'none' }
     }
+
     return (
         <Layout title="Submission | DIYHacks" nav={true}>
             <Container className={styles.body}>

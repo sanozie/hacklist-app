@@ -11,34 +11,36 @@ import { SubmissionCircleRow, SubmissionGraphRow } from "components/SubmissionGr
 
 let SubmissionHack = props => {
     return (
-        <Col md={12} className="m-3">
-            <Row>
-                <h2>{props.title}</h2>
-            </Row>
-            <Row>
-                <h3>{props.industry}</h3>
-            </Row>
-            <Row>
-                <Col xs={8}>
-                    <SubmissionGraphRow sizeData={props.sizeData} />
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={8}>
-                    <SubmissionCircleRow sizeData={props.sizeData} />
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={12}>
-                    <Row>
-                        <p>Submitted</p>
-                    </Row>
-                    <Row>
-                        <p>{dateFormatter(props.submit_date)}</p>
-                    </Row>
-                </Col>
-            </Row>
-        </Col>
+        <Row className="status-wrapper">
+            <Col md={12} className="m-3">
+                <Row>
+                    <h2>{props.title}</h2>
+                </Row>
+                <Row>
+                    <h3>{props.industry}</h3>
+                </Row>
+                <Row>
+                    <Col xs={8}>
+                        <SubmissionGraphRow sizeData={props.sizeData} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={8}>
+                        <SubmissionCircleRow sizeData={props.sizeData} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <Row>
+                            <p>Submitted</p>
+                        </Row>
+                        <Row>
+                            <p>{dateFormatter(props.submit_date)}</p>
+                        </Row>
+                    </Col>
+                </Row>
+            </Col>
+        </Row>
     )
 }
 

@@ -38,3 +38,22 @@ h1 {
 .btn-secondary {
     border: 1px solid rgba(255, 255, 255, 0.2)
 }
+
+// Wrappers
+.status-wrapper {
+    box-shadow: -3px 6px 6px rgba(0, 0, 0, 0.3);
+    height: 100%;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+$bgLighten: lighten($bgColor, 2%);
+.status-wrapper:hover {
+    box-shadow: -5px 13px 13px rgba(0, 0, 0, 0.17);
+    background-color: $bgLighten;
+    transform: translateY(-5px)
+}

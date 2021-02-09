@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styles from "./Dashboard.module.scss";
@@ -8,6 +10,7 @@ import { SubmissionCircleRow, SubmissionGraphRow } from "components/SubmissionGr
  * @param {*} data
  */
 let Submissions = ({ data }) => {
+    let router = useRouter()
     let submissionValues = Object.values(data)
     let submissionCount = submissionValues.length
 

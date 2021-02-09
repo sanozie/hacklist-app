@@ -13,10 +13,13 @@ import SubmissionHack from 'components/Hacks/SubmissionHack'
 
 // Store
 import { Submissions } from 'store'
+import Badge from "components/Badge";
 
 
 const SubmissionDash = () => {
     let router = useRouter()
+    let [editHack, setEditHack] = useState(false)
+
 
     const submissionsState = useContext(Submissions.State)
     const submissionsDispatch = useContext(Submissions.Dispatch)
@@ -30,13 +33,20 @@ const SubmissionDash = () => {
                         <Row>
                             <h1>Your Submissions</h1>
                         </Row>
-                        <Row>
                             {submissionsState !== null && Object.entries(submissionsState).map(hack => {
                                 let [hackID, hackValues] = hack
                                 console.log(hack)
-                                return <SubmissionHack {...hackValues} />
+                                return (
+                                    <Row onMouseEnter={() => setEditHack(true)}
+                                         onMouseLeave={() => setEditHack(false)}>
+                                        <Badge title="Submit A Hack" display={editHack} type="add" link="/AddSubmission/"
+                                               placement="br" />
+                                        <Col xs={10}>
+                                            <SubmissionHack {...hackValues} />
+                                        </Col>
+                                    </Row>
+                                )
                             })}
-                        </Row>
                     </Col>
                 </Row>
             </Container>
