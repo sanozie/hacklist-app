@@ -31,7 +31,7 @@ const SubmissionDash = () => {
                 <Row className="my-2 pt-5 pb-3">
                     <Col className="text-center">
                         <Row>
-                            <h1>Your Submissions</h1>
+                            <h1 className="page-header">Your Submissions</h1>
                         </Row>
                             {submissionsState !== null && Object.entries(submissionsState).map(hack => {
                                 let [hackID, hackValues] = hack
@@ -39,8 +39,6 @@ const SubmissionDash = () => {
                                 return (
                                     <Row onMouseEnter={() => setEditHack(true)}
                                          onMouseLeave={() => setEditHack(false)}>
-                                        <Badge title="Submit A Hack" display={editHack} type="add" link="/AddSubmission/"
-                                               placement="br" />
                                         <Col xs={10}>
                                             <SubmissionHack {...hackValues} />
                                         </Col>

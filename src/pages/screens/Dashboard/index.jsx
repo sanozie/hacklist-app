@@ -59,7 +59,7 @@ let Dashboard = ({ user }) => {
             <Layout title="Dashboard | DIYHacks" nav={true}>
                 <Container className={styles.body}>
                     <Row className="my-2 pt-5 pb-3">
-                        <h1 className="pl-2">YOUR STATS</h1>
+                        <h1 className="page-header pl-2">YOUR STATS</h1>
                     </Row>
                     <Row className="justify-content-center">
                         <Col md="8" className={styles.status_env}>
@@ -73,7 +73,7 @@ let Dashboard = ({ user }) => {
                                        placement="br" />
                                 <Col className="d-flex flex-column">
                                     <Row>
-                                        <h2>Hack Submissions</h2>
+                                        <h2 className="pl-4 pt-4">Hack Submissions</h2>
                                     </Row>
                                     <Row className="flex-grow-1">
                                         <Col xs="12" className="center-vert">
@@ -92,9 +92,9 @@ let Dashboard = ({ user }) => {
                                        link="/Signup/" placement="br" type="add" />
                                 <Col>
                                     <Row>
-                                        <h2>Signups</h2>
+                                        <h2 className="pl-4 pt-4">Signups</h2>
                                     </Row>
-                                    <Signups data={data?.signups} />
+                                    <Signups data={data.signups} />
                                 </Col>
                             </Row>
                         </Col>
@@ -102,7 +102,7 @@ let Dashboard = ({ user }) => {
                             <Row className="status-wrapper">
                                 <Col>
                                     <Row>
-                                        <h2>Active Hacks</h2>
+                                        <h2 className="pl-4 pt-4">Active Hacks</h2>
                                     </Row>
                                     <ActiveHacks data={data.activeHacks} />
                                 </Col>
