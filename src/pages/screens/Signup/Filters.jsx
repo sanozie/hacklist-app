@@ -21,7 +21,7 @@ let addIcon = makeStyles({
     }
 })
 
-let Filters = ({setNewTimeline, setNewFilterData}) => {
+let Filters = ({ setFilterData }) => {
     //Style Hooks
     let classes = MaterialStyles().classesFormControl;
     let addIconClass = addIcon();
@@ -44,13 +44,8 @@ let Filters = ({setNewTimeline, setNewFilterData}) => {
     let [popoverAnchorIndustry, setPopoverAnchorIndustry] = useState(null)
 
     useEffect(() => {
-        setNewTimeline(timeline)
-    }, [timeline])
-
-    useEffect(() => {
-        //Configure filtering data to send to callback
-        setNewFilterData({industry, skills, tags})
-    }, [industry, skills, tags])
+        setFilterData({ timeline, industry, skills, tags })
+    }, [  timeline, industry, skills, tags ])
 
     //Filter methods
     let handleSkill = val => {

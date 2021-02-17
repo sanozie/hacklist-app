@@ -22,6 +22,8 @@ import { MaterialStyles } from "lib/MaterialStyles";
 let Hack = props => {
     //Style Hooks
     let classes = MaterialStyles().classesFormControl
+
+    // Util Hooks
     let [alreadySignedUp, setAlreadySignedUp] = useState(false)
     let [hackOwner, setHackOwner] = useState(false)
     let [skill, setSkill] = useState('')
@@ -61,9 +63,11 @@ let Hack = props => {
             method: 'PUT',
             body
         }).then(res => {
+            debugger
             switch(res.status) {
-                case '202':
+                case 202:
                     setAlreadySignedUp(true)
+                    props.emitSignup()
             }
         })
         handleClose()

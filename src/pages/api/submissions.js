@@ -1,23 +1,13 @@
+// Database
 import firebase from 'db/server'
-import { formatSubmissionData } from "utils/formatdata"
+
+// Utils
+import { formatSubmissionData } from 'utils/formatdata'
+import dateMap from 'utils/datemap'
+
 
 export default async (req, res) => {
-    let date = new Date()
-    let queryDate;
-    switch(req.query.timeline) {
-        case 'week':
-            queryDate = date.setDate(date.getDate() - 7)
-            break;
-        case 'mon':
-            queryDate = date.setMonth(date.getMonth() - 1)
-            break;
-        case '3mon':
-            queryDate = date.setMonth(date.getMonth() - 3)
-            break;
-        case '6mon':
-            queryDate = date.setMonth(date.getMonth() - 6)
-            break;
-    }
+    let queryDate = dateMap(req.query.timeline)
 
     firebase.collection('Submissions')
         .where('submit_date', '<', new Date())

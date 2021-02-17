@@ -1,40 +1,72 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef, useDebugValue} from 'react'
 
-//Bootstrap
+// Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-//Local
+// Local
 import Layout from 'components/Layout'
 import styles from './Signup.module.scss'
+
+// Utils
+import dateMap from 'utils/datemap'
 
 import Hack from './Hack'
 import Filters from './Filters'
 
+const MAX_TIMELINE = '6mon'
+
+// Custom hack filtering hook
+function useFilteredHacks() {
+    let [hacks, setHacks] = useState([])
+    let [filteredHacks, setFilteredHacks] = useState([])
+    let [filterData, setFilterData] = useState({})
+    let [signup, setSignup] = useState(false)
+
+    // Fetching data every time signup occurs
+    useEffect(() => {
+        debugger
+        fetch(`/api/submissions?timeline=${MAX_TIMELINE}`)
+            .then(res => res.json())
+            .then(res => {
+                setHacks(res)
+                setFilteredHacks(filterHacks(res, filterData))
+            })
+    }, [signup])
+
+    // Changing data every time filtered data changes
+    useEffect(() => {
+        setFilteredHacks(filterHacks(hacks, filterData))
+    }, [filterData])
+
+    useDebugValue("FilteredHacks")
+
+    return [filteredHacks, setFilterData, signup, setSignup]
+}
+
+function filterHacks(hacks, filterData) {
+    // Add more filter variables here
+    const timelineTrim = hack => {
+        return new Date(hack.submit_date) > dateMap(filterData.timeline)
+    }
+
+    if (Object.keys(filterData).length === 0) {
+        return hacks
+    } else {
+        return hacks.filter(hack => timelineTrim(hack))
+    }
+}
+
 
 let Signup = ({user}) => {
     //Data Hooks
-    let [hacks, setHacks] = useState([])
-    const prevHacks = usePrevious(hacks)
-    let [filteredHacks, setFilteredHacks] = useState([])
-    let [timeline, setTimeline] = useState('6mon')
-    let [filterData, setFilterData] = useState({})
+    let [filteredHacks, setFilterData, signup, setSignup] = useFilteredHacks()
 
     // MANDATORY LOCAL STORAGE SETTING OF LAST PAGE VISITED
     useEffect(() => {
         localStorage.setItem('lastVisited', 'Signup')
     }, [])
-
-    //Fetching data everytime timeline is updated
-    useEffect(() => {
-        fetch(`/api/submissions?timeline=${timeline}`)
-            .then(res => res.json())
-            .then(res => {
-                setHacks(res)
-                setFilteredHacks(res)
-            })
-    }, [timeline])
 
     return (
         <Layout title="Signup | DIYHacks" nav={true}>
@@ -45,12 +77,11 @@ let Signup = ({user}) => {
                     </Col>
                 </Row>
                 <Row className="flex-grow-1">
-                    <Filters setNewTimeline={newTimeline => setTimeline(newTimeline)}
-                             setNewFilterData={newFilterData => setFilterData(newFilterData)} />
+                    <Filters setFilterData={filterData => setFilterData(filterData)} />
                     <Col xs="8">
                         <Row>
-                            {(filteredHacks.length !== 0) && hacks.map(hack => (
-                                <Hack {...hack} uid={user.id} />
+                            {(filteredHacks.length !== 0) && filteredHacks.map(hack => (
+                                <Hack {...hack} uid={user.id} emitSignup={() => setSignup(!signup)}/>
                             ))}
                         </Row>
                     </Col>
@@ -61,18 +92,3 @@ let Signup = ({user}) => {
 }
 
 export default Signup
-
-// Hook
-function usePrevious(value) {
-    // The ref object is a generic container whose current property is mutable ...
-    // ... and can hold any value, similar to an instance property on a class
-    const ref = useRef();
-
-    // Store current value in ref
-    useEffect(() => {
-        ref.current = value;
-    }, [value]); // Only re-run if value changes
-
-    // Return previous value (happens before update in useEffect above)
-    return ref.current;
-}
