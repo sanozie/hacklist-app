@@ -33,5 +33,5 @@ yarn-error.log*
 .env.build
 
 # things
-.idea
-.next
+/.idea/
+/.vscode/
