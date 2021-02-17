@@ -63,7 +63,6 @@ let Hack = props => {
             method: 'PUT',
             body
         }).then(res => {
-            debugger
             switch(res.status) {
                 case 202:
                     setAlreadySignedUp(true)
