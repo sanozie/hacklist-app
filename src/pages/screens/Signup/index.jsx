@@ -26,7 +26,6 @@ function useFilteredHacks() {
 
     // Fetching data every time signup occurs
     useEffect(() => {
-        debugger
         fetch(`/api/submissions?timeline=${MAX_TIMELINE}`)
             .then(res => res.json())
             .then(res => {
@@ -47,9 +46,7 @@ function useFilteredHacks() {
 
 function filterHacks(hacks, filterData) {
     // Add more filter variables here
-    const timelineTrim = hack => {
-        return new Date(hack.submit_date) > dateMap(filterData.timeline)
-    }
+    const timelineTrim = hack => new Date(hack.submit_date) > dateMap(filterData.timeline)
 
     if (Object.keys(filterData).length === 0) {
         return hacks
