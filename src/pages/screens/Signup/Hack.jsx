@@ -24,7 +24,6 @@ let Hack = props => {
     let classes = MaterialStyles().classesFormControl
 
     // Util Hooks
-    let [alreadySignedUp, setAlreadySignedUp] = useState(false)
     let [hackOwner, setHackOwner] = useState(false)
     let [skill, setSkill] = useState('')
 
@@ -33,13 +32,16 @@ let Hack = props => {
     let [popoverSubmitButton, setPopoverSubmitButton] = useState(null)
     let [openSubmit, setOpenSubmit] = useState(false)
 
+    let [buttonText, setButtonText] = useState("SIGNUP")
+
     useEffect(() => {
         if (props.signups[props.uid]) {
-            setAlreadySignedUp(true)
+            setButtonText("EDIT")
         }
 
         if (props.submitter === props.uid) {
             setHackOwner(true)
+            setButtonText("OWNER")
         }
     }, [props.uid])
 
@@ -65,7 +67,6 @@ let Hack = props => {
         }).then(res => {
             switch(res.status) {
                 case 202:
-                    setAlreadySignedUp(true)
                     props.emitSignup()
             }
         })
@@ -102,50 +103,42 @@ let Hack = props => {
                 </Col>
             </Row>
             <Row>
-                {/*{!alreadySignedUp && !hackOwner && (*/}
-
-                {/*)}*/}
                 <>
                     <Button ref={submitButton} onClick={handleSignup}
-                            variant="outline-light" aria-describedby="signupButton">SIGNUP</Button>
+                            variant="outline-light" aria-describedby="signupButton" disabled={hackOwner}>
+                        { buttonText }
+                    </Button>
                     <Popover
-                    id="signupButton"
-                    open={openSubmit}
-                    anchorEl={popoverSubmitButton}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                    transformOrigin={{
-                    vertical: 'center',
-                    horizontal: 'center',
-                }}>
-                        <p>Sign up as:</p>
-                        <FormControl required variant="outlined"
-                                     className={`${classes.formControl} w-100`}>
-                        <TextField
-                            variant="outlined"
-                            value={skill}
-                            onChange={e => { setSkill(e.target.value) }}
-                            label="Skill"
-                            size="small"
-                            select>
-                            <MenuItem value='eng'>Engineer</MenuItem>
-                            <MenuItem value='design'>Designer</MenuItem>
-                            <MenuItem value='pm'>Product Manager</MenuItem>
-                        </TextField>
+                        id="signupButton"
+                        open={openSubmit}
+                        anchorEl={popoverSubmitButton}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'center',
+                            horizontal: 'center',
+                        }}>
+                            <p>Sign up as:</p>
+                            <FormControl required variant="outlined"
+                                         className={`${classes.formControl} w-100`}>
+                            <TextField
+                                variant="outlined"
+                                value={skill}
+                                onChange={e => { setSkill(e.target.value) }}
+                                label="Skill"
+                                size="small"
+                                select>
+                                <MenuItem value='eng'>Engineer</MenuItem>
+                                <MenuItem value='design'>Designer</MenuItem>
+                                <MenuItem value='pm'>Product Manager</MenuItem>
+                            </TextField>
                         </FormControl>
                         <Button variant="outline-success" color='primary' onClick={handleSubmit}>Confirm</Button>
                     </Popover>
                 </>
-                {alreadySignedUp && (
-                    <Button variant="outline-success">Signed Up</Button>
-                )}
-
-                {hackOwner && (
-                    <Button variant="outlined" disabled>Owner</Button>
-                )}
             </Row>
         </Col>
     )
