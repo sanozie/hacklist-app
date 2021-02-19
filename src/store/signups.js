@@ -8,7 +8,7 @@ const Dispatch = createContext()
 const Provider = ProviderDecorator(State, Dispatch)
 
 // Export
-export const Submissions = {
+export const Signups = {
     State,
     Dispatch,
     Provider,

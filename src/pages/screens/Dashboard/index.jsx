@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useDebugValue } from 'react'
 
 //swr (data-loading module)
 import useSWR from 'swr'
@@ -23,19 +23,28 @@ import Badge from 'components/Badge'
 import Layout from 'components/Layout'
 
 // Context
-import { Submissions as SubmissionContext } from 'store'
+import { Submissions as SubmissionContext, Signups as SignupContext } from 'store'
 
 let swrConfig = {}
+
+function useBadgeOverlay() {
+    let [submissionBadges, setSubmissionBadges] = useState(false)
+    let [signupBadges, setSignupBadges] = useState(false)
+
+    useDebugValue({submissionBadges, signupBadges})
+
+    return [submissionBadges, setSubmissionBadges, signupBadges, setSignupBadges]
+}
 
 /**
  * Parent component for Dashboard
  */
 let Dashboard = ({ user }) => {
-    let [submissionBadges, setSubmissionBadges] = useState(false)
-    let [addSignup, setAddSignup] = useState(false)
+    let [submissionBadges, setSubmissionBadges, signupBadges, setSignupBadges] = useBadgeOverlay()
 
-    // Set global context for submissions
+    // Set global context for submissions & signups
     const submissionsDispatch = useContext(SubmissionContext.Dispatch)
+    const signupsDispatch = useContext(SignupContext.Dispatch)
 
     useEffect(() => {
         // TODO: Replace this with history API eventually if needed
@@ -50,7 +59,9 @@ let Dashboard = ({ user }) => {
     // Setting global context and local history on successful fetch
     useEffect(() => {
         submissionsDispatch({type: 'replace', data: data?.submissions })
+        signupsDispatch({type: 'replace', data: data?.signups })
         localStorage.setItem('submissions', JSON.stringify(data?.submissions))
+        localStorage.setItem('signups', JSON.stringify(data?.signups))
     }, [data])
 
     if (error || !data) return <MainProgression />
@@ -86,10 +97,12 @@ let Dashboard = ({ user }) => {
                             </Row>
                         </Col>
                         <Col md="4" className={styles.status_env}>
-                            <Row className="status-wrapper" onMouseEnter={() => setAddSignup(true)}
-                                 onMouseLeave={() => setAddSignup(false)}>
-                                <Badge title="Signup For A Hack" display={addSignup}
+                            <Row className="status-wrapper" onMouseEnter={() => setSignupBadges(true)}
+                                 onMouseLeave={() => setSignupBadges(false)}>
+                                <Badge title="Signup For A Hack" display={signupBadges}
                                        link="/Signup/" placement="br" type="add" />
+                                <Badge title="Edit Your Signups" display={signupBadges}
+                                       link="/SignupDash/" placement="tr" type="edit" />
                                 <Col>
                                     <Row>
                                         <h2 className="pl-4 pt-4">Signups</h2>

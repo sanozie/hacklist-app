@@ -6,13 +6,11 @@ import theme from "lib/AppTheme";
 
 // Local Store
 import { Submissions } from './submissions'
+import { Signups } from './signups'
 
-const providers = [<ThemeProvider theme={theme} />, <Submissions.Provider />]
+const providers = [ <ThemeProvider theme={theme} />, <Submissions.Provider />, <Signups.Provider /> ]
 
 const Store = ({ children: initial }) =>
-    providers.reduce(
-        (children, parent) => React.cloneElement(parent, { children }),
-        initial
-    )
+    providers.reduce((children, parent) => React.cloneElement(parent, { children }), initial)
 
-export { Store, Submissions }
+export { Submissions, Signups, Store }

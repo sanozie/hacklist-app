@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useDebugValue} from 'react'
+import React, {useState, useEffect, useDebugValue} from 'react'
 
 // Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -38,7 +38,7 @@ function useFilteredHacks() {
         setFilteredHacks(filterHacks(hacks, filterData))
     }, [filterData])
 
-    useDebugValue("FilteredHacks")
+    useDebugValue({ filteredHacks, filterData })
 
     return [filteredHacks, setFilterData, signup, setSignup]
 }

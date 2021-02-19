@@ -13,6 +13,8 @@ import Hack from 'components/Hacks/Hack'
 
 // Store
 import { Submissions } from 'store'
+import contingentLoad from 'utils/store/contingentLoad'
+
 import Badge from "components/Badge";
 
 
@@ -23,8 +25,9 @@ const SubmissionDash = () => {
 
     const submissionsState = useContext(Submissions.State)
     const submissionsDispatch = useContext(Submissions.Dispatch)
-    loadSubmissions(submissionsState, submissionsDispatch)
+    contingentLoad('submissions', submissionsState, submissionsDispatch, '/api/usersubmissions')
 
+    // TODO: It looks like hovering causes a rerender.... this should be fixed
     return (
         <Layout title="Submissions | DIYHacks" nav={true}>
             <Container>
@@ -33,7 +36,7 @@ const SubmissionDash = () => {
                         <Row>
                             <h1 className="page-header">Your Submissions</h1>
                         </Row>
-                            {submissionsState !== null && Object.entries(submissionsState).map(hack => {
+                            { submissionsState !== null && Object.entries(submissionsState).map(hack => {
                                 let [hackID, hackValues] = hack
                                 console.log(hack)
                                 return (
@@ -50,18 +53,6 @@ const SubmissionDash = () => {
             </Container>
         </Layout>
     )
-}
-
-async function loadSubmissions(submissionsState, submissionsDispatch) {
-    let local = JSON.parse(localStorage.getItem('submissions'))
-    if(submissionsState !== null) {
-        console.log('submission state')
-    } else if (local) {
-        submissionsDispatch({type: 'replace', data: local })
-    } else {
-        let data = await fetch('/api/usersubmissions').json()
-        submissionsDispatch({type: 'replace', data })
-    }
 }
 
 export default SubmissionDash

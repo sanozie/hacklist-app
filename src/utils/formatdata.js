@@ -25,7 +25,7 @@ function formatSignupData(data) {
     //find a way to display the min signups while also accounting for signups outside of mins (where min=0)
     let { limits } = data;
     data.circle = (Object.keys(data.signups).length / limits.max) * 100
-    return data
+    return formatSubmissionData(data)
 }
 
 export {formatSignupData, formatSubmissionData}

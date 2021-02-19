@@ -10,6 +10,7 @@ import Signup from "./screens/Signup";
 import AddSubmission from "./screens/AddSubmission";
 import AuthReroute from 'components/AuthReroute'
 import SubmissionDash from './screens/SubmissionDash'
+import SignupDash from './screens/SignupDash'
 
 const Screen = () => {
     const router = useRouter()
@@ -38,6 +39,8 @@ const Screen = () => {
             return <AddSubmission />
         case 'SubmissionDash':
             return <SubmissionDash />
+        case 'SignupDash':
+            return <SignupDash />
         default:
             return <Signin/>
     }
