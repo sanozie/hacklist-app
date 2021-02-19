@@ -9,7 +9,7 @@ import Container from 'react-bootstrap/Container'
 
 // Components
 import Layout from "components/Layout"
-import SubmissionHack from 'components/Hacks/SubmissionHack'
+import Hack from 'components/Hacks/Hack'
 
 // Store
 import { Submissions } from 'store'
@@ -38,9 +38,9 @@ const SubmissionDash = () => {
                                 console.log(hack)
                                 return (
                                     <Row onMouseEnter={() => setEditHack(true)}
-                                         onMouseLeave={() => setEditHack(false)}>
+                                         onMouseLeave={() => setEditHack(false)} className="my-3">
                                         <Col xs={10}>
-                                            <SubmissionHack {...hackValues} />
+                                            <Hack {...hackValues} />
                                         </Col>
                                     </Row>
                                 )

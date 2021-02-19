@@ -8,12 +8,11 @@ import Col from 'react-bootstrap/Col'
 // Local
 import Layout from 'components/Layout'
 import styles from './Signup.module.scss'
+import SignupRow from './SignupRow'
+import Filters from './Filters'
 
 // Utils
 import dateMap from 'utils/datemap'
-
-import Hack from './Hack'
-import Filters from './Filters'
 
 const MAX_TIMELINE = '6mon'
 
@@ -78,7 +77,7 @@ let Signup = ({user}) => {
                     <Col xs="8">
                         <Row>
                             {(filteredHacks.length !== 0) && filteredHacks.map(hack => (
-                                <Hack {...hack} uid={user.id} emitSignup={() => setSignup(!signup)}/>
+                                <SignupRow {...hack} uid={user.id} emitSignup={() => setSignup(!signup)}/>
                             ))}
                         </Row>
                     </Col>

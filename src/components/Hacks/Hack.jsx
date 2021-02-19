@@ -10,8 +10,7 @@ import { SubmissionCircleRow, SubmissionGraphRow } from 'components/SubmissionGr
 import Badge from 'components/Badge'
 
 
-let SubmissionHack = props => {
-
+let Hack = props => {
     return (
         <Row className="status-wrapper">
             <Col md={12} className="m-3">
@@ -46,4 +45,4 @@ let SubmissionHack = props => {
     )
 }
 
-export default SubmissionHack
+export default Hack
