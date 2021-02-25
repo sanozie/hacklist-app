@@ -1,6 +1,5 @@
 // React
-import { useEffect, useState, useContext } from 'react'
-import { useRouter } from 'next/router'
+import React, {useContext, useDebugValue, useEffect, useState} from 'react'
 
 // Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -9,18 +8,44 @@ import Container from 'react-bootstrap/Container'
 
 // Components
 import Layout from "components/Layout"
-import Hack from 'components/Hacks/Hack'
+import SignupRow from 'components/Hacks/SignupRow'
 
 // Store
 import { Signups } from 'store'
 import contingentLoad from 'utils/store/contingentLoad'
 
+// /**
+//  * Custom Hack Filtering hook. Returns hooks to render based off of filter data.
+//  * @returns {(*[]|((value: (((prevState: {}) => {}) | {})) => void)|boolean|((value: (((prevState: boolean) => boolean) | boolean)) => void))[]}
+//  */
+// function useSignupEditor(user) {
+//     let [hacks, setHacks] = useState([])
+//     let [filteredHacks, setFilteredHacks] = useState([])
+//     let [filterData, setFilterData] = useState({})
+//     let [signup, setSignup] = useState(false)
+//
+//     // Fetching data every time signup occurs
+//     useEffect(() => {
+//         fetch(`/api/submissions?timeline=${MAX_TIMELINE}`)
+//             .then(res => res.json())
+//             .then(res => {
+//                 setHacks(res)
+//                 setFilteredHacks(filterHacks(res, filterData, user))
+//             })
+//     }, [signup])
+//
+//     // Changing data every time filtered data changes
+//     useEffect(() => {
+//         setFilteredHacks(filterHacks(hacks, filterData, user))
+//     }, [filterData])
+//
+//     useDebugValue({ filteredHacks, filterData })
+//
+//     return [filteredHacks, setFilterData, signup, setSignup]
+// }
 
-const SignupDash = () => {
-    let router = useRouter()
-    let [editHack, setEditHack] = useState(false)
 
-
+const SignupDash = ({user}) => {
     const signupsState = useContext(Signups.State)
     const signupsDispatch = useContext(Signups.Dispatch)
     contingentLoad('signups', signupsState, signupsDispatch, null)
@@ -35,13 +60,9 @@ const SignupDash = () => {
                         </Row>
                         { signupsState !== null && Object.entries(signupsState).map(hack => {
                             let [hackID, hackValues] = hack
-                            console.log(hack)
                             return (
-                                <Row onMouseEnter={() => setEditHack(true)}
-                                     onMouseLeave={() => setEditHack(false)} className="my-3">
-                                    <Col xs={10}>
-                                        <Hack {...hackValues} />
-                                    </Col>
+                                <Row className="my-3">
+                                    <SignupRow {...hackValues} uid={user.id} />
                                 </Row>
                             )
                         })}

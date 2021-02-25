@@ -1,10 +1,6 @@
 //React
 import { useState, useEffect, useRef } from 'react'
 
-// Local
-import styles from './Signup.module.scss'
-import dateFormatter from 'utils/dateformatter'
-
 //Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -15,7 +11,6 @@ import Popover from "@material-ui/core/Popover";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import { makeStyles } from "@material-ui/core/styles";
 import { MaterialStyles } from "lib/MaterialStyles";
 
 // Components
@@ -57,7 +52,7 @@ let SignupRow = props => {
         setPopoverSubmitButton(submitButton.current)
     }
 
-    let handleSubmit = el => {
+    let handleSubmit = () => {
         const body = JSON.stringify({
             hackId: props.hackId,
             uid: props.uid,

@@ -40,7 +40,7 @@ const Screen = () => {
         case 'SubmissionDash':
             return <SubmissionDash />
         case 'SignupDash':
-            return <SignupDash />
+            return <SignupDash user={user} />
         default:
             return <Signin/>
     }
