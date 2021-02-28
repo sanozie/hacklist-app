@@ -1,5 +1,5 @@
 import firebase from 'db/server'
-import {formatSignupData, formatSubmissionData} from 'utils/formatdata';
+import { formatSignupData, formatSubmissionData } from 'utils/formatdata';
 
 export default async (req, res) => {
     let uid = req.query.uid

@@ -49,7 +49,6 @@ let Dashboard = ({ user }) => {
     useEffect(() => {
         // TODO: Replace this with history API eventually if needed
         localStorage.setItem('lastVisited', 'Dashboard')
-        console.log('does this even happen')
     }, [])
 
     const { data, error } = useSWR(`/api/user?uid=${user.id}`, fetcher, swrConfig)

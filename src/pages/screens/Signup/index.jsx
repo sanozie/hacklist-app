@@ -14,7 +14,8 @@ import Filters from './Filters'
 // Utils
 import dateMap from 'utils/datemap'
 
-const MAX_TIMELINE = '6mon'
+// Process
+const MAX_TIMELINE = process.env.MAX_TIMELINE
 
 /**
  * Custom Hack Filtering hook. Returns hooks to render based off of filter data.
