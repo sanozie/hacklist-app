@@ -1,5 +1,5 @@
 // Reducer
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect } from 'react'
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -15,9 +15,20 @@ const reducer = (state, action) => {
 }
 
 // Provider
-const ProviderDecorator = (State, Dispatch) => {
+const ProviderDecorator = (State, Dispatch, initializer, initArg = null) => {
     return ({children}) => {
-        const [state, dispatch] = useReducer(reducer, null)
+        const [state, dispatch] = useReducer(reducer, initArg)
+
+        useEffect(() => {
+            initializer().then(data => {
+                console.log(data)
+                dispatch({ type: 'replace', data })
+            })
+        }, [])
+
+        useEffect(() => {
+            console.log(state)
+        }, [state])
 
         return (
             <State.Provider value={state}>

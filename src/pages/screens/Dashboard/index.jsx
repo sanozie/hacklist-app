@@ -1,8 +1,5 @@
 import { useState, useEffect, useContext, useDebugValue } from 'react'
 
-//swr (data-loading module)
-import useSWR from 'swr'
-
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -39,31 +36,24 @@ function useBadgeOverlay() {
 /**
  * Parent component for Dashboard
  */
-let Dashboard = ({ user }) => {
+let Dashboard = () => {
     let [submissionBadges, setSubmissionBadges, signupBadges, setSignupBadges] = useBadgeOverlay()
 
     // Set global context for submissions & signups
-    const submissionsDispatch = useContext(SubmissionContext.Dispatch)
-    const signupsDispatch = useContext(SignupContext.Dispatch)
+    const signupsState = useContext(SignupContext.State)
+    const submissionsState = useContext(SubmissionContext.State)
 
     useEffect(() => {
+        console.log('index')
         // TODO: Replace this with history API eventually if needed
         localStorage.setItem('lastVisited', 'Dashboard')
     }, [])
 
-    const { data, error } = useSWR(`/api/user?uid=${user.id}`, fetcher, swrConfig)
     /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
         it will probably just have a loading screen forever.
      */
-    // Setting global context and local history on successful fetch
-    useEffect(() => {
-        submissionsDispatch({type: 'replace', data: data?.submissions })
-        signupsDispatch({type: 'replace', data: data?.signups })
-        localStorage.setItem('submissions', JSON.stringify(data?.submissions))
-        localStorage.setItem('signups', JSON.stringify(data?.signups))
-    }, [data])
 
-    if (error || !data) return <MainProgression />
+    if (!signupsState || !submissionsState) return <MainProgression />
 
     return (
             <Layout title="Dashboard | DIYHacks" nav={true}>
@@ -88,7 +78,7 @@ let Dashboard = ({ user }) => {
                                     <Row className="flex-grow-1">
                                         <Col xs="12" className="center-vert">
                                             <div className="center-vert-env w-100">
-                                                <Submissions data={data.submissions} />
+                                                <Submissions data={submissionsState} />
                                             </div>
                                         </Col>
                                     </Row>
@@ -106,20 +96,20 @@ let Dashboard = ({ user }) => {
                                     <Row>
                                         <h2 className="pl-4 pt-4">Signups</h2>
                                     </Row>
-                                    <Signups data={data.signups} />
+                                    <Signups data={signupsState} />
                                 </Col>
                             </Row>
                         </Col>
-                        <Col md="12" className={styles.status_env}>
-                            <Row className="status-wrapper">
-                                <Col>
-                                    <Row>
-                                        <h2 className="pl-4 pt-4">Active Hacks</h2>
-                                    </Row>
-                                    <ActiveHacks data={data.activeHacks} />
-                                </Col>
-                            </Row>
-                        </Col>
+                        {/*<Col md="12" className={styles.status_env}>*/}
+                        {/*    <Row className="status-wrapper">*/}
+                        {/*        <Col>*/}
+                        {/*            <Row>*/}
+                        {/*                <h2 className="pl-4 pt-4">Active Hacks</h2>*/}
+                        {/*            </Row>*/}
+                        {/*            <ActiveHacks data={data.activeHacks} />*/}
+                        {/*        </Col>*/}
+                        {/*    </Row>*/}
+                        {/*</Col>*/}
                     </Row>
                 </Container>
             </Layout>
