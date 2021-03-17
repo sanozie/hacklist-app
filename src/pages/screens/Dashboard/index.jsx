@@ -20,9 +20,7 @@ import Badge from 'components/Badge'
 import Layout from 'components/Layout'
 
 // Context
-import { Submissions as SubmissionContext, Signups as SignupContext } from 'store'
-
-let swrConfig = {}
+import { Submissions as SubmissionContext, Signups as SignupContext, ActiveHacks as ActiveHacksContext } from 'store'
 
 function useBadgeOverlay() {
     let [submissionBadges, setSubmissionBadges] = useState(false)
@@ -42,9 +40,9 @@ let Dashboard = () => {
     // Set global context for submissions & signups
     const signupsState = useContext(SignupContext.State)
     const submissionsState = useContext(SubmissionContext.State)
+    const activeHacksState = useContext(ActiveHacksContext.State)
 
     useEffect(() => {
-        console.log('index')
         // TODO: Replace this with history API eventually if needed
         localStorage.setItem('lastVisited', 'Dashboard')
     }, [])
@@ -53,7 +51,7 @@ let Dashboard = () => {
         it will probably just have a loading screen forever.
      */
 
-    if (!signupsState || !submissionsState) return <MainProgression />
+    if (!signupsState || !submissionsState || !activeHacksState) return <MainProgression />
 
     return (
             <Layout title="Dashboard | DIYHacks" nav={true}>
@@ -100,16 +98,16 @@ let Dashboard = () => {
                                 </Col>
                             </Row>
                         </Col>
-                        {/*<Col md="12" className={styles.status_env}>*/}
-                        {/*    <Row className="status-wrapper">*/}
-                        {/*        <Col>*/}
-                        {/*            <Row>*/}
-                        {/*                <h2 className="pl-4 pt-4">Active Hacks</h2>*/}
-                        {/*            </Row>*/}
-                        {/*            <ActiveHacks data={data.activeHacks} />*/}
-                        {/*        </Col>*/}
-                        {/*    </Row>*/}
-                        {/*</Col>*/}
+                        <Col md="12" className={styles.status_env}>
+                            <Row className="status-wrapper">
+                                <Col>
+                                    <Row>
+                                        <h2 className="pl-4 pt-4">Active Hacks</h2>
+                                    </Row>
+                                    <ActiveHacks data={activeHacksState} />
+                                </Col>
+                            </Row>
+                        </Col>
                     </Row>
                 </Container>
             </Layout>

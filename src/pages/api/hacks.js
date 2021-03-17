@@ -60,8 +60,8 @@ export default async (req, res) => {
 
             // Get past hacks for specific user
             case 'pasthacks':
-                firebase.collection('Past Hacks')
                 let pastData = {}
+                firebase.collection('Past Hacks')
                     .where('members', 'array-contains', uid).get().then(pastSnapshot => {
                         fetchActives(pastData, 'past', pastSnapshot, uid)
                         res.status(200).send(pastData)

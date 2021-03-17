@@ -21,14 +21,9 @@ const ProviderDecorator = (State, Dispatch, initializer, initArg = null) => {
 
         useEffect(() => {
             initializer().then(data => {
-                console.log(data)
                 dispatch({ type: 'replace', data })
             })
         }, [])
-
-        useEffect(() => {
-            console.log(state)
-        }, [state])
 
         return (
             <State.Provider value={state}>
