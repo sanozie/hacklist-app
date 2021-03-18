@@ -1,5 +1,5 @@
 // React
-import React, {useContext, useDebugValue, useEffect, useState} from 'react'
+import React, { useContext } from 'react'
 
 // Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -12,7 +12,6 @@ import SignupRow from 'components/Hacks/SignupRow'
 
 // Store
 import { Signups } from 'store'
-import contingentLoad from 'utils/store/contingentLoad'
 
 // /**
 //  * Custom Hack Filtering hook. Returns hooks to render based off of filter data.
@@ -47,8 +46,6 @@ import contingentLoad from 'utils/store/contingentLoad'
 
 const SignupDash = ({user}) => {
     const signupsState = useContext(Signups.State)
-    const signupsDispatch = useContext(Signups.Dispatch)
-    contingentLoad('signups', signupsState, signupsDispatch, null)
 
     return (
         <Layout title="Submissions | DIYHacks" nav={true}>

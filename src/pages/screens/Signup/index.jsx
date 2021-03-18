@@ -29,7 +29,7 @@ function useFilteredHacks(user) {
 
     // Fetching data every time signup occurs
     useEffect(() => {
-        fetch(`/api/submissions?timeline=${MAX_TIMELINE}`)
+        fetch(`/api/hacks?type=submissions&timeline=${MAX_TIMELINE}`)
             .then(res => res.json())
             .then(res => {
                 setHacks(res)

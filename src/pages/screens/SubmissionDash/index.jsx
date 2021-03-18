@@ -1,6 +1,5 @@
 // React
-import { useEffect, useState, useContext } from 'react'
-import { useRouter } from 'next/router'
+import { useState, useContext } from 'react'
 
 // Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -13,19 +12,13 @@ import Hack from 'components/Hacks/Hack'
 
 // Store
 import { Submissions } from 'store'
-import contingentLoad from 'utils/store/contingentLoad'
-
-import Badge from "components/Badge";
 
 
 const SubmissionDash = () => {
-    let router = useRouter()
     let [editHack, setEditHack] = useState(false)
 
 
     const submissionsState = useContext(Submissions.State)
-    const submissionsDispatch = useContext(Submissions.Dispatch)
-    contingentLoad('submissions', submissionsState, submissionsDispatch, '/api/usersubmissions')
 
     // TODO: It looks like hovering causes a rerender.... this should be fixed
     return (
