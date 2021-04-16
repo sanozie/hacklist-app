@@ -9,17 +9,17 @@ import Calendar from 'react-calendar'
  * Information on current and past hacks of user.
  * @param {*} data
  */
-let ActiveHacks = ({ data }) => {
-    let activeHackValues = Object.values(data.active)
+let Portfolio = ({ data }) => {
+    let activeHackValues = Object.values(data.actives)
     let activeHackCount = activeHackValues.length
-    let pastHackValues = Object.values(data.past)
-    let pastHackCount = pastHackValues.length
+    let archivedHackValues = Object.values(data.archive)
+    let archivedHackLength = archivedHackValues.length
 
     let activeCalendarData = activeHackValues.map(item => {
         return new Date(item.date)
     })
 
-    let pastCalendarData = pastHackValues.map(item => {
+    let archiveCalendarData = archivedHackValues.map(item => {
         return new Date(item.date)
     })
 
@@ -40,7 +40,7 @@ let ActiveHacks = ({ data }) => {
                         <h3>1 Scheduled Hack</h3>
                     )}
                     {(activeHackCount > 1) && (
-                        <h3>{data.active.length} Scheduled Hacks</h3>
+                        <h3>{data.actives.length} Scheduled Hacks</h3>
                     )}
                 </Row>
                 {(activeHackCount === 0) && (
@@ -84,25 +84,25 @@ let ActiveHacks = ({ data }) => {
             </Col>
             <Col lg="4">
                 <Row className="center">
-                    {(pastHackCount === 0) && (
+                    {(archivedHackLength === 0) && (
                         <h3>No Past Hacks</h3>
                     )}
-                    {(pastHackCount === 1) && (
+                    {(archivedHackLength === 1) && (
                         <h3>1 Past Hack</h3>
                     )}
-                    {(pastHackCount > 1) && (
-                        <h3>{pastHackCount} Past Hacks</h3>
+                    {(archivedHackLength > 1) && (
+                        <h3>{archivedHackLength} Past Hacks</h3>
                     )}
                 </Row>
-                {(pastHackCount == 0) && (
+                {(archivedHackLength == 0) && (
                     <Row className="center flex-grow-1">
                         <p className={styles.new_info}>Once you've completed a hack, it will be viewable here!</p>
                     </Row>
                 )}
-                {(pastHackCount > 0) && (
+                {(archivedHackLength > 0) && (
                     <Row className="my-3">
                         <Col xs="12">
-                            {pastHackValues.map(item => {
+                            {archivedHackValues.map(item => {
                                 let newDate = new Date(item.date)
                                 let monthNum = newDate.getMonth();
                                 return (
@@ -130,4 +130,4 @@ let ActiveHacks = ({ data }) => {
 
 }
 
-export default ActiveHacks
+export default Portfolio

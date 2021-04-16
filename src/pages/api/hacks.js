@@ -48,25 +48,25 @@ export default async (req, res) => {
                 })
                 break
 
-            // Get active hacks
-            case 'activehacks':
-                let activeData = {}
-                firebase.collection('Active Hacks')
+            // Get active and archived hacks of current user
+            case 'portfolio':
+                let data = { actives: {}, archive: {} }
+
+                let activesHandler = firebase.collection('Actives')
                     .where('members', 'array-contains', uid).get().then(activeSnapshot => {
-                    fetchActives(activeData, 'active', activeSnapshot, uid)
-                    res.status(200).send(activeData)
+                    fetchPortfolio(data.actives, 'active', activeSnapshot, uid)
+                })
+
+                let archiveHandler = firebase.collection('Archive')
+                    .where('members', 'array-contains', uid).get().then(archiveSnapshot => {
+                    fetchPortfolio(data.archive, 'past', archiveSnapshot, uid)
+                })
+
+                Promise.all([activesHandler, archiveHandler]).then(() => {
+                    res.status(200).send(data)
                 })
                 break
 
-            // Get past hacks for specific user
-            case 'pasthacks':
-                let pastData = {}
-                firebase.collection('Past Hacks')
-                    .where('members', 'array-contains', uid).get().then(pastSnapshot => {
-                        fetchActives(pastData, 'past', pastSnapshot, uid)
-                        res.status(200).send(pastData)
-                    })
-                break
 
             // Get signups of current user
             case 'usersignups':
@@ -83,6 +83,7 @@ export default async (req, res) => {
                 break
         }
     }
+
     function postHandler() {
         let { type, uid } = req.query
 
@@ -142,13 +143,13 @@ export default async (req, res) => {
 
 
 /**
- * Manipulating data for active hacks.
+ * Manipulating portfolio hack data.
  * @param data Object to be edited
  * @param timeframe past or active
  * @param snapshot Firebase snapshot
  * @param uid
  */
-const fetchActives = (data, timeframe, snapshot, uid) => {
+const fetchPortfolio = (data, timeframe, snapshot, uid) => {
     snapshot.forEach(doc => {
         let docData = doc.data()
         docData.date = docData.date.toDate()
