@@ -1,5 +1,5 @@
 //React
-import { useState, useEffect, useRef, useContext, useCallback } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 
 //Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -61,7 +61,6 @@ let SignupRow = props => {
     let handleSubmit = () => {
         let hack = { hackId: props.hackID, uid: props.uid, skill }
         signupActions.update(hack)
-        props.forceUpdate()
         handleClose()
     }
 

@@ -1,4 +1,4 @@
-function formatSubmissionData(data) {
+function formatSubmissionData(data, platform) {
     let sizeData = {}, tempDataMin = { eng: 0, design: 0, pm: 0 }, tempDataTotal = { eng: 0, design: 0, pm: 0 }, { limits } = data;
     for (let [key, value] of Object.entries(data.signups)) {
         let { skill } = value
@@ -17,15 +17,17 @@ function formatSubmissionData(data) {
     }
     sizeData.overflow_width = (Object.keys(data.signups).length - limits.min) / limits.max * 100
     data.sizeData = sizeData;
-    data.submit_date = data.submit_date.toDate()
+    if (platform === 'server') {
+        data.submit_date = data.submit_date.toDate()
+    }
     return data
 }
 
-function formatSignupData(data) {
+function formatSignupData(data, platform) {
     //find a way to display the min signups while also accounting for signups outside of mins (where min=0)
     let { limits } = data;
     data.circle = (Object.keys(data.signups).length / limits.max) * 100
-    return formatSubmissionData(data)
+    return formatSubmissionData(data, platform)
 }
 
 export {formatSignupData, formatSubmissionData}

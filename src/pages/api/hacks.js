@@ -26,7 +26,7 @@ export default async (req, res) => {
                         snapshot.forEach(item => {
                             let docData = item.data()
                             docData.hackId = item.id
-                            data.push(formatSubmissionData(docData))
+                            data.push(formatSubmissionData(docData, 'server'))
                         })
                         res.send(data)
                     })
@@ -41,7 +41,7 @@ export default async (req, res) => {
                     snapshot.forEach(doc => {
                         let docData = doc.data()
                         docData.hackId = doc.id
-                        submissionData[doc.id] = formatSubmissionData(docData)
+                        submissionData[doc.id] = formatSubmissionData(docData, 'server')
                     })
 
                     res.status(200).send(submissionData)
@@ -75,7 +75,7 @@ export default async (req, res) => {
                     let signupsData = {}
                     snapshot.forEach(doc => {
                         //figure out how to only count towards those with min
-                        signupsData[doc.id] = formatSignupData(doc.data())
+                        signupsData[doc.id] = formatSignupData(doc.data(), 'server')
                     })
 
                     res.status(200).send(signupsData)
