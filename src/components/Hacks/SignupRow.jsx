@@ -1,5 +1,5 @@
 //React
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext, useCallback } from 'react'
 
 //Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -16,6 +16,9 @@ import { MaterialStyles } from "lib/MaterialStyles";
 // Components
 import Hack from 'components/Hacks/Hack'
 
+// Store
+import { Signups }  from 'store'
+
 let SignupRow = props => {
     //Style Hooks
     let classes = MaterialStyles().classesFormControl
@@ -30,6 +33,8 @@ let SignupRow = props => {
     let [openSubmit, setOpenSubmit] = useState(false)
 
     let [buttonText, setButtonText] = useState("SIGNUP")
+
+    let signupActions = useContext(Signups.Dispatch)
 
     useEffect(() => {
         if (props.signups[props.uid]) {
@@ -52,21 +57,11 @@ let SignupRow = props => {
         setPopoverSubmitButton(submitButton.current)
     }
 
+    // TODO: Figure out the hackId vs hackID thing
     let handleSubmit = () => {
-        const body = JSON.stringify({
-            hackId: props.hackId,
-            uid: props.uid,
-            skill
-        })
-        fetch('/api/signup', {
-            method: 'PUT',
-            body
-        }).then(res => {
-            switch(res.status) {
-                case 202:
-                    props.emitSignup()
-            }
-        })
+        let hack = { hackId: props.hackID, uid: props.uid, skill }
+        signupActions.update(hack)
+        props.forceUpdate()
         handleClose()
     }
 

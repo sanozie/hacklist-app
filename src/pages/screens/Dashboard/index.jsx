@@ -16,7 +16,7 @@ import { MainProgression } from 'components/Progression'
 import Badge from 'components/Badge'
 import Layout from 'components/Layout'
 
-// Context
+// Store
 import { Submissions as SubmissionContext, Signups as SignupContext, Portfolio as PortfolioContext } from 'store'
 
 function useBadgeOverlay() {

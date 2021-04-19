@@ -59,7 +59,7 @@ const SignupDash = ({user}) => {
                             let [hackID, hackValues] = hack
                             return (
                                 <Row className="my-3">
-                                    <SignupRow {...hackValues} uid={user.id} />
+                                    <SignupRow {...hackValues} uid={user.id} hackID={hackID} forceUpdate={() => {forceUpdate()}} />
                                 </Row>
                             )
                         })}
