@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 // Components
-import Layout from "components/Layout"
+import Layout from 'components/Layout'
 import SignupRow from 'components/Hacks/SignupRow'
 
 // Store

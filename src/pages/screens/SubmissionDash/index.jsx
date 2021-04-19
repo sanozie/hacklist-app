@@ -7,8 +7,9 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 // Components
-import Layout from "components/Layout"
+import Layout from 'components/Layout'
 import Hack from 'components/Hacks/Hack'
+import { MainProgression } from 'components/Progression'
 
 // Store
 import { Submissions } from 'store'
@@ -19,6 +20,8 @@ const SubmissionDash = () => {
 
 
     const submissionsState = useContext(Submissions.State)
+
+    if (!submissionsState) return <MainProgression />
 
     // TODO: It looks like hovering causes a rerender.... this should be fixed
     return (

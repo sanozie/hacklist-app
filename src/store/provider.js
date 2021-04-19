@@ -18,7 +18,6 @@ const useAsyncReducer = (initializer, updater) => {
     const asyncActions = () => {
         return {
             init: () => initializer().then(data => {
-                debugger
                 dispatch({type: 'replace', data})
             }),
             clear: () => dispatch({ type: 'clear' }),
