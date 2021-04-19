@@ -1,8 +1,8 @@
-import { createContext } from 'react'
+import {createContext} from 'react'
 import ProviderDecorator from './provider'
-import { getUserFromCookie } from 'utils/auth/userCookies'
+import {getUserFromCookie} from 'utils/auth/userCookies'
 import produce from 'immer'
-import { formatSignupData } from 'utils/formatdata'
+import {formatSignupData} from 'utils/formatdata'
 
 const initializer = async () => {
     try {
@@ -16,17 +16,18 @@ const initializer = async () => {
 
 const updater = async (update, state) => {
     let { hackId, uid, skill } = update
-    const nextState = produce(state, draftState => {
+
+    fetch(`/api/hacks?type=signup&uid=${uid}`, {
+        method: 'POST',
+        body: JSON.stringify(update)
+    })
+
+    return produce(state, draftState => {
         draftState[hackId].signups[uid].skill = skill
         Object.entries(draftState).forEach(([hackId, hackValue]) => {
             draftState[hackId] = formatSignupData(hackValue, 'client')
         })
     })
-    fetch(`/api/hacks?type=signup&uid=${uid}`, {
-        method: 'POST',
-        body: JSON.stringify(update)
-    })
-    return nextState
 }
 
 // Context

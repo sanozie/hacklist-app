@@ -17,11 +17,10 @@ const useAsyncReducer = (initializer, updater) => {
 
     const asyncActions = () => {
         return {
-            init: () => {
-                initializer().then(data => {
-                    dispatch({type: 'replace', data})
-                })
-            },
+            init: () => initializer().then(data => {
+                debugger
+                dispatch({type: 'replace', data})
+            }),
             clear: () => dispatch({ type: 'clear' }),
             update: param => updater(param, state).then(data => {
                 dispatch({ type: 'replace', data})

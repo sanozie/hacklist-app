@@ -12,10 +12,13 @@ import SignupRow from 'components/Hacks/SignupRow'
 
 // Store
 import { Signups } from 'store'
+import { MainProgression } from 'components/Progression'
 
 
 const SignupDash = ({user}) => {
     const signupsState = useContext(Signups.State)
+
+    if (!signupsState) return <MainProgression />
 
     return (
         <Layout title="Submissions | DIYHacks" nav={true}>
