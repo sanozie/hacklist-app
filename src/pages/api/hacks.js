@@ -10,6 +10,9 @@ export default async (req, res) => {
             break
         case 'POST':
             postHandler()
+            break
+        case 'DELETE':
+            deleteHandler()
     }
 
     function getHandler() {
@@ -28,7 +31,7 @@ export default async (req, res) => {
                             docData.hackId = item.id
                             data.push(formatSubmissionData(docData, 'server'))
                         })
-                        res.send(data)
+                        res.status(200).send(data)
                     })
                 break
 
@@ -95,7 +98,6 @@ export default async (req, res) => {
                 firebase.collection('Submissions').add({
                     submitter_name: body.submitter_name,
                     submitter: body.submitter,
-                    submitter_skill: body.contribution,
                     title: body.hackTitle,
                     submit_date: new Date(),
                     industry: body.industry,
@@ -115,8 +117,9 @@ export default async (req, res) => {
                             min: body.pmRange[0],
                         }
                     },
-                    signups: {}
-
+                    signups: {
+                        [uid]: body.contribution
+                    }
                 }).then(result => {
                     res.status(200).send({msg: "Hack Submitted!"})
                 }).catch(err => {
@@ -131,6 +134,32 @@ export default async (req, res) => {
                     .then(result => {
                         firebase.collection('Submissions').doc(hackId).update({
                             signups: { ...result.data().signups, [uid]: { query: true, skill }}
+                        }).then(() => {
+                            res.status(202).send("Updated")
+                        }).catch(e => {
+                            throw e
+                        })
+                    }).catch(e => { throw e })
+        }
+    }
+
+    function deleteHandler() {
+        let { type, uid } = req.query
+
+        switch(type) {
+            // Add a new submission
+            case 'submission':
+                break
+
+            // Signup to a specific hack
+            case 'signup':
+                let { hackId } = JSON.parse(req.body)
+                firebase.collection('Submissions').doc(hackId).get()
+                    .then(result => {
+                        let data = result.data().signups
+                        delete data[uid]
+                        firebase.collection('Submissions').doc(hackId).update({
+                            signups: data
                         }).then(() => {
                             res.status(202).send("Updated")
                         }).catch(e => {

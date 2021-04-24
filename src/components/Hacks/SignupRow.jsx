@@ -38,7 +38,7 @@ let SignupRow = props => {
 
     useEffect(() => {
         if (props.signups[props.uid]) {
-            setButtonText("EDIT")
+            setButtonText("EDIT SKILL")
         }
 
         if (props.submitter === props.uid) {
@@ -64,6 +64,11 @@ let SignupRow = props => {
         handleClose()
     }
 
+    let handleWithdraw = () => {
+        let hack = { hackId: props.hackID, uid: props.uid }
+        signupActions.delete(hack)
+    }
+
 
     return (
         <Col md={12} className="m-3">
@@ -71,44 +76,56 @@ let SignupRow = props => {
                 <Col xs={10}>
                     <Hack {...props} />
                 </Col>
-                <Col xs={2}>
-                    <Row className="center">
-                        <>
-                            <Button ref={submitButton} onClick={handleSignup}
-                                    variant="outline-light" color="primary" aria-describedby="signupButton" disabled={hackOwner}>
-                                { buttonText }
-                            </Button>
-                            <Popover
-                                id="signupButton"
-                                open={openSubmit}
-                                anchorEl={popoverSubmitButton}
-                                onClose={handleClose}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'center',
-                                    horizontal: 'center',
-                                }}>
-                                <p>Sign up as:</p>
-                                <FormControl required variant="outlined"
-                                             className={`${classes.formControl} w-100`}>
-                                    <TextField
-                                        variant="outlined"
-                                        value={skill}
-                                        onChange={e => { setSkill(e.target.value) }}
-                                        label="Skill"
-                                        size="small"
-                                        select>
-                                        <MenuItem value='eng'>Engineer</MenuItem>
-                                        <MenuItem value='design'>Designer</MenuItem>
-                                        <MenuItem value='pm'>Product Manager</MenuItem>
-                                    </TextField>
-                                </FormControl>
-                                <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
-                            </Popover>
-                        </>
+                <Col xs={2} className='my-auto'>
+                    <Row>
+                        <Col>
+                            <Row className="center m-1">
+                                <>
+                                    <Button ref={submitButton} onClick={handleSignup}
+                                            variant="outline-light" color="primary" aria-describedby="signupButton" disabled={hackOwner}>
+                                        { buttonText }
+                                    </Button>
+                                    <Popover
+                                        id="signupButton"
+                                        open={openSubmit}
+                                        anchorEl={popoverSubmitButton}
+                                        onClose={handleClose}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'left',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'center',
+                                            horizontal: 'center',
+                                        }}>
+                                        <p>Sign up as:</p>
+                                        <FormControl required variant="outlined"
+                                                     className={`${classes.formControl} w-100`}>
+                                            <TextField
+                                                variant="outlined"
+                                                value={skill}
+                                                onChange={e => { setSkill(e.target.value) }}
+                                                label="Skill"
+                                                size="small"
+                                                select>
+                                                <MenuItem value='eng'>Engineer</MenuItem>
+                                                <MenuItem value='design'>Designer</MenuItem>
+                                                <MenuItem value='pm'>Product Manager</MenuItem>
+                                            </TextField>
+                                        </FormControl>
+                                        <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
+                                    </Popover>
+                                </>
+                            </Row>
+                            {!hackOwner && (
+                                <Row className="center">
+                                    <Button ref={submitButton} onClick={handleWithdraw} variant="danger"
+                                            aria-describedby="signupButton" disabled={hackOwner}>
+                                        WITHDRAW
+                                    </Button>
+                                </Row>
+                            )}
+                        </Col>
                     </Row>
                 </Col>
             </Row>

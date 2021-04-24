@@ -1,7 +1,7 @@
 // Reducer
 import React, { useReducer, useEffect } from 'react'
 
-const useAsyncReducer = (initializer, updater) => {
+const useAsyncReducer = (initializer, updater, deleter) => {
     let reducer = (state, action) => {
         switch (action.type) {
             case 'clear':
@@ -18,11 +18,14 @@ const useAsyncReducer = (initializer, updater) => {
     const asyncActions = () => {
         return {
             init: () => initializer().then(data => {
-                dispatch({type: 'replace', data})
+                dispatch({ type: 'replace', data })
             }),
             clear: () => dispatch({ type: 'clear' }),
             update: param => updater(param, state).then(data => {
-                dispatch({ type: 'replace', data})
+                dispatch({ type: 'replace', data })
+            }),
+            delete: param => deleter(param, state).then(data => {
+                dispatch({ type: 'replace', data })
             })
         }
     }
@@ -33,9 +36,9 @@ const useAsyncReducer = (initializer, updater) => {
 }
 
 // Provider
-const ProviderDecorator = (State, Dispatch, initializer, updater) => {
+const ProviderDecorator = (State, Dispatch, initializer, updater, deleter) => {
     return ({children}) => {
-        const [state, actions] = useAsyncReducer(initializer, updater)
+        const [state, actions] = useAsyncReducer(initializer, updater, deleter)
 
         useEffect(() => {
             actions.init()

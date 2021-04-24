@@ -30,10 +30,23 @@ const updater = async (update, state) => {
     })
 }
 
+const deleter = async (update, state) => {
+    let { hackId, uid } = update
+
+    fetch(`/api/hacks?type=signup&uid=${uid}`, {
+        method: 'DELETE',
+        body: JSON.stringify(update)
+    })
+
+    return produce(state, draftState => {
+        delete draftState[hackId].signups[uid]
+    })
+}
+
 // Context
 const State = createContext()
 const Dispatch = createContext()
-const Provider = ProviderDecorator(State, Dispatch, initializer, updater)
+const Provider = ProviderDecorator(State, Dispatch, initializer, updater, deleter)
 
 
 // Export
