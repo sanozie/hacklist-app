@@ -45,7 +45,7 @@ let SignupRow = props => {
             setHackOwner(true)
             setButtonText("OWNER")
         }
-    }, [props.uid])
+    })
 
     let handleClose = () => {
         setOpenSubmit(false)
@@ -59,14 +59,23 @@ let SignupRow = props => {
 
     // TODO: Figure out the hackId vs hackID thing
     let handleSubmit = () => {
-        let hack = { hackId: props.hackID, uid: props.uid, skill }
-        signupActions.update(hack)
+        signupActions.update({ hackId: props.hackID, uid: props.uid, skill })
         handleClose()
     }
 
     let handleWithdraw = () => {
-        let hack = { hackId: props.hackID, uid: props.uid }
-        signupActions.delete(hack)
+        let hack = { hackId: props.hackID, uid: props.uid, skill, title: props.title }
+        let confirmWithdraw = new Promise((resolve, reject) => {
+            props.confirmWithdraw(hack).then(() => {
+                resolve()
+            }).catch(() => {
+                reject()
+            })
+        })
+
+        confirmWithdraw.then(() => {
+            signupActions.delete(hack)
+        })
     }
 
 

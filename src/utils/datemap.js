@@ -1,6 +1,6 @@
 /**
  * Returning date corresponding to set keys
- * @param {'week' | 'mon' | '3mon' | '6mon' } key
+ * @param { 'week' | 'mon' | '3mon' | '6mon' } key
  */
 export default function dateMap(key) {
     let date = new Date()
