@@ -57,7 +57,7 @@ const SignupDash = ({user}) => {
                             return (
                                 <Row className="my-3">
                                     <SignupRow {...hackValues} uid={user.id} hackID={hackID}
-                                               confirmWithdraw={handleWithdraw}/>
+                                               confirmWithdraw={handleWithdraw} dash={true} />
                                 </Row>
                             )
                         })}

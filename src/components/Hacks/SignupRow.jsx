@@ -126,7 +126,7 @@ let SignupRow = props => {
                                     </Popover>
                                 </>
                             </Row>
-                            {!hackOwner && (
+                            {!hackOwner && props.dash && (
                                 <Row className="center">
                                     <Button ref={submitButton} onClick={handleWithdraw} variant="danger"
                                             aria-describedby="signupButton" disabled={hackOwner}>
