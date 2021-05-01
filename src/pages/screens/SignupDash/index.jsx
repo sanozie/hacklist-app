@@ -52,11 +52,10 @@ const SignupDash = ({user}) => {
                         <Row>
                             <h1 className="page-header">Your Signups</h1>
                         </Row>
-                        { Object.entries(signupsState).map(hack => {
-                            let [hackID, hackValues] = hack
+                        { Object.entries(signupsState).map(([id, hack]) => {
                             return (
                                 <Row className="my-3">
-                                    <SignupRow {...hackValues} uid={user.id} hackID={hackID}
+                                    <SignupRow hack={hack} uid={user.id} hackId={id}
                                                confirmWithdraw={handleWithdraw} dash={true} />
                                 </Row>
                             )

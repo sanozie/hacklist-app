@@ -15,14 +15,19 @@ const initializer = async () => {
 }
 
 const updater = async (update, state) => {
-    let { hackId, uid, skill } = update
-
+    let { hackId, uid, skill, hack } = update
+    console.log(update)
     fetch(`/api/hacks?type=signup&uid=${uid}`, {
         method: 'POST',
         body: JSON.stringify(update)
     })
 
     return produce(state, draftState => {
+        if(!draftState[hackId]) {
+            draftState[hackId] = hack
+            draftState[hackId].signups[uid] = { query: true }
+        }
+
         draftState[hackId].signups[uid].skill = skill
         Object.entries(draftState).forEach(([hackId, hackValue]) => {
             draftState[hackId] = formatSignupData(hackValue, 'client')

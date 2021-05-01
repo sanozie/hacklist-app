@@ -25,13 +25,11 @@ export default async (req, res) => {
                     .where('submit_date', '<', new Date())
                     .where('submit_date', '>', new Date(queryDate)).get()
                     .then(snapshot => {
-                        let data=[]
-                        snapshot.forEach(item => {
-                            let docData = item.data()
-                            docData.hackId = item.id
-                            data.push(formatSubmissionData(docData, 'server'))
+                        let submissionData = {}
+                        snapshot.forEach(doc => {
+                            submissionData[doc.id] = formatSubmissionData(doc.data(), 'server')
                         })
-                        res.status(200).send(data)
+                        res.status(200).send(submissionData)
                     })
                 break
 
@@ -40,11 +38,8 @@ export default async (req, res) => {
                 firebase.collection('Submissions').where('submitter', '==', uid)
                     .orderBy('submit_date', 'desc').get().then(snapshot => {
                     let submissionData = {}
-
                     snapshot.forEach(doc => {
-                        let docData = doc.data()
-                        docData.hackId = doc.id
-                        submissionData[doc.id] = formatSubmissionData(docData, 'server')
+                        submissionData[doc.id] = formatSubmissionData(doc.data(), 'server')
                     })
 
                     res.status(200).send(submissionData)
@@ -130,6 +125,7 @@ export default async (req, res) => {
             // Signup to a specific hack
             case 'signup':
                 let { hackId, skill } = JSON.parse(req.body)
+                console.log(JSON.parse(req.body))
                 firebase.collection('Submissions').doc(hackId).get()
                     .then(result => {
                         firebase.collection('Submissions').doc(hackId).update({

@@ -19,6 +19,11 @@ import Hack from 'components/Hacks/Hack'
 // Store
 import { Signups }  from 'store'
 
+/* TODO: To be honest, the logic for this component is utter trash. Complex for no reason. This should really
+    be fixed eventually.
+    The difference between dash & non-dash elements should be very clear and not so intertwined. Possibly create mini
+    components for each use-case.
+*/
 let SignupRow = props => {
     //Style Hooks
     let classes = MaterialStyles().classesFormControl
@@ -26,6 +31,7 @@ let SignupRow = props => {
     // Util Hooks
     let [hackOwner, setHackOwner] = useState(false)
     let [skill, setSkill] = useState('')
+    let [submitted, setSubmitted] = useState(false)
 
 
     let submitButton = useRef(null)
@@ -37,13 +43,13 @@ let SignupRow = props => {
     let signupActions = useContext(Signups.Dispatch)
 
     useEffect(() => {
-        if (props.signups[props.uid]) {
-            setButtonText("EDIT SKILL")
+        if (props.hack.signups[props.uid]) {
+            setButtonText('EDIT SKILL')
         }
 
-        if (props.submitter === props.uid) {
+        if (props.hack.submitter === props.uid) {
             setHackOwner(true)
-            setButtonText("OWNER")
+            setButtonText('OWNER')
         }
     })
 
@@ -59,12 +65,15 @@ let SignupRow = props => {
 
     // TODO: Figure out the hackId vs hackID thing
     let handleSubmit = () => {
-        signupActions.update({ hackId: props.hackID, uid: props.uid, skill })
+        signupActions.update({ hackId: props.hackId, uid: props.uid, skill, hack: props.hack })
+        if (!props.dash) {
+            setSubmitted(true)
+        }
         handleClose()
     }
 
     let handleWithdraw = () => {
-        let hack = { hackId: props.hackID, uid: props.uid, skill, title: props.title }
+        let hack = { hackId: props.hackId, uid: props.uid, skill, title: props.hack.title }
         let confirmWithdraw = new Promise((resolve, reject) => {
             props.confirmWithdraw(hack).then(() => {
                 resolve()
@@ -83,49 +92,60 @@ let SignupRow = props => {
         <Col md={12} className="m-3">
             <Row>
                 <Col xs={10}>
-                    <Hack {...props} />
+                    <Hack {...props.hack} />
                 </Col>
                 <Col xs={2} className='my-auto'>
                     <Row>
                         <Col>
-                            <Row className="center m-1">
-                                <>
-                                    <Button ref={submitButton} onClick={handleSignup}
-                                            variant="outline-light" color="primary" aria-describedby="signupButton" disabled={hackOwner}>
-                                        { buttonText }
+                            {!submitted && (
+                                <Row className="center m-1">
+                                    <>
+                                        <Button ref={submitButton} onClick={handleSignup}
+                                                variant="outline-light" color="primary" aria-describedby="signupButton"
+                                                disabled={hackOwner}>
+                                            { buttonText }
+                                        </Button>
+                                        <Popover
+                                            id="signupButton"
+                                            open={openSubmit}
+                                            anchorEl={popoverSubmitButton}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                            transformOrigin={{
+                                                vertical: 'center',
+                                                horizontal: 'center',
+                                            }}>
+                                            <p>Sign up as:</p>
+                                            <FormControl required variant="outlined"
+                                                         className={`${classes.formControl} w-100`}>
+                                                <TextField
+                                                    variant="outlined"
+                                                    value={skill}
+                                                    onChange={e => { setSkill(e.target.value) }}
+                                                    label="Skill"
+                                                    size="small"
+                                                    select>
+                                                    <MenuItem value='eng'>Engineer</MenuItem>
+                                                    <MenuItem value='design'>Designer</MenuItem>
+                                                    <MenuItem value='pm'>Product Manager</MenuItem>
+                                                </TextField>
+                                            </FormControl>
+                                            <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
+                                        </Popover>
+                                    </>
+                                </Row>
+                            )}
+                            {submitted && (
+                                <Row className="center">
+                                    <Button variant="outline-success"
+                                            aria-describedby="signupButton" disabled={true}>
+                                        SIGNED UP
                                     </Button>
-                                    <Popover
-                                        id="signupButton"
-                                        open={openSubmit}
-                                        anchorEl={popoverSubmitButton}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'center',
-                                            horizontal: 'center',
-                                        }}>
-                                        <p>Sign up as:</p>
-                                        <FormControl required variant="outlined"
-                                                     className={`${classes.formControl} w-100`}>
-                                            <TextField
-                                                variant="outlined"
-                                                value={skill}
-                                                onChange={e => { setSkill(e.target.value) }}
-                                                label="Skill"
-                                                size="small"
-                                                select>
-                                                <MenuItem value='eng'>Engineer</MenuItem>
-                                                <MenuItem value='design'>Designer</MenuItem>
-                                                <MenuItem value='pm'>Product Manager</MenuItem>
-                                            </TextField>
-                                        </FormControl>
-                                        <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
-                                    </Popover>
-                                </>
-                            </Row>
+                                </Row>
+                            )}
                             {!hackOwner && props.dash && (
                                 <Row className="center">
                                     <Button ref={submitButton} onClick={handleWithdraw} variant="danger"
@@ -141,5 +161,6 @@ let SignupRow = props => {
         </Col>
     )
 }
+
 
 export default SignupRow
