@@ -24,7 +24,7 @@ import { Signups }  from 'store'
     The difference between dash & non-dash elements should be very clear and not so intertwined. Possibly create mini
     components for each use-case.
 */
-let SignupRow = props => {
+let ConfigRow = props => {
     //Style Hooks
     let classes = MaterialStyles().classesFormControl
 
@@ -63,7 +63,6 @@ let SignupRow = props => {
         setPopoverSubmitButton(submitButton.current)
     }
 
-    // TODO: Figure out the hackId vs hackID thing
     let handleSubmit = () => {
         signupActions.update({ hackId: props.hackId, uid: props.uid, skill, hack: props.hack })
         if (!props.dash) {
@@ -163,4 +162,4 @@ let SignupRow = props => {
 }
 
 
-export default SignupRow
+export default ConfigRow

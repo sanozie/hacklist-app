@@ -32,7 +32,7 @@ const SubmissionDash = () => {
                         <Row>
                             <h1 className="page-header">Your Submissions</h1>
                         </Row>
-                            { submissionsState !== null && Object.entries(submissionsState).map(hack => {
+                            {Object.entries(submissionsState).map(hack => {
                                 let [hackID, hackValues] = hack
                                 console.log(hack)
                                 return (

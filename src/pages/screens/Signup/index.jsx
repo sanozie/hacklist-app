@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col'
 // Local
 import Layout from 'components/Layout'
 import styles from './Signup.module.scss'
-import SignupRow from 'components/Hacks/SignupRow'
+import ConfigRow from 'components/Hacks/ConfigRow'
 import Filters from './Filters'
 import { MainProgression } from 'components/Progression'
 
@@ -98,7 +98,7 @@ let Signup = ({user}) => {
                             <Col xs="8">
                                 <Row>
                                     {(filteredHacks.length !== 0) && filteredHacks.map(([id, hack]) => (
-                                        <SignupRow hack={hack} hackId={id} uid={user.id}
+                                        <ConfigRow hack={hack} hackId={id} uid={user.id}
                                                    emitSignup={() => setSignup(!signup)} />
                                     ))}
                                     {(filteredHacks.length === 0) && (

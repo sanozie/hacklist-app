@@ -1,0 +1,55 @@
+{
+    "accommodation": {
+        "name": "Accommodation"
+    },
+    "agriculture": {
+        "name": "Agriculture"
+    },
+    "foodservices": {
+        "name": "Food Services"
+    },
+    "trans": {
+        "name": "Transportation"
+    },
+    "entertainment": {
+        "name": "Entertainment"
+    },
+    "clothing": {
+        "name": "Clothing"
+    },
+    "manufacturing": {
+        "name": "Manufacturing"
+    },
+    "construction": {
+        "name": "Construction"
+    },
+    "education": {
+        "name": "Education"
+    },
+    "electronics": {
+        "name": "Electronics"
+    },
+    "finance": {
+        "name": "Finance"
+    },
+    "dataanalytics": {
+        "name": "Data Analytics"
+    },
+    "internet": {
+        "name": "Internet"
+    },
+    "machinery": {
+        "name": "Machinery"
+    },
+    "management": {
+        "name": "Enterprise Management"
+    },
+    "sports": {
+        "name": "Sports"
+    },
+    "environment": {
+        "name": "Environment"
+    }
+}
+
+// Make some surveys to make list better
