@@ -5,22 +5,19 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-// Utils
-import fetcher from 'utils/fetcher'
-
 // Local
 import styles from './Dashboard.module.scss'
 
 // Components
 import Signups from './Signups'
-import ActiveHacks from './ActiveHacks'
+import Portfolio from './Portfolio'
 import Submissions from './Submissions'
 import { MainProgression } from 'components/Progression'
 import Badge from 'components/Badge'
 import Layout from 'components/Layout'
 
-// Context
-import { Submissions as SubmissionContext, Signups as SignupContext, ActiveHacks as ActiveHacksContext } from 'store'
+// Store
+import { Submissions as SubmissionContext, Signups as SignupContext, Portfolio as PortfolioContext } from 'store'
 
 function useBadgeOverlay() {
     let [submissionBadges, setSubmissionBadges] = useState(false)
@@ -40,7 +37,7 @@ let Dashboard = () => {
     // Set global context for submissions & signups
     const signupsState = useContext(SignupContext.State)
     const submissionsState = useContext(SubmissionContext.State)
-    const activeHacksState = useContext(ActiveHacksContext.State)
+    const portfolioState = useContext(PortfolioContext.State)
 
     useEffect(() => {
         // TODO: Replace this with history API eventually if needed
@@ -51,7 +48,7 @@ let Dashboard = () => {
         it will probably just have a loading screen forever.
      */
 
-    if (!signupsState || !submissionsState || !activeHacksState) return <MainProgression />
+    if (!signupsState || !submissionsState || !portfolioState) return <MainProgression />
 
     return (
             <Layout title="Dashboard | DIYHacks" nav={true}>
@@ -102,9 +99,9 @@ let Dashboard = () => {
                             <Row className="status-wrapper">
                                 <Col>
                                     <Row>
-                                        <h2 className="pl-4 pt-4">Active Hacks</h2>
+                                        <h2 className="pl-4 pt-4">Portfolio</h2>
                                     </Row>
-                                    <ActiveHacks data={activeHacksState} />
+                                    <Portfolio data={portfolioState} />
                                 </Col>
                             </Row>
                         </Col>

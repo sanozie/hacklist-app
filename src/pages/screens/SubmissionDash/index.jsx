@@ -7,8 +7,9 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 // Components
-import Layout from "components/Layout"
+import Layout from 'components/Layout'
 import Hack from 'components/Hacks/Hack'
+import { MainProgression } from 'components/Progression'
 
 // Store
 import { Submissions } from 'store'
@@ -20,6 +21,8 @@ const SubmissionDash = () => {
 
     const submissionsState = useContext(Submissions.State)
 
+    if (!submissionsState) return <MainProgression />
+
     // TODO: It looks like hovering causes a rerender.... this should be fixed
     return (
         <Layout title="Submissions | DIYHacks" nav={true}>
@@ -29,7 +32,7 @@ const SubmissionDash = () => {
                         <Row>
                             <h1 className="page-header">Your Submissions</h1>
                         </Row>
-                            { submissionsState !== null && Object.entries(submissionsState).map(hack => {
+                            {Object.entries(submissionsState).map(hack => {
                                 let [hackID, hackValues] = hack
                                 console.log(hack)
                                 return (

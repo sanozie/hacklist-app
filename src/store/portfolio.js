@@ -5,8 +5,8 @@ import { getUserFromCookie } from 'utils/auth/userCookies'
 const initializer = async () => {
     try {
         let user = getUserFromCookie()
-        let submissions = await fetch(`/api/hacks?type=usersubmissions&uid=${user.id}`)
-        return await submissions.json()
+        let portfolio = await fetch(`/api/hacks?type=portfolio&uid=${user.id}`)
+        return await portfolio.json()
     } catch {
         return null
     }
@@ -22,7 +22,7 @@ const Dispatch = createContext()
 const Provider = ProviderDecorator(State, Dispatch, initializer, updater)
 
 // Export
-export const Submissions = {
+export const Portfolio = {
     State,
     Dispatch,
     Provider,

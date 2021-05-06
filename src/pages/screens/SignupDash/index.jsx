@@ -1,51 +1,48 @@
 // React
-import React, { useContext } from 'react'
+import { useState, useContext } from 'react'
 
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+
+// Material UI
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 
 // Components
-import Layout from "components/Layout"
-import SignupRow from 'components/Hacks/SignupRow'
+import Layout from 'components/Layout'
+import ConfigRow from 'components/Hacks/ConfigRow'
 
 // Store
 import { Signups } from 'store'
+import { MainProgression } from 'components/Progression'
 
-// /**
-//  * Custom Hack Filtering hook. Returns hooks to render based off of filter data.
-//  * @returns {(*[]|((value: (((prevState: {}) => {}) | {})) => void)|boolean|((value: (((prevState: boolean) => boolean) | boolean)) => void))[]}
-//  */
-// function useSignupEditor(user) {
-//     let [hacks, setHacks] = useState([])
-//     let [filteredHacks, setFilteredHacks] = useState([])
-//     let [filterData, setFilterData] = useState({})
-//     let [signup, setSignup] = useState(false)
-//
-//     // Fetching data every time signup occurs
-//     useEffect(() => {
-//         fetch(`/api/submissions?timeline=${MAX_TIMELINE}`)
-//             .then(res => res.json())
-//             .then(res => {
-//                 setHacks(res)
-//                 setFilteredHacks(filterHacks(res, filterData, user))
-//             })
-//     }, [signup])
-//
-//     // Changing data every time filtered data changes
-//     useEffect(() => {
-//         setFilteredHacks(filterHacks(hacks, filterData, user))
-//     }, [filterData])
-//
-//     useDebugValue({ filteredHacks, filterData })
-//
-//     return [filteredHacks, setFilterData, signup, setSignup]
-// }
+// Utils
+import { useDialog } from 'utils/materialui'
 
 
 const SignupDash = ({user}) => {
     const signupsState = useContext(Signups.State)
+    let [confirmHack, setConfirmHack] = useState(null)
+
+    let [open, handleOpen, handleClose, handleSubmit] = useDialog()
+
+    let handleWithdraw = async (hack) => {
+        setConfirmHack(hack.title)
+        handleOpen()
+        return new Promise((resolve, reject) => {
+            window.dialogConf.progress
+                .then(() => resolve())
+                .catch(() => reject())
+        })
+    }
+
+    if (!signupsState) return <MainProgression />
 
     return (
         <Layout title="Submissions | DIYHacks" nav={true}>
@@ -55,17 +52,38 @@ const SignupDash = ({user}) => {
                         <Row>
                             <h1 className="page-header">Your Signups</h1>
                         </Row>
-                        { signupsState !== null && Object.entries(signupsState).map(hack => {
-                            let [hackID, hackValues] = hack
+                        { Object.entries(signupsState).map(([id, hack]) => {
                             return (
                                 <Row className="my-3">
-                                    <SignupRow {...hackValues} uid={user.id} />
+                                    <ConfigRow hack={hack} uid={user.id} hackId={id}
+                                               confirmWithdraw={handleWithdraw} dash={true} />
                                 </Row>
                             )
                         })}
                     </Col>
                 </Row>
             </Container>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{ `Withdraw your signup from ${confirmHack}?`}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        You'll have to sign up again manually if you continue.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} variant="outline-lignt" color="primary">
+                        CANCEL
+                    </Button>
+                    <Button onClick={handleSubmit} variant="danger" color="primary" autoFocus>
+                        WITHDRAW
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Layout>
     )
 }
