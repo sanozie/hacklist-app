@@ -1,5 +1,5 @@
 // React
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 
 // Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -13,12 +13,9 @@ import { MainProgression } from 'components/Progression'
 
 // Store
 import { Submissions } from 'store'
+import SubmissionConfig from 'components/Hacks/SubmissionConfig'
 
-
-const SubmissionDash = () => {
-    let [editHack, setEditHack] = useState(false)
-
-
+const SubmissionDash = ({user}) => {
     const submissionsState = useContext(Submissions.State)
 
     if (!submissionsState) return <MainProgression />
@@ -32,15 +29,10 @@ const SubmissionDash = () => {
                         <Row>
                             <h1 className="page-header">Your Submissions</h1>
                         </Row>
-                            {Object.entries(submissionsState).map(hack => {
-                                let [hackID, hackValues] = hack
-                                console.log(hack)
+                            {Object.entries(submissionsState).map(([id, hack]) => {
                                 return (
-                                    <Row onMouseEnter={() => setEditHack(true)}
-                                         onMouseLeave={() => setEditHack(false)} className="my-3">
-                                        <Col xs={10}>
-                                            <Hack {...hackValues} />
-                                        </Col>
+                                    <Row className="my-3">
+                                        <SubmissionConfig hack={hack} uid={user.id} hackId={id} dash={true} />
                                     </Row>
                                 )
                             })}

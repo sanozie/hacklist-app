@@ -24,7 +24,7 @@ import { Signups }  from 'store'
     The difference between dash & non-dash elements should be very clear and not so intertwined. Possibly create mini
     components for each use-case.
 */
-let ConfigRow = props => {
+let SignupConfig = props => {
     //Style Hooks
     let classes = MaterialStyles().classesFormControl
 
@@ -162,4 +162,4 @@ let ConfigRow = props => {
 }
 
 
-export default ConfigRow
+export default SignupConfig
