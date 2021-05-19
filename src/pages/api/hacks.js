@@ -141,15 +141,20 @@ export default async (req, res) => {
 
     function deleteHandler() {
         let { type, uid } = req.query
+        let { hackId } = JSON.parse(req.body)
 
         switch(type) {
-            // Add a new submission
+            // Delete a submission
             case 'submission':
+                firebase.collection('Submissions').doc(hackId).delete().then(() => {
+                    res.status(202)
+                }).catch(e => {
+                    console.error("Error removing document: ", e);
+                })
                 break
 
-            // Signup to a specific hack
+            // Withdraw from a signup
             case 'signup':
-                let { hackId } = JSON.parse(req.body)
                 firebase.collection('Submissions').doc(hackId).get()
                     .then(result => {
                         let data = result.data().signups

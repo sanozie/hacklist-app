@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 import ProviderDecorator from './provider'
 import { getUserFromCookie } from 'utils/auth/userCookies'
+import produce from 'immer'
 
 const initializer = async () => {
     try {
@@ -16,10 +17,23 @@ const updater = async () => {
     return null
 }
 
+const deleter = async (update, state) => {
+    let { hackId } = update
+
+    fetch(`/api/hacks?type=submission`, {
+        method: 'DELETE',
+        body: JSON.stringify(update)
+    })
+
+    return produce(state, draftState => {
+        delete draftState[hackId]
+    })
+}
+
 // Context
 const State = createContext()
 const Dispatch = createContext()
-const Provider = ProviderDecorator(State, Dispatch, initializer, updater)
+const Provider = ProviderDecorator(State, Dispatch, initializer, updater, deleter)
 
 // Export
 export const Submissions = {

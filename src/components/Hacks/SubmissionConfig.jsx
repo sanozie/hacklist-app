@@ -1,5 +1,5 @@
 //React
-import { useState, useEffect, useRef, useContext } from 'react'
+import { useContext } from 'react'
 
 //Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -27,27 +27,21 @@ import { Submissions }  from 'store'
 let SubmissionConfig = props => {
     let submissionActions = useContext(Submissions.Dispatch)
 
-    let handleEdit = () => {
-    //     signupActions.update({ hackId: props.hackId, uid: props.uid, skill, hack: props.hack })
-    //     if (!props.dash) {
-    //         setSubmitted(true)
-    //     }
-    //     handleClose()
-    }
+    let handleEdit = () => {}
 
     let handleDelete = () => {
-    //     let hack = { hackId: props.hackId, uid: props.uid, skill, title: props.hack.title }
-    //     let confirmWithdraw = new Promise((resolve, reject) => {
-    //         props.confirmWithdraw(hack).then(() => {
-    //             resolve()
-    //         }).catch(() => {
-    //             reject()
-    //         })
-    //     })
-    //
-    //     confirmWithdraw.then(() => {
-    //         signupActions.delete(hack)
-    //     })
+        let hack = { hackId: props.hackId, title: props.hack.title }
+        let confirmDelete = new Promise((resolve, reject) => {
+            props.confirmDelete(hack).then(() => {
+                resolve()
+            }).catch(() => {
+                reject()
+            })
+        })
+
+        confirmDelete.then(() => {
+            submissionActions.delete(hack)
+        })
     }
 
 
