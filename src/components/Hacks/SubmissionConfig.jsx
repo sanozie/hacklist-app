@@ -27,8 +27,6 @@ import { Submissions }  from 'store'
 let SubmissionConfig = props => {
     let submissionActions = useContext(Submissions.Dispatch)
 
-    let handleEdit = () => {}
-
     let handleDelete = () => {
         let hack = { hackId: props.hackId, title: props.hack.title }
         let confirmDelete = new Promise((resolve, reject) => {
@@ -41,6 +39,21 @@ let SubmissionConfig = props => {
 
         confirmDelete.then(() => {
             submissionActions.delete(hack)
+        })
+    }
+
+    let handleEdit = () => {
+        let hack = { hackId: props.hackId, title: props.hack.title }
+        let confirmDelete = new Promise((resolve, reject) => {
+            props.confirmEdit(hack).then(data => {
+                resolve(data)
+            }).catch(() => {
+                reject()
+            })
+        })
+
+        confirmEdit.then(data => {
+            submissionActions.update(hack)
         })
     }
 

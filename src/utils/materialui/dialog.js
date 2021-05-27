@@ -27,12 +27,13 @@ let useDialog = () => {
         window.dialogConf.rej()
     }
 
-    function handleSubmit() {
+    function handleSubmit(data = null) {
         setOpen(false)
+        window.dialogConf.data = data
         setDialogState('submitted')
     }
 
-    useDebugValue({ open, dialogState })
+    useDebugValue({ dialogState })
 
     return [open, handleOpen, handleClose, handleSubmit]
 }

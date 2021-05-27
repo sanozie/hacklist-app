@@ -13,7 +13,7 @@ const initializer = async () => {
     }
 }
 
-const updater = async () => {
+const updater = async (hack, state) => {
     return null
 }
 

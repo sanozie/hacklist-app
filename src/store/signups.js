@@ -16,7 +16,7 @@ const initializer = async () => {
 
 const updater = async (update, state) => {
     let { hackId, uid, skill, hack } = update
-    console.log(update)
+
     fetch(`/api/hacks?type=signup&uid=${uid}`, {
         method: 'POST',
         body: JSON.stringify(update)
