@@ -2,10 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../Tutoring/semscreen-component" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../newprofile" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../react-calendar" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../sanozie.github.io" vcs="Git" />
   </component>
 </project>

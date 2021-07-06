@@ -1,6 +1,6 @@
 import firebase from 'db/server'
-import { formatSignupData, formatSubmissionData } from 'utils/formatdata'
-import dateMap from 'utils/datemap'
+import { formatSignupData, formatSubmissionData } from 'utils/data/formatdata'
+import dateMap from 'utils/data/datemap'
 
 
 export default async (req, res) => {

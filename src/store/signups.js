@@ -2,7 +2,7 @@ import { createContext } from 'react'
 import ProviderDecorator from './provider'
 import { getUserFromCookie } from 'utils/auth/userCookies'
 import produce from 'immer'
-import { formatSignupData } from 'utils/formatdata'
+import { formatSignupData } from 'utils/data/formatdata'
 
 const initializer = async () => {
     try {

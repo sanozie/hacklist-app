@@ -13,7 +13,7 @@ import Filters from './Filters'
 import { MainProgression } from 'components/Progression'
 
 // Utils
-import dateMap from 'utils/datemap'
+import dateMap from 'utils/data/datemap'
 
 // Process
 const MAX_TIMELINE = process.env.MAX_TIMELINE

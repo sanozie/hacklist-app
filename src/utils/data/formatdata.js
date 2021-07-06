@@ -1,3 +1,9 @@
+/**
+ * Format submission data provided by database to be used on the client
+ * @param data
+ * @param platform
+ * @returns {*}
+ */
 function formatSubmissionData(data, platform) {
     let sizeData = {}, tempDataMin = { eng: 0, design: 0, pm: 0 }, tempDataTotal = { eng: 0, design: 0, pm: 0 }, { limits } = data;
     for (let [key, value] of Object.entries(data.signups)) {
@@ -23,6 +29,12 @@ function formatSubmissionData(data, platform) {
     return data
 }
 
+/**
+ * Format signup data retrieved from database to be used on dashboard
+ * @param data
+ * @param platform
+ * @returns {*}
+ */
 function formatSignupData(data, platform) {
     //find a way to display the min signups while also accounting for signups outside of mins (where min=0)
     let { limits } = data;
@@ -30,4 +42,15 @@ function formatSignupData(data, platform) {
     return formatSubmissionData(data, platform)
 }
 
-export {formatSignupData, formatSubmissionData}
+/**
+ * Convert server data of hack to client data
+ */
+function convertServerHackToClientHack() {
+
+}
+
+function convertClientHackToServerHack() {
+
+}
+
+export { formatSignupData, formatSubmissionData, convertServerHackToClientHack, convertClientHackToServerHack }

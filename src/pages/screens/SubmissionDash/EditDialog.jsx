@@ -1,7 +1,9 @@
+// Local
+import SubmissionForm from 'components/Forms/SubmissionForm'
+
+// Material UI
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from 'react-bootstrap/Button'
 import Dialog from '@material-ui/core/Dialog'
 
 const EditDialog = props => {
@@ -12,18 +14,10 @@ const EditDialog = props => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">{ `Editing ${props.confirmHack}`}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">{ `Editing ${props.hack?.title}`}</DialogTitle>
             <DialogContent>
-
+                <SubmissionForm hackState={props.state} hack={props.hack}/>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={props.handleClose} variant="outline-lignt" color="primary">
-                    CANCEL
-                </Button>
-                <Button onClick={props.handleSubmit} variant="danger" color="primary" autoFocus>
-                    SUBMIT
-                </Button>
-            </DialogActions>
         </Dialog>
     )
 }

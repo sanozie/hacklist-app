@@ -10,7 +10,7 @@ import Container from 'react-bootstrap/Container'
 import Layout from 'components/Layout'
 import { MainProgression } from 'components/Progression'
 import DeleteDialog from './DeleteDialog'
-import EditDialog from './DeleteDialog'
+import EditDialog from './EditDialog'
 
 // Store
 import { Submissions } from 'store'
@@ -20,25 +20,22 @@ import { useDialog } from 'utils/materialui'
 
 const SubmissionDash = ({user}) => {
     const submissionsState = useContext(Submissions.State)
-    let [confirmHack, setConfirmHack] = useState(null)
+    let [focusedHack, setFocusedHack] = useState(null)
 
     let [deleteDialogOpen, deleteDialogHandleOpen, deleteDialogHandleClose, deleteDialogHandleSubmit] = useDialog()
     let [editDialogOpen, editDialogHandleOpen, editDialogHandleClose, editDialogHandleSubmit] = useDialog()
 
-    if (!submissionsState) return <MainProgression />
-
-    let handleDelete = async (hack) => {
-        setConfirmHack(hack.title)
+    let handleDelete = async hack => {
+        setFocusedHack(hack)
         deleteDialogHandleOpen()
         return new Promise((resolve, reject) => {
             window.dialogConf.progress
                 .then(() => resolve())
                 .catch(() => reject())
         })
-    }
-
-    let handleEdit = async (hack) => {
-        setConfirmHack(hack.title)
+    },
+        handleEdit = async hack => {
+        setFocusedHack(hack)
         editDialogHandleOpen()
         return new Promise((resolve, reject) => {
             window.dialogConf.progress
@@ -46,6 +43,8 @@ const SubmissionDash = ({user}) => {
                 .catch(() => reject())
         })
     }
+
+    if (!submissionsState) return <MainProgression />
 
     // TODO: It looks like hovering causes a rerender.... this should be fixed
     return (
@@ -69,10 +68,9 @@ const SubmissionDash = ({user}) => {
             </Container>
             <DeleteDialog open={deleteDialogOpen} handleOpen={deleteDialogHandleOpen}
                           handleClose={deleteDialogHandleClose} handleSubmit={deleteDialogHandleSubmit}
-                          confirmHack={confirmHack} />
+                          hack={focusedHack} />
             <EditDialog open={editDialogOpen} handleOpen={editDialogHandleOpen}
-                        handleClose={editDialogHandleClose} handleSubmit={editDialogHandleSubmit}
-                        confirmHack={confirmHack} />
+                        handleClose={editDialogHandleClose} handleSubmit={editDialogHandleSubmit} hack={focusedHack}/>
         </Layout>
     )
 }

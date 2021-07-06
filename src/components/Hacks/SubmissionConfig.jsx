@@ -44,7 +44,7 @@ let SubmissionConfig = props => {
 
     let handleEdit = () => {
         let hack = { hackId: props.hackId, title: props.hack.title }
-        let confirmDelete = new Promise((resolve, reject) => {
+        let confirmEdit = new Promise((resolve, reject) => {
             props.confirmEdit(hack).then(data => {
                 resolve(data)
             }).catch(() => {

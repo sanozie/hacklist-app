@@ -1,5 +1,5 @@
 // Utils
-import dateFormatter from 'utils/dateformatter';
+import dateFormatter from 'utils/data/dateformatter';
 
 // Bootstrap
 import Row from 'react-bootstrap/Row'
