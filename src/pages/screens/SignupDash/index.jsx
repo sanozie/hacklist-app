@@ -16,7 +16,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 
 // Components
 import Layout from 'components/Layout'
-import ConfigRow from 'components/Hacks/ConfigRow'
+import SignupConfig from 'components/Hacks/SignupConfig'
 
 // Store
 import { Signups } from 'store'
@@ -55,8 +55,8 @@ const SignupDash = ({user}) => {
                         { Object.entries(signupsState).map(([id, hack]) => {
                             return (
                                 <Row className="my-3">
-                                    <ConfigRow hack={hack} uid={user.id} hackId={id}
-                                               confirmWithdraw={handleWithdraw} dash={true} />
+                                    <SignupConfig hack={hack} uid={user.id} hackId={id}
+                                                  confirmWithdraw={handleWithdraw} dash={true} />
                                 </Row>
                             )
                         })}

@@ -1,9 +1,10 @@
 import firebase from 'db/server'
-import { formatSignupData, formatSubmissionData } from 'utils/formatdata'
-import dateMap from 'utils/datemap'
+import { formatSignupData, formatSubmissionData } from 'utils/data/formatdata'
+import dateMap from 'utils/data/datemap'
 
 
 export default async (req, res) => {
+    // TODO: Convert handlers to async/await syntax
     switch(req.method) {
         case 'GET':
             getHandler()
@@ -13,47 +14,45 @@ export default async (req, res) => {
             break
         case 'DELETE':
             deleteHandler()
+        case 'PUT':
+            putHandler()
     }
 
     function getHandler() {
-        let { type, uid } = req.query
+        const { type, uid } = req.query
         switch(type) {
             // Get submissions from users (indexed by submission date)
             case 'submissions':
-                let queryDate = dateMap(req.query.timeline)
+                const queryDate = dateMap(req.query.timeline)
                 firebase.collection('Submissions')
                     .where('submit_date', '<', new Date())
                     .where('submit_date', '>', new Date(queryDate)).get()
                     .then(snapshot => {
-                        let submissionData = {}
-                        snapshot.forEach(doc => {
-                            submissionData[doc.id] = formatSubmissionData(doc.data(), 'server')
-                        })
-                        res.status(200).send(submissionData)
+                        res.status(200).send(formatDBSubmissionData(snapshot))
                     })
                 break
 
             // Get submissions submitted by current user
             case 'usersubmissions':
-                firebase.collection('Submissions').where('submitter', '==', uid)
-                    .orderBy('submit_date', 'desc').get().then(snapshot => {
-                    let submissionData = {}
-                    snapshot.forEach(doc => {
-                        submissionData[doc.id] = formatSubmissionData(doc.data(), 'server')
+                firebase.collection('Submissions')
+                    .where('submitter', '==', uid)
+                    .orderBy('submit_date', 'desc')
+                    .get()
+                    .then(snapshot => {
+                        res.status(200).send(formatDBSubmissionData(snapshot))
                     })
-
-                    res.status(200).send(submissionData)
-                })
                 break
 
             // Get active and archived hacks of current user
             case 'portfolio':
-                let data = { actives: {}, archive: {} }
+                const data = { actives: {}, archive: {} }
 
                 let activesHandler = firebase.collection('Actives')
-                    .where('members', 'array-contains', uid).get().then(activeSnapshot => {
-                    fetchPortfolio(data.actives, 'active', activeSnapshot, uid)
-                })
+                    .where('members', 'array-contains', uid)
+                    .get()
+                    .then(activeSnapshot => {
+                        fetchPortfolio(data.actives, 'active', activeSnapshot, uid)
+                    })
 
                 let archiveHandler = firebase.collection('Archive')
                     .where('members', 'array-contains', uid).get().then(archiveSnapshot => {
@@ -69,63 +68,72 @@ export default async (req, res) => {
             // Get signups of current user
             case 'usersignups':
                 firebase.collection('Submissions')
-                    .where(`signups.${uid}.query`, '==', true).get().then(snapshot => {
-                    let signupsData = {}
-                    snapshot.forEach(doc => {
-                        //figure out how to only count towards those with min
-                        signupsData[doc.id] = formatSignupData(doc.data(), 'server')
+                    .where(`signups.${uid}.query`, '==', true)
+                    .get()
+                    .then(snapshot => {
+                        res.status(200).send(formatDBSignupData(snapshot))
                     })
-
-                    res.status(200).send(signupsData)
-                })
                 break
         }
     }
 
     function postHandler() {
-        let { type, uid } = req.query
+        const { type, uid } = req.query
 
         switch(type) {
-            // Add a new submission
+            // Add a new submission.
             case 'submission':
-                let body = JSON.parse(req.body)
-                //Remember to generate a random hack title if there is none
-                firebase.collection('Submissions').add({
+                const body = JSON.parse(req.body)
+                const hack = {
                     submitter_name: body.submitter_name,
                     submitter: body.submitter,
                     title: body.hackTitle,
                     submit_date: new Date(),
                     industry: body.industry,
-                    limits: {
-                        max: body.engRange[1] + body.designRange[1] + body.pmRange[1],
-                        min: body.engRange[0] + body.designRange[0] + body.pmRange[0],
-                        eng: {
-                            max: body.engRange[1],
-                            min: body.engRange[0],
-                        },
-                        design: {
-                            max: body.designRange[1],
-                            min: body.designRange[0],
-                        },
-                        pm: {
-                            max: body.pmRange[1],
-                            min: body.pmRange[0],
-                        }
-                    },
+                    limits: body.limits,
                     signups: {
-                        [uid]: body.contribution
+                        [uid]: {
+                            skill: body.contribution,
+                            query: true
+                        }
                     }
-                }).then(result => {
-                    res.status(200).send({msg: "Hack Submitted!"})
+                }
+
+                firebase.collection('Submissions').add(hack).then(result => {
+                    const { id } = result
+                    res.status(200).send({ hackId: id, hackData: formatSubmissionData(hack,'client' ) })
                 }).catch(err => {
                     res.status(501).send({msg: "Server-side Error. Your hack wasn't saved."})
                 })
-                break
+                break;
+        }
+    }
+
+    function putHandler() {
+        const { type, uid } = req.query
+
+        switch(type) {
+            // Update a submission
+            case 'submission':
+                const body = JSON.parse(req.body)
+                const hackUpdate = {
+                    title: body.hackTitle,
+                    industry: body.industry,
+                    limits: body.limits,
+                    signups: { ...body.signups, [uid]: { query: true, skill: body.contribution }}
+                }
+
+                //Remember to generate a random hack title if there is none
+                firebase.collection('Submissions').doc(body.hackId).update(hackUpdate).then(() => {
+                    res.status(202).send({ hackId: body.hackId, hackData: hackUpdate })
+                }).catch(e => {
+                    throw e
+                })
+                break;
 
             // Signup to a specific hack
             case 'signup':
                 let { hackId, skill } = JSON.parse(req.body)
-                console.log(JSON.parse(req.body))
                 firebase.collection('Submissions').doc(hackId).get()
                     .then(result => {
                         firebase.collection('Submissions').doc(hackId).update({
@@ -138,18 +146,22 @@ export default async (req, res) => {
                     }).catch(e => { throw e })
         }
     }
-
     function deleteHandler() {
         let { type, uid } = req.query
+        let { hackId } = JSON.parse(req.body)
 
         switch(type) {
-            // Add a new submission
+            // Delete a submission
             case 'submission':
+                firebase.collection('Submissions').doc(hackId).delete().then(() => {
+                    res.status(202)
+                }).catch(e => {
+                    console.error("Error removing document: ", e);
+                })
                 break
 
-            // Signup to a specific hack
+            // Withdraw from a signup
             case 'signup':
-                let { hackId } = JSON.parse(req.body)
                 firebase.collection('Submissions').doc(hackId).get()
                     .then(result => {
                         let data = result.data().signups
@@ -174,7 +186,7 @@ export default async (req, res) => {
  * @param snapshot Firebase snapshot
  * @param uid
  */
-const fetchPortfolio = (data, timeframe, snapshot, uid) => {
+function fetchPortfolio(data, timeframe, snapshot, uid)  {
     snapshot.forEach(doc => {
         let docData = doc.data()
         docData.date = docData.date.toDate()
@@ -183,4 +195,20 @@ const fetchPortfolio = (data, timeframe, snapshot, uid) => {
         }
         data[doc.id] = docData
     })
+}
+
+function formatDBSubmissionData(snapshot) {
+    let data = {}
+    snapshot.forEach(doc => {
+        data[doc.id] = formatSubmissionData(doc.data(), 'server')
+    })
+    return data
+}
+
+function formatDBSignupData(snapshot) {
+    let data = {}
+    snapshot.forEach(doc => {
+        data[doc.id] = formatSignupData(doc.data(), 'server')
+    })
+    return data
 }

@@ -1,0 +1,25 @@
+// Local
+import SubmissionForm from 'components/Forms/SubmissionForm'
+
+// Material UI
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import Dialog from '@material-ui/core/Dialog'
+
+const EditDialog = props => {
+    return (
+        <Dialog
+            open={props.open}
+            onClose={props.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{ `Editing ${props.hack?.title}`}</DialogTitle>
+            <DialogContent>
+                <SubmissionForm hack={props.hack} usage='update' finished={props.finished} handleFinish={props.handleSubmit}/>
+            </DialogContent>
+        </Dialog>
+    )
+}
+
+export default EditDialog

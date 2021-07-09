@@ -38,7 +38,7 @@ const Screen = () => {
         case 'AddSubmission':
             return <AddSubmission />
         case 'SubmissionDash':
-            return <SubmissionDash />
+            return <SubmissionDash user={user} />
         case 'SignupDash':
             return <SignupDash user={user} />
         default:

@@ -19,6 +19,7 @@ const useAsyncReducer = (initializer, updater, deleter) => {
         return {
             init: () => initializer().then(data => {
                 dispatch({ type: 'replace', data })
+            }).catch(err => {
             }),
             clear: () => dispatch({ type: 'clear' }),
             update: param => updater(param, state).then(data => {
@@ -30,7 +31,7 @@ const useAsyncReducer = (initializer, updater, deleter) => {
         }
     }
 
-    let actions = asyncActions(dispatch)
+    let actions = asyncActions()
 
     return [state, actions]
 }
