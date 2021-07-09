@@ -16,7 +16,7 @@ const EditDialog = props => {
         >
             <DialogTitle id="alert-dialog-title">{ `Editing ${props.hack?.title}`}</DialogTitle>
             <DialogContent>
-                <SubmissionForm hackState={props.state} hack={props.hack}/>
+                <SubmissionForm hack={props.hack} usage='update' finished={props.finished} handleFinish={props.handleSubmit}/>
             </DialogContent>
         </Dialog>
     )

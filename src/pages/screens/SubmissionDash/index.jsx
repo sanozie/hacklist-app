@@ -70,7 +70,8 @@ const SubmissionDash = ({user}) => {
                           handleClose={deleteDialogHandleClose} handleSubmit={deleteDialogHandleSubmit}
                           hack={focusedHack} />
             <EditDialog open={editDialogOpen} handleOpen={editDialogHandleOpen}
-                        handleClose={editDialogHandleClose} handleSubmit={editDialogHandleSubmit} hack={focusedHack}/>
+                        handleClose={editDialogHandleClose} handleSubmit={editDialogHandleSubmit} hack={focusedHack}
+                        finished={editDialogHandleClose} />
         </Layout>
     )
 }

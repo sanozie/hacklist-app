@@ -42,15 +42,4 @@ function formatSignupData(data, platform) {
     return formatSubmissionData(data, platform)
 }
 
-/**
- * Convert server data of hack to client data
- */
-function convertServerHackToClientHack() {
-
-}
-
-function convertClientHackToServerHack() {
-
-}
-
-export { formatSignupData, formatSubmissionData, convertServerHackToClientHack, convertClientHackToServerHack }
+export { formatSignupData, formatSubmissionData }

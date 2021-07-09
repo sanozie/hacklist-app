@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useDebugValue } from 'react'
+import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
 
 // Bootstrap
@@ -23,18 +24,50 @@ import {firebase} from '../../db/client'
 
 // Store
 import { Submissions } from 'store'
+import { useUser } from 'utils/auth/useUser'
 
 /**
  * Submission Form Hook
  * @returns {({setIndustry: (value: (((prevState: string) => string) | string)) => void, state: string}|{state: string, setContribution: (value: (((prevState: string) => string) | string)) => void}|{setHackTitle: (value: (((prevState: string) => string) | string)) => void, state: string}|{setEngRange: (value: (((prevState: number[]) => number[]) | number[])) => void, state: number[]}|{setDesignRange: (value: (((prevState: number[]) => number[]) | number[])) => void, state: number[]})[]}
  */
-function useSubmissionForm(state, id) {
-    let [industryState, setIndustry] = useState('')
-    let [contributionState, setContribution] = useState('')
-    let [hackTitleState, setHackTitle] = useState('')
-    let [engRangeState, setEngRange] = useState([1, 3])
-    let [designRangeState, setDesignRange] = useState([1, 3])
-    let [pmRangeState, setPmRange] = useState([1, 3])
+function useSubmissionForm(state, uid) {
+    let [industryState, setIndustry] = useState(state ? state.industry : '')
+    let [contributionState, setContribution] = useState(state ? state.signups[uid].skill : '')
+    let [hackTitleState, setHackTitle] = useState(state ? state.title : '')
+    let [engRangeState, setEngRange] = useState([
+        state ? state.limits.eng.min : 1,
+        state ? state.limits.eng.max : 3
+    ])
+    let [designRangeState, setDesignRange] = useState([
+        state ? state.limits.design.min : 1,
+        state ? state.limits.design.max : 3
+    ])
+    let [pmRangeState, setPmRange] = useState([
+        state ? state.limits.pm.min : 1,
+        state ? state.limits.pm.max : 3
+    ])
+    let [limits, setLimits] = useState({})
+
+    useEffect(() => {
+        let limitMap = {
+            max: designRangeState[1] + engRangeState[1] + pmRangeState[1],
+            min: designRangeState[0] + engRangeState[0] + pmRangeState[0],
+            design: {
+                max: designRangeState[1],
+                min: designRangeState[0]
+            },
+            eng: {
+                max: engRangeState[1],
+                min: engRangeState[0]
+            },
+            pm: {
+                max: pmRangeState[1],
+                min: pmRangeState[0]
+            }
+        }
+        setLimits(limitMap)
+    }, [engRangeState, designRangeState, pmRangeState])
+
 
     let industry = {
         state: industryState,
@@ -61,25 +94,28 @@ function useSubmissionForm(state, id) {
             setPmRange
         }
 
-    return [industry, contribution, hackTitle, engRange, designRange, pmRange]
+    useDebugValue({ industry, contribution, hackTitle, limits })
+
+    return [industry, contribution, hackTitle, engRange, designRange, pmRange, limits]
 }
 
 
 let SubmissionForm = props => {
+    let { displayName, uid } = firebase.auth().currentUser
     const router = useRouter()
-    const submissionState = useContext(Submissions.State)
+    const submissionState = useContext(Submissions.State),
+        submissionActions = useContext(Submissions.Dispatch)
 
     let [industry,
         contribution,
         hackTitle,
         engRange,
         designRange,
-        pmRange] = useSubmissionForm(submissionState, props.hack?.hackId)
+        pmRange,
+        limits] = useSubmissionForm(submissionState[props.hack?.hackId], uid)
     let [apiProgress, setApiProgress] = useState('idle')
     const [open, setOpen] = useState(false)
     let [focus, setFocus] = useState('default')
-
-    // Destructure hack to be edited to be used in default form values
 
     // Styles
     const formControlClasses = MaterialStyles().classesFormControl
@@ -96,30 +132,40 @@ let SubmissionForm = props => {
 
     const handleSubmit = async () => {
         setApiProgress('pending')
-        let { displayName, uid } = firebase.auth().currentUser
-        setTimeout(() => {
-            console.table(data)
 
-        })
-        let data = JSON.stringify({
-            industry: industry.state,
-            contribution: contribution.state,
-            hackTitle: hackTitle.state,
-            engRange: engRange.state,
-            designRange: designRange.state,
-            pmRange: pmRange.state,
-            submitter_name: displayName,
-            submitter: uid
-        })
+        const params = {
+            usage: props.usage,
+            uid,
+            data: {
+                industry: industry.state,
+                contribution: contribution.state,
+                hackTitle: hackTitle.state,
+                limits,
+                submitter_name: displayName,
+                submitter: uid,
+                hackId: props.hack?.hackId,
+                signups: submissionState[props.hack?.hackId]?.signups
+            }
+        }
+
+        // Needs to be for put and post
         try {
-            await fetch('/api/submit', {
-                method: 'POST',
-                body: data
-            })
-            setApiProgress('success')
+            await submissionActions.update(params)
+            switch(props.usage) {
+                case 'add':
+                    setApiProgress('success')
+                    break
+                case 'update':
+                    setApiProgress('updated')
+                    props.handleFinish()
+            }
         } catch(err) {
             setApiProgress('error')
         }
+    }
+    const handleOpen = () => {
+        setOpen(true)
+        setApiProgress('idle')
     }
 
     return (
@@ -138,12 +184,7 @@ let SubmissionForm = props => {
                         select
                         required
                     >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        <MenuItem value='Recruiting & Staffing'>Recruiting & Staffing</MenuItem>
                     </TextField>
                 </FormControl>
                 <FormControl required variant="outlined"
@@ -157,12 +198,9 @@ let SubmissionForm = props => {
                         color="primary"
                         select
                         required>
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        <MenuItem value='eng'>Engineering</MenuItem>
+                        <MenuItem value='design'>Design</MenuItem>
+                        <MenuItem value='pm'>Product Management</MenuItem>
                     </TextField>
                 </FormControl>
                 <FormControl variant="outlined" classes={formControlClasses} onMouseDown={() => setFocus('title')}>
@@ -214,7 +252,7 @@ let SubmissionForm = props => {
                 </FormControl>
             </Row>
             <Row className="justify-content-center">
-                <button className="btn btn-secondary" onClick={() => setOpen(true)}>SUBMIT</button>
+                <button className="btn btn-secondary" onClick={handleOpen}>SUBMIT</button>
             </Row>
             <Dialog
                 maxWidth={'xs'}
@@ -253,4 +291,8 @@ let SubmissionForm = props => {
     )
 }
 
+SubmissionForm.propTypes = {
+    usage: PropTypes.oneOf(['add', 'update']).isRequired,
+    focusListener: PropTypes.func,
+}
 export default SubmissionForm
