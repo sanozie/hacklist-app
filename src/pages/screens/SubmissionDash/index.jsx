@@ -19,7 +19,7 @@ import { useDialog } from 'utils/materialui'
 
 
 const SubmissionDash = ({user}) => {
-    const submissionsState = useContext(Submissions.State)
+    const submissionsState = useContext(Submissions.State)?.state
     let [focusedHack, setFocusedHack] = useState(null)
 
     let [deleteDialogOpen, deleteDialogHandleOpen, deleteDialogHandleClose, deleteDialogHandleSubmit] = useDialog()

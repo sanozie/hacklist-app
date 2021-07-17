@@ -4,10 +4,11 @@ import React from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from "lib/AppTheme";
 
-// Local Store
+// Local Store Providers
 import { Submissions } from './submissions'
 import { Signups } from './signups'
 import { Portfolio } from './portfolio'
+import { Sync } from './sync'
 
 const providers = [
     <ThemeProvider theme={theme} />,

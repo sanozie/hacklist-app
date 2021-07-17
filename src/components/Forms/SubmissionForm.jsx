@@ -103,7 +103,7 @@ function useSubmissionForm(state, uid) {
 let SubmissionForm = props => {
     let { displayName, uid } = firebase.auth().currentUser
     const router = useRouter()
-    const submissionState = useContext(Submissions.State),
+    const submissionState = useContext(Submissions.State)?.state,
         submissionActions = useContext(Submissions.Dispatch)
 
     let [industry,
