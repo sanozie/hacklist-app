@@ -103,7 +103,7 @@ function useSubmissionForm(state, uid) {
 let SubmissionForm = props => {
     let { displayName, uid } = firebase.auth().currentUser
     const router = useRouter()
-    const submissionState = useContext(Submissions.State),
+    const submissionState = useContext(Submissions.State)?.state,
         submissionActions = useContext(Submissions.Dispatch)
 
     let [industry,
@@ -150,14 +150,15 @@ let SubmissionForm = props => {
 
         // Needs to be for put and post
         try {
-            await submissionActions.update(params)
+
             switch(props.usage) {
                 case 'add':
+                    await submissionActions.update(params)
                     setApiProgress('success')
                     break
                 case 'update':
+                    await props.handleFinish(params)
                     setApiProgress('updated')
-                    props.handleFinish()
             }
         } catch(err) {
             setApiProgress('error')

@@ -14,7 +14,8 @@ const initializer = async () => {
     try {
         let user = getUserFromCookie()
         let submissions = await fetch(`/api/hacks?type=usersubmissions&uid=${user.id}`)
-        return await submissions.json()
+        let state = await submissions.json(), headers = { updated: { last: null, method: null } }
+        return { state, headers }
     } catch {
         return null
     }
@@ -30,9 +31,11 @@ const updater = async (params, state) => {
     const { hackId, hackData } = await hack.json()
 
     return produce(state, draftState => {
-        draftState[hackId] = draftState[hackId]
-            ? formatSubmissionData({ ...draftState[hackId], ...hackData }, 'client')
+        draftState.state[hackId] = draftState.state[hackId]
+            ? formatSubmissionData({ ...draftState.state[hackId], ...hackData }, 'client')
             : hackData
+        draftState.headers.updated.last = hackId
+        draftState.headers.updated.method = 'update'
     })
 }
 
@@ -45,7 +48,9 @@ const deleter = async (update, state) => {
     })
 
     return produce(state, draftState => {
-        delete draftState[hackId]
+        delete draftState.state[hackId]
+        draftState.headers.updated.last = hackId
+        draftState.headers.updated.method = 'delete'
     })
 }
 

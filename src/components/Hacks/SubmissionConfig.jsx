@@ -53,7 +53,7 @@ let SubmissionConfig = props => {
         })
 
         confirmEdit.then(data => {
-            submissionActions.update(hack)
+            submissionActions.update(data)
         })
     }
 

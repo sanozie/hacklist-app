@@ -67,7 +67,7 @@ let AddSubmission = () => {
                 <Row className="flex-grow-1">
                     <Col className="py-5 my-5">
                         <Row>
-                            <SubmissionForm focusListener={field => setFocus(field)} usage='add' />,
+                            <SubmissionForm focusListener={field => setFocus(field)} usage='add' />
                             <Col>
                                 <Row className={styles.desc_wrapper}>
                                     <Col>

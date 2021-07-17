@@ -6,7 +6,8 @@ const initializer = async () => {
     try {
         let user = getUserFromCookie()
         let portfolio = await fetch(`/api/hacks?type=portfolio&uid=${user.id}`)
-        return await portfolio.json()
+        let state = await portfolio.json(), headers = { updated: { last: null, method: null } }
+        return { state, headers }
     } catch {
         return null
     }

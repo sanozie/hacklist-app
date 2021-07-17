@@ -27,7 +27,7 @@ import { useDialog } from 'utils/materialui'
 
 
 const SignupDash = ({user}) => {
-    const signupsState = useContext(Signups.State)
+    const signupsState = useContext(Signups.State)?.state
     let [confirmHack, setConfirmHack] = useState(null)
 
     let [open, handleOpen, handleClose, handleSubmit] = useDialog()

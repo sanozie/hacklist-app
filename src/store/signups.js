@@ -8,7 +8,8 @@ const initializer = async () => {
     try {
         let user = getUserFromCookie()
         let signups = await fetch(`/api/hacks?type=usersignups&uid=${user.id}`)
-        return await signups.json()
+        let state = await signups.json(), headers = { updated: { last: null, method: null } }
+        return { state, headers }
     } catch {
         return null
     }
@@ -23,15 +24,16 @@ const updater = async (update, state) => {
     })
 
     return produce(state, draftState => {
-        if(!draftState[hackId]) {
-            draftState[hackId] = hack
-            draftState[hackId].signups[uid] = { query: true }
+        if(!draftState.state[hackId]) {
+            draftState.state[hackId] = hack
+            draftState.state[hackId].signups[uid] = { query: true }
         }
 
-        draftState[hackId].signups[uid].skill = skill
-        Object.entries(draftState).forEach(([hackId, hackValue]) => {
-            draftState[hackId] = formatSignupData(hackValue, 'client')
-        })
+        draftState.state[hackId].signups[uid].skill = skill
+        draftState.state[hackId] = formatSignupData(draftState.state[hackId], 'client')
+
+        draftState.headers.updated.last = hackId
+        draftState.headers.updated.method = 'update'
     })
 }
 
@@ -44,7 +46,9 @@ const deleter = async (update, state) => {
     })
 
     return produce(state, draftState => {
-        delete draftState[hackId]
+        delete draftState.state[hackId]
+        draftState.headers.updated.last = hackId
+        draftState.headers.updated.method = 'delete'
     })
 }
 
