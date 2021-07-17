@@ -12,6 +12,7 @@ import { Sync } from './sync'
 
 const providers = [
     <ThemeProvider theme={theme} />,
+    <Sync />,
     <Submissions.Provider />,
     <Signups.Provider />,
     <Portfolio.Provider />

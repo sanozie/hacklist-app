@@ -14,12 +14,13 @@ export default async (req, res) => {
             break
         case 'DELETE':
             deleteHandler()
+            break
         case 'PUT':
             putHandler()
     }
 
     function getHandler() {
-        const { type, uid } = req.query
+        const { type, uid, hackId } = req.query
         switch(type) {
             // Get submissions from users (indexed by submission date)
             case 'submissions':
@@ -32,7 +33,7 @@ export default async (req, res) => {
                     })
                 break
 
-            // Get submissions submitted by current user
+            // Get all submissions submitted by current user
             case 'usersubmissions':
                 firebase.collection('Submissions')
                     .where('submitter', '==', uid)
@@ -64,7 +65,6 @@ export default async (req, res) => {
                 })
                 break
 
-
             // Get signups of current user
             case 'usersignups':
                 firebase.collection('Submissions')
@@ -74,6 +74,14 @@ export default async (req, res) => {
                         res.status(200).send(formatDBSignupData(snapshot))
                     })
                 break
+
+            case 'submission':
+                firebase.collection('Submissions')
+                    .where('id', '==', hackId)
+                    .get()
+                    .then(snapshot => {
+                        res.status(200).send(formatDBSubmissionData(snapshot))
+                    })
         }
     }
 

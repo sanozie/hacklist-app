@@ -31,8 +31,8 @@ const updater = async (params, state) => {
     const { hackId, hackData } = await hack.json()
 
     return produce(state, draftState => {
-        draftState.data[hackId] = draftState.data[hackId]
-            ? formatSubmissionData({ ...draftState.data[hackId], ...hackData }, 'client')
+        draftState.state[hackId] = draftState.state[hackId]
+            ? formatSubmissionData({ ...draftState.state[hackId], ...hackData }, 'client')
             : hackData
         draftState.headers.updated.last = hackId
         draftState.headers.updated.method = 'update'
@@ -48,7 +48,7 @@ const deleter = async (update, state) => {
     })
 
     return produce(state, draftState => {
-        delete draftState.data[hackId]
+        delete draftState.state[hackId]
         draftState.headers.updated.last = hackId
         draftState.headers.updated.method = 'delete'
     })
