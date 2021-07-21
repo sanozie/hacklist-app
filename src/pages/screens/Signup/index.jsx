@@ -60,8 +60,8 @@ function useFilteredHacks(user) {
  */
 function filterHacks(hacks, filterData, user) {
     // First filter by if the user is already signed up || is the owner
-    const ownerTrim = ([id, hack]) => hack.submitter !== user.id
-    const signupTrim = ([id, hack]) => !hack.signups[user.id]
+    const ownerTrim = ([id, hack]) => hack.submitter !== user.uid
+    const signupTrim = ([id, hack]) => !hack.signups[user.uid]
     // Add more filter data variables here
     const timelineTrim = ([id, hack]) => new Date(hack.submit_date) > dateMap(filterData.timeline)
 
@@ -98,7 +98,7 @@ let Signup = ({user}) => {
                             <Col xs="8">
                                 <Row>
                                     {(filteredHacks.length !== 0) && filteredHacks.map(([id, hack]) => (
-                                        <SignupConfig hack={hack} hackId={id} uid={user.id}
+                                        <SignupConfig hack={hack} hackId={id} uid={user.uid}
                                                       emitSignup={() => setSignup(!signup)} />
                                     ))}
                                     {(filteredHacks.length === 0) && (

@@ -23,7 +23,7 @@ function useBadgeOverlay() {
     let [submissionBadges, setSubmissionBadges] = useState(false)
     let [signupBadges, setSignupBadges] = useState(false)
 
-    useDebugValue({submissionBadges, signupBadges})
+    useDebugValue({ submissionBadges, signupBadges })
 
     return [submissionBadges, setSubmissionBadges, signupBadges, setSignupBadges]
 }

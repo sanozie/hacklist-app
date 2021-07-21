@@ -32,7 +32,7 @@ const Screen = () => {
         case '/':
             return <Signin />
         case 'Dashboard':
-            return <Dashboard user={user}/>
+            return <Dashboard />
         case 'Signup':
             return <Signup user={user} />
         case 'AddSubmission':

@@ -55,7 +55,7 @@ const SignupDash = ({user}) => {
                         { Object.entries(signupsState).map(([id, hack]) => {
                             return (
                                 <Row className="my-3">
-                                    <SignupConfig hack={hack} uid={user.id} hackId={id}
+                                    <SignupConfig hack={hack} uid={user.uid} hackId={id}
                                                   confirmWithdraw={handleWithdraw} dash={true} />
                                 </Row>
                             )

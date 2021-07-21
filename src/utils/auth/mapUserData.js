@@ -1,9 +1,11 @@
 export const mapUserData = async (user) => {
-    const { uid, email } = user
+    const { uid, email, providerData: [{ displayName }] } = user
+    console.log(displayName)
     const token = await user.getIdToken(true)
     return {
-        id: uid,
+        uid,
         email,
         token,
+        displayName
     }
 }

@@ -5,7 +5,7 @@ import { getUserFromCookie } from 'utils/auth/userCookies'
 const initializer = async () => {
     try {
         let user = getUserFromCookie()
-        let portfolio = await fetch(`/api/hacks?type=portfolio&uid=${user.id}`)
+        let portfolio = await fetch(`/api/hacks?type=portfolio&uid=${user.uid}`)
         let state = await portfolio.json(), headers = { updated: { last: null, method: null } }
         return { state, headers }
     } catch {
