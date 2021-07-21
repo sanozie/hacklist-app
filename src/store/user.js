@@ -1,4 +1,4 @@
-import { createContext, useEffect } from 'react'
+import { createContext } from 'react'
 import { useUser } from 'utils/auth/useUser'
 
 const State = createContext()
