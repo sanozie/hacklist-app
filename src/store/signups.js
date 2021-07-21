@@ -7,7 +7,7 @@ import { formatSignupData } from 'utils/data/formatdata'
 const initializer = async () => {
     try {
         let user = getUserFromCookie()
-        let signups = await fetch(`/api/hacks?type=usersignups&uid=${user.id}`)
+        let signups = await fetch(`/api/hacks?type=usersignups&uid=${user.uid}`)
         let state = await signups.json(), headers = { updated: { last: null, method: null } }
         return { state, headers }
     } catch {

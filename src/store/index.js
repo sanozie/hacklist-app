@@ -9,16 +9,18 @@ import { Submissions } from './submissions'
 import { Signups } from './signups'
 import { Portfolio } from './portfolio'
 import { Sync } from './sync'
+import { User } from './user'
 
 const providers = [
     <ThemeProvider theme={theme} />,
     <Sync />,
     <Submissions.Provider />,
     <Signups.Provider />,
-    <Portfolio.Provider />
+    <Portfolio.Provider />,
+    <User.Provider />,
     ]
 
 const Store = ({ children: initial }) =>
     providers.reduce((children, parent) => React.cloneElement(parent, { children }), initial)
 
-export { Submissions, Signups, Portfolio, Store }
+export { Submissions, Signups, Portfolio, User, Store }

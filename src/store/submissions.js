@@ -13,7 +13,7 @@ const methodUsage = {
 const initializer = async () => {
     try {
         let user = getUserFromCookie()
-        let submissions = await fetch(`/api/hacks?type=usersubmissions&uid=${user.id}`)
+        let submissions = await fetch(`/api/hacks?type=usersubmissions&uid=${user.uid}`)
         let state = await submissions.json(), headers = { updated: { last: null, method: null } }
         return { state, headers }
     } catch {

@@ -24,7 +24,7 @@ import {firebase} from '../../db/client'
 
 // Store
 import { Submissions } from 'store'
-import { useUser } from 'utils/auth/useUser'
+import { User } from 'store'
 
 /**
  * Submission Form Hook
@@ -101,8 +101,8 @@ function useSubmissionForm(state, uid) {
 
 
 let SubmissionForm = props => {
-    let { displayName, uid } = firebase.auth().currentUser
     const router = useRouter()
+    const { uid, displayName } = useContext(User.State)
     const submissionState = useContext(Submissions.State)?.state,
         submissionActions = useContext(Submissions.Dispatch)
 
@@ -112,7 +112,7 @@ let SubmissionForm = props => {
         engRange,
         designRange,
         pmRange,
-        limits] = useSubmissionForm(submissionState[props.hack?.hackId], uid)
+        limits] = useSubmissionForm(submissionState?.[props.hack?.hackId], uid)
     let [apiProgress, setApiProgress] = useState('idle')
     const [open, setOpen] = useState(false)
     let [focus, setFocus] = useState('default')
