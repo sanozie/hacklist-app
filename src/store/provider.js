@@ -1,5 +1,7 @@
-// Reducer
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useContext } from 'react'
+
+// Store
+import { User } from 'store'
 
 const useAsyncReducer = (initializer, updater, deleter) => {
     let reducer = (state, action) => {
@@ -40,10 +42,11 @@ const useAsyncReducer = (initializer, updater, deleter) => {
 const ProviderDecorator = (State, Dispatch, initializer, updater, deleter) => {
     return ({children}) => {
         const [state, actions] = useAsyncReducer(initializer, updater, deleter)
+        const user = useContext(User.State)
 
         useEffect(() => {
             actions.init()
-        }, [])
+        }, [user])
 
         return (
             <State.Provider value={state}>

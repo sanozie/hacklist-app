@@ -34,7 +34,6 @@ function useFilteredHacks(user) {
         fetch(`/api/hacks?type=submissions&timeline=${MAX_TIMELINE}`)
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 setHacks(res)
                 setFilteredHacks(filterHacks(res, filterData, user))
                 setFetched(true)
