@@ -50,7 +50,6 @@ let Signups = ({ data }) => {
                         )
                     })}
                 </div>
-
             </Col>
         </Row>
     )

@@ -1,13 +1,7 @@
-import { useRouter } from "next/router";
+import { MainProgression } from 'components/Progression'
 
 const AuthReroute = () => {
-    const router = useRouter()
-    return (
-        <div>
-            Sorry, you're not signed in. Please sign back in.
-            <button onClick={() => {router.push('/Signin')}}>Sign in</button>
-        </div>
-    )
+    return <MainProgression message="Signing you in..."/>
 }
 
 export default AuthReroute

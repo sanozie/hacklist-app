@@ -19,9 +19,16 @@ let Progression = () => {
     return <LinearProgress classes={progressionStyles} />
     
 }
-let MainProgression = () => {
+let MainProgression = props => {
     const classes = useStyles();
-    return <div className="poster center"><div className={classes.root}><Progression /></div></div>
+    return (
+        <div className="poster center">
+            <div className={classes.root}>
+                <p className="text-center mb-2">{props.message}</p>
+                <Progression />
+            </div>
+        </div>
+    )
 }
 
 export { Progression, MainProgression }

@@ -4,18 +4,18 @@ import { useRouter } from 'next/router'
 import { useUser } from 'utils/auth/useUser'
 
 // Components
-import Signin from "./screens/Signin";
-import Dashboard from "./screens/Dashboard";
-import Signup from "./screens/Signup";
-import AddSubmission from "./screens/AddSubmission";
+import Signin from './screens/Signin'
+import Dashboard from './screens/Dashboard'
+import Signup from './screens/Signup'
+import AddSubmission from './screens/AddSubmission'
 import AuthReroute from 'components/AuthReroute'
 import SubmissionDash from './screens/SubmissionDash'
 import SignupDash from './screens/SignupDash'
 
 const Screen = () => {
     const router = useRouter()
-    const { screen } = router.query
     const { user } = useUser()
+    const { screen } = router.query
 
     // Public paths
     if(screen === 'Signin') {
@@ -23,7 +23,7 @@ const Screen = () => {
     }
 
     // Private path wall (no unauthenticated users access paths below)
-    if (!user && !router.query.deepRoute) {
+    if (!user) {
         return <AuthReroute />
     }
 
@@ -44,8 +44,6 @@ const Screen = () => {
         default:
             return <Signin/>
     }
-
-    return <p>Wau. Something's really, really broken. Sorry about that.</p>
 }
 
 
