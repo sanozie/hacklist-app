@@ -26,7 +26,7 @@ import { Signups }  from 'store'
 */
 let SignupConfig = props => {
     //Style Hooks
-    let classes = MaterialStyles().classesFormControl
+    const { classesFormControl } = MaterialStyles()
 
     // Util Hooks
     let [hackOwner, setHackOwner] = useState(false)
@@ -86,7 +86,6 @@ let SignupConfig = props => {
         })
     }
 
-
     return (
         <Col md={12} className="m-3">
             <Row>
@@ -117,22 +116,30 @@ let SignupConfig = props => {
                                                 vertical: 'center',
                                                 horizontal: 'center',
                                             }}>
-                                            <p>Sign up as:</p>
-                                            <FormControl required variant="outlined"
-                                                         className={`${classes.formControl} w-100`}>
-                                                <TextField
-                                                    variant="outlined"
-                                                    value={skill}
-                                                    onChange={e => { setSkill(e.target.value) }}
-                                                    label="Skill"
-                                                    size="small"
-                                                    select>
-                                                    <MenuItem value='eng'>Engineer</MenuItem>
-                                                    <MenuItem value='design'>Designer</MenuItem>
-                                                    <MenuItem value='pm'>Product Manager</MenuItem>
-                                                </TextField>
-                                            </FormControl>
-                                            <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
+                                            <Col className="my-1">
+                                                <Row className="my-3 justify-content-center text-center">
+                                                    <p>Sign up as:</p>
+                                                </Row>
+                                                <Row className="my-1">
+                                                    <FormControl required variant="outlined"
+                                                                 className={`${classesFormControl.formControl} w-100`}>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            value={skill}
+                                                            onChange={e => { setSkill(e.target.value) }}
+                                                            label="Skill"
+                                                            size="small"
+                                                            select>
+                                                            <MenuItem value='eng'>Engineer</MenuItem>
+                                                            <MenuItem value='design'>Designer</MenuItem>
+                                                            <MenuItem value='pm'>Product Manager</MenuItem>
+                                                        </TextField>
+                                                    </FormControl>
+                                                </Row>
+                                                <Row className="mt-2 mb-3 justify-content-center" >
+                                                    <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
+                                                </Row>
+                                            </Col>
                                         </Popover>
                                     </>
                                 </Row>

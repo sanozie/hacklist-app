@@ -167,22 +167,27 @@ let Filters = ({ setFilterData }) => {
                             horizontal: 'center',
                         }}
                     >
-
-                        <p>Add an industry (Enter)</p>
-                        <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
-                            <TextField
-                                variant="outlined"
-                                value={newIndustry}
-                                onChange={e => { setNewIndustry(e.target.value) }}
-                                onKeyDown={e => {handleAddIndustryEnter(e)}}
-                                label="Industry"
-                                size="small"
-                                select
-                            >
-                                <MenuItem value='Marketing'>Marketing</MenuItem>
-                                <MenuItem value='Recruitment & Staffing'>Recruitment & Staffing</MenuItem>
-                            </TextField>
-                        </FormControl>
+                        <Col>
+                            <Row className="my-3">
+                                <p>Add an industry (Enter)</p>
+                            </Row>
+                            <Row className="mt-1 mb-3">
+                                <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
+                                    <TextField
+                                        variant="outlined"
+                                        value={newIndustry}
+                                        onChange={e => { setNewIndustry(e.target.value) }}
+                                        onKeyDown={e => {handleAddIndustryEnter(e)}}
+                                        label="Industry"
+                                        size="small"
+                                        select
+                                    >
+                                        <MenuItem value='Marketing'>Marketing</MenuItem>
+                                        <MenuItem value='Recruitment & Staffing'>Recruitment & Staffing</MenuItem>
+                                    </TextField>
+                                </FormControl>
+                            </Row>
+                        </Col>
                     </Popover>
                 </Row>
                 <Row>
@@ -205,7 +210,7 @@ let Filters = ({ setFilterData }) => {
                         anchorEl={popoverAnchorTag}
                         onClose={handleCloseAddTag}
                         anchorOrigin={{
-                            vertical: 'top',
+                            vertical: 'bottom',
                             horizontal: 'center',
                         }}
                         transformOrigin={{
@@ -213,17 +218,23 @@ let Filters = ({ setFilterData }) => {
                             horizontal: 'center',
                         }}
                     >
-                        <p>Add a tag (enter)</p>
-                        <FormControl required variant="outlined" className={classes.formControl}>
-                            <TextField
-                                variant="outlined"
-                                value={newTag}
-                                onChange={e => { setNewTag(e.target.value) }}
-                                onKeyDown={e => {handleAddTagEnter(e)}}
-                                label="New Tag"
-                                size="small"
-                            />
-                        </FormControl>
+                        <Col>
+                            <Row className="my-3">
+                                <p>Add a tag (enter)</p>
+                            </Row>
+                            <Row className="mt-1 mb-3">
+                                <FormControl required variant="outlined" className={classes.formControl}>
+                                    <TextField
+                                        variant="outlined"
+                                        value={newTag}
+                                        onChange={e => { setNewTag(e.target.value) }}
+                                        onKeyDown={e => {handleAddTagEnter(e)}}
+                                        label="New Tag"
+                                        size="small"
+                                    />
+                                </FormControl>
+                            </Row>
+                        </Col>
                     </Popover>
                 </Row>
                 <Row>

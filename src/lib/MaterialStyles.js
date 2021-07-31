@@ -11,14 +11,14 @@ const useFormControl = makeStyles(() => ({
         margin: '0.5rem !important',
         color: 'white',
     }
-}));
+}))
 
 const useStylesInput = makeStyles(() => ({
     root: {
         minWidth: 200,
         boxShadow: '0px 2px 3px rgba(0,0,0,0.2)',
     }
-}));
+}))
 
 const usePopupStyles = makeStyles(() => ({
     paper: {

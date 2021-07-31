@@ -47,7 +47,6 @@ let Dashboard = () => {
     /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
         it will probably just have a loading screen forever.
      */
-
     if (!signupsState || !submissionsState || !portfolioState) return <MainProgression />
 
     return (

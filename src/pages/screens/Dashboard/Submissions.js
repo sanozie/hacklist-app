@@ -10,7 +10,6 @@ import { SubmissionCircleRow, SubmissionGraphRow } from "components/SubmissionGr
  * @param {*} data
  */
 let Submissions = ({ data }) => {
-    let router = useRouter()
     let submissionValues = Object.values(data)
     let submissionCount = submissionValues.length
 
@@ -37,26 +36,24 @@ let Submissions = ({ data }) => {
                     </Row>
                 )}
                 {(submissionCount > 0) && submissionValues.map(item => {
-                        return (
-                            <Row className="py-1">
-                                <Col lg="2" className="d-flex align-items-center">
-                                    <h4 className="submitted_hack_title flex-grow-1">
-                                        {item.title}
-                                    </h4>
-                                </Col>
-                                <Col lg="7" className=" align-items-center py-1">
-                                    <SubmissionGraphRow sizeData={item.sizeData} />
-                                </Col>
-                                <Col lg="3">
-                                    <SubmissionCircleRow sizeData={item.sizeData} />
-                                </Col>
-                            </Row>
-                        )
-                    }
-                )}
+                    return (
+                        <Row className="py-1">
+                            <Col lg="2" className="d-flex align-items-center">
+                                <h4 className="submitted_hack_title flex-grow-1">
+                                    {item.title}
+                                </h4>
+                            </Col>
+                            <Col lg="7" xs="12" className="align-items-center py-1">
+                                <SubmissionGraphRow sizeData={item.sizeData} />
+                            </Col>
+                            <Col lg="3" className="d-none d-lg-block">
+                                <SubmissionCircleRow sizeData={item.sizeData} />
+                            </Col>
+                        </Row>
+                    )
+                })}
             </Col>
         </Row>
-
     )
 }
 
