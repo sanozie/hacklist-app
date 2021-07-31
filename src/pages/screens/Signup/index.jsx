@@ -90,7 +90,7 @@ let Signup = ({user}) => {
                     </Col>
                 </Row>
                 <Row className="flex-grow-1">
-                    {!fetched && (<MainProgression />)}
+                    {!fetched && (<MainProgression message="Fetching data" />)}
                     {fetched && (
                         <>
                             <Filters setFilterData={filterData => setFilterData(filterData)} />

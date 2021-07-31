@@ -59,7 +59,7 @@ let SubmissionConfig = props => {
 
 
     return (
-        <Col md={12} className="m-3">
+        <Col className="m-md-3 p-0">
             <Row>
                 <Col xs={10}>
                     <Hack {...props.hack} />

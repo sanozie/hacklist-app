@@ -47,16 +47,16 @@ let Dashboard = () => {
     /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
         it will probably just have a loading screen forever.
      */
-    if (!signupsState || !submissionsState || !portfolioState) return <MainProgression />
+    if (!signupsState || !submissionsState || !portfolioState) return <MainProgression message="Loading your data" />
 
     return (
         <Layout title="Dashboard | DIYHacks" nav={true}>
             <Container className={styles.body}>
-                <Row className="my-2 pt-5 pb-3">
+                <Row className="my-2 pt-5 pb-3 justify-content-center">
                     <h1 className="page-header pl-2">YOUR STATS</h1>
                 </Row>
                 <Row className="justify-content-center">
-                    <Col md="8" className={styles.status_env}>
+                    <Col md="8" className={`${styles.status_env} my-2 my-md-0`}>
                         {/* Figure out a better way to update this hover */}
                         <Row className="status-wrapper"
                              onMouseEnter={() => setSubmissionBadges(true)}
@@ -79,7 +79,7 @@ let Dashboard = () => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col md="4" className={styles.status_env}>
+                    <Col md="4" className={`${styles.status_env} my-2 my-md-0`}>
                         <Row className="status-wrapper" onMouseEnter={() => setSignupBadges(true)}
                              onMouseLeave={() => setSignupBadges(false)}>
                             <Badge title="Signup For A Hack" display={signupBadges}
@@ -94,7 +94,7 @@ let Dashboard = () => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col md="12" className={styles.status_env}>
+                    <Col md="12" className={`${styles.status_env} my-2 my-md-0`}>
                         <Row className="status-wrapper">
                             <Col>
                                 <Row>
