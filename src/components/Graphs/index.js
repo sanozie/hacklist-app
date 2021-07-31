@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 
 
 
-const SubmissionGraph = (props) => {
+const SubmissionGraph = props => {
     let classes = `${styles.submissions_graph} ${props.classes}`
     let title = ""
     switch (props.type) {
@@ -37,13 +37,13 @@ const SubmissionGraph = (props) => {
     )
 }
 
-const SubmissionGraphOverflow = (props) => {
+const SubmissionGraphOverflow = props => {
     return (
         <div className={styles.submissions_graph_overflow} style={{ width: props.width }} />
     )
 }
 
-const CircleGraph = (props) => {
+const CircleGraph = props => {
     let title = "",
         style = {},
         engCircle = {
@@ -96,7 +96,7 @@ const CircleGraph = (props) => {
             }
             placement="top"
         >
-            <CircularProgress variant="static" value={props.value} classes={style} />
+            <CircularProgress variant="determinate" value={props.value} classes={style} />
         </HtmlTooltip>
     )
 }

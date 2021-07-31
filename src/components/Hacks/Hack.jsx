@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 // Components
-import { SubmissionCircleRow, SubmissionGraphRow } from 'components/SubmissionGraphs';
+import { SubmissionCircleRow, SubmissionGraphRow } from 'components/Graphs';
 import Badge from 'components/Badge'
 
 // Styles
@@ -16,10 +16,12 @@ import styles from './Hack.module.scss'
 let Hack = props => {
     return (
         <Row className="status-wrapper">
-            <Col md={12} className="m-3">
+            <Col className="m-md-3 m-1 p-1">
                 <Row>
-                    <h2>{props.title}</h2>
-                    <h3 className={`align-items-end ${styles.industry_label}`}>{props.industry}</h3>
+                    <Col className="text-left">
+                        <h2>{props.title}</h2>
+                        <h3 className={`align-items-end ${styles.industry_label} mx-0`}>{props.industry}</h3>
+                    </Col>
                 </Row>
                 <Row className="d-none d-sm-flex my-1">
                     <Col lg="8" className="justify-content-start"><h5 className="d-flex">Minimums</h5></Col>
