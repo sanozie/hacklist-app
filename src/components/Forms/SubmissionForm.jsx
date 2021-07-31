@@ -122,7 +122,7 @@ function useSubmissionForm(state, uid) {
 
     useDebugValue({ industry, contribution, hackTitle, limits, hackTitleErr, industryErr, contributionErr })
 
-    return [industry, contribution, hackTitle, engRange, designRange, pmRange, limits, hackTitleErr, industryErr, contributionErr]
+    return { industry, contribution, hackTitle, engRange, designRange, pmRange, limits, hackTitleErr, industryErr, contributionErr }
 }
 
 
@@ -132,16 +132,7 @@ let SubmissionForm = props => {
     const submissionState = useContext(Submissions.State)?.state,
         submissionActions = useContext(Submissions.Dispatch)
 
-    let [industry,
-        contribution,
-        hackTitle,
-        engRange,
-        designRange,
-        pmRange,
-        limits,
-        hackTitleErr,
-        industryErr,
-        contributionErr] = useSubmissionForm(submissionState?.[props.hack?.hackId], uid)
+    let form = useSubmissionForm(submissionState?.[props.hack?.hackId], uid)
     let [apiProgress, setApiProgress] = useState('idle')
     const [open, setOpen] = useState(false)
     let [focus, setFocus] = useState('default')
@@ -165,10 +156,10 @@ let SubmissionForm = props => {
             usage: props.usage,
             uid,
             data: {
-                industry: industry.state,
-                contribution: contribution.state,
-                hackTitle: hackTitle.state,
-                limits,
+                industry: form.industry.state,
+                contribution: form.contribution.state,
+                hackTitle: form.hackTitle.state,
+                limits: form.limits,
                 submitter_name: displayName,
                 submitter: uid,
                 hackId: props.hack?.hackId,
@@ -193,16 +184,16 @@ let SubmissionForm = props => {
     }
     const handleOpen = () => {
         let valid = true
-        if (hackTitle.state === '') {
-            hackTitleErr.setHackTitleError(true)
+        if (form.hackTitle.state === '') {
+            form.hackTitleErr.setHackTitleError(true)
             valid = false
         }
-        if (industry.state === '') {
-            industryErr.setIndustryError(true)
+        if (form.industry.state === '') {
+            form.industryErr.setIndustryError(true)
             valid = false
         }
-        if (contribution.state === '') {
-            contributionErr.setContributionError(true)
+        if (form.contribution.state === '') {
+            form.contributionErr.setContributionError(true)
             valid = false
         }
 
@@ -212,47 +203,55 @@ let SubmissionForm = props => {
         }
     }
 
+    useEffect(() =>{
+        console.log(form.hackTitleErr.state)
+    }, [form.hackTitleErr])
+
     return (
         <Col>
             <Row className="justify-content-center">
                 <FormControl required variant="outlined" classes={classesFormControl}
-                             onMouseDown={() => setFocus('industry')} error={industryErr.state}>
+                             onMouseDown={() => setFocus('industry')}>
                     <TextField
                         variant="outlined"
-                        value={industry.state}
-                        onChange={e => { industry.setIndustry(e.target.value) }}
+                        value={form.industry.state}
+                        onChange={e => { form.industry.setIndustry(e.target.value) }}
                         label="Industry"
                         color="primary"
                         classes={classesInput}
                         select
                         required
+                        error={form.industryErr.state}
                     >
                         <MenuItem value='Recruiting & Staffing'>Recruiting & Staffing</MenuItem>
                     </TextField>
                 </FormControl>
                 <FormControl required variant="outlined" classes={classesFormControl}
-                             onMouseDown={() => setFocus('contribution')} error={contributionErr.state}>
+                             onMouseDown={() => setFocus('contribution')}>
                     <TextField
                         variant="outlined"
-                        value={contribution.state}
-                        onChange={e => { contribution.setContribution(e.target.value) }}
+                        value={form.contribution.state}
+                        onChange={e => { form.contribution.setContribution(e.target.value) }}
                         label="Contribution"
                         color="primary"
                         select
-                        required>
+                        required
+                        error={form.contributionErr.state}>
                         <MenuItem value='eng'>Engineering</MenuItem>
                         <MenuItem value='design'>Design</MenuItem>
                         <MenuItem value='pm'>Product Management</MenuItem>
                     </TextField>
                 </FormControl>
                 <FormControl variant="outlined" classes={classesFormControl} onMouseDown={() => setFocus('title')}
-                             required error={hackTitleErr.state}>
+                              >
                     <TextField
                         variant="outlined"
-                        value={hackTitle.state}
-                        onChange={e => { hackTitle.setHackTitle(e.target.value) }}
+                        value={form.hackTitle.state}
+                        onChange={e => { form.hackTitle.setHackTitle(e.target.value) }}
                         color="primary"
-                        label="Title" />
+                        label="Title"
+                        required
+                        error={form.hackTitleErr.state} />
                 </FormControl>
             </Row>
             <Row className="justify-content-center">
@@ -261,10 +260,10 @@ let SubmissionForm = props => {
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
-                        value={engRange.state}
+                        value={form.engRange.state}
                         valueLabelDisplay="auto"
                         aria-labelledby="eng-range"
-                        onChange={(event, newVal) => engRange.setEngRange(newVal)}
+                        onChange={(event, newVal) => form.engRange.setEngRange(newVal)}
                         color="primary"
                     />
                 </FormControl>
@@ -273,10 +272,10 @@ let SubmissionForm = props => {
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
-                        value={designRange.state}
+                        value={form.designRange.state}
                         valueLabelDisplay="auto"
                         aria-labelledby="design-range"
-                        onChange={(event, newVal) => designRange.setDesignRange(newVal)}
+                        onChange={(event, newVal) => form.designRange.setDesignRange(newVal)}
                         color='secondary'
                     />
                 </FormControl>
@@ -285,16 +284,16 @@ let SubmissionForm = props => {
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
-                        value={pmRange.state}
+                        value={form.pmRange.state}
                         valueLabelDisplay="auto"
                         aria-labelledby="pm-range"
-                        onChange={(event, newVal) => pmRange.setPmRange(newVal)}
+                        onChange={(event, newVal) => form.pmRange.setPmRange(newVal)}
                         color="tertiary"
                     />
                 </FormControl>
             </Row>
             <Row className="justify-content-center">
-                <button className="btn btn-secondary" onClick={handleOpen}>SUBMIT</button>
+                <Button variant="outline-light" onClick={handleOpen}>SUBMIT</Button>
             </Row>
             <Dialog
                 maxWidth={'xs'}
@@ -322,10 +321,10 @@ let SubmissionForm = props => {
                 <div style={getProgress('success')}>
                     <DialogTitle id="confirm" className="text-center">Submissions Updated</DialogTitle>
                     <DialogActions className="justify-content-center">
-                        <button className="btn btn-primary"
+                        <Button className="btn btn-primary"
                                 onClick={() => {router.push('/[screen]', '/Dashboard')}}>
                             BACK TO DASHBOARD
-                        </button>
+                        </Button>
                     </DialogActions>
                 </div>
             </Dialog>

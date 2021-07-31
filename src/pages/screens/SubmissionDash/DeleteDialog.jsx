@@ -16,13 +16,13 @@ const DeleteDialog = props => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">{ `Delete the ${props.hack?.title} hack?`}</DialogTitle>
+            <DialogTitle id="alert-dialog-title" className="text-center">{ `Delete the ${props.hack?.title} hack?`}</DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className="text-center">
                     You can't undo this action.
                 </DialogContentText>
             </DialogContent>
-            <DialogActions>
+            <DialogActions className="justify-content-center">
                 <Button onClick={props.handleClose} variant="outline-light" color="primary">
                     CANCEL
                 </Button>

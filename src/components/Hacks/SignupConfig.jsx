@@ -32,6 +32,7 @@ let SignupConfig = props => {
     let [hackOwner, setHackOwner] = useState(false)
     let [skill, setSkill] = useState('')
     let [submitted, setSubmitted] = useState(false)
+    let [submitErr, setSubmitErr] = useState(false)
 
 
     let submitButton = useRef(null)
@@ -53,6 +54,10 @@ let SignupConfig = props => {
         }
     })
 
+    useEffect(() => {
+        setSubmitErr(false)
+    }, [skill])
+
     let handleClose = () => {
         setOpenSubmit(false)
         setPopoverSubmitButton(null)
@@ -64,11 +69,15 @@ let SignupConfig = props => {
     }
 
     let handleSubmit = () => {
-        signupActions.update({ hackId: props.hackId, uid: props.uid, skill, hack: props.hack })
-        if (!props.dash) {
-            setSubmitted(true)
+        if(skill === '') {
+            setSubmitErr(true)
+        } else {
+            signupActions.update({ hackId: props.hackId, uid: props.uid, skill, hack: props.hack })
+            if (!props.dash) {
+                setSubmitted(true)
+            }
+            handleClose()
         }
-        handleClose()
     }
 
     let handleWithdraw = () => {
@@ -129,7 +138,8 @@ let SignupConfig = props => {
                                                             onChange={e => { setSkill(e.target.value) }}
                                                             label="Skill"
                                                             size="small"
-                                                            select>
+                                                            select
+                                                            error={submitErr}>
                                                             <MenuItem value='eng'>Engineer</MenuItem>
                                                             <MenuItem value='design'>Designer</MenuItem>
                                                             <MenuItem value='pm'>Product Manager</MenuItem>
@@ -137,7 +147,7 @@ let SignupConfig = props => {
                                                     </FormControl>
                                                 </Row>
                                                 <Row className="mt-2 mb-3 justify-content-center" >
-                                                    <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
+                                                    <Button className="btn btn-primary" onClick={handleSubmit}>CONFIRM</Button>
                                                 </Row>
                                             </Col>
                                         </Popover>
