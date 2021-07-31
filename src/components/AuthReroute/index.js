@@ -1,7 +1,7 @@
 import { MainProgression } from 'components/Progression'
 
 const AuthReroute = () => {
-    return <MainProgression message="Signing you in..."/>
+    return <MainProgression message="Authenticating..."/>
 }
 
 export default AuthReroute
