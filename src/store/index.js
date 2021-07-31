@@ -2,7 +2,7 @@ import React from 'react'
 
 // Material UI
 import { ThemeProvider } from '@material-ui/core/styles'
-import theme from "lib/AppTheme";
+import theme from 'lib/AppTheme'
 
 // Local Store Providers
 import { Submissions } from './submissions'
@@ -12,7 +12,6 @@ import { Sync } from './sync'
 import { User } from './user'
 
 const providers = [
-    <ThemeProvider theme={theme} />,
     <Sync />,
     <Submissions.Provider />,
     <Signups.Provider />,

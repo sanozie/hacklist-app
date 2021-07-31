@@ -11,16 +11,13 @@ import Button from 'react-bootstrap/Button'
 import FormControl from '@material-ui/core/FormControl'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Slider from '@material-ui/core/Slider'
-import { MaterialStyles } from 'lib/MaterialStyles'
+import { MaterialStyles, Slider } from 'lib/MaterialStyles'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
 import {Progression} from '../Progression'
 import Dialog from '@material-ui/core/Dialog'
-import {firebase} from '../../db/client'
 
 // Store
 import { Submissions } from 'store'
@@ -32,8 +29,11 @@ import { User } from 'store'
  */
 function useSubmissionForm(state, uid) {
     let [industryState, setIndustry] = useState(state ? state.industry : '')
+    let [industryError, setIndustryError] = useState(false)
     let [contributionState, setContribution] = useState(state ? state.signups[uid].skill : '')
+    let [contributionError, setContributionError] = useState(false)
     let [hackTitleState, setHackTitle] = useState(state ? state.title : '')
+    let [hackTitleError, setHackTitleError] = useState(false)
     let [engRangeState, setEngRange] = useState([
         state ? state.limits.eng.min : 1,
         state ? state.limits.eng.max : 3
@@ -48,6 +48,7 @@ function useSubmissionForm(state, uid) {
     ])
     let [limits, setLimits] = useState({})
 
+    // Building limit map
     useEffect(() => {
         let limitMap = {
             max: designRangeState[1] + engRangeState[1] + pmRangeState[1],
@@ -67,6 +68,19 @@ function useSubmissionForm(state, uid) {
         }
         setLimits(limitMap)
     }, [engRangeState, designRangeState, pmRangeState])
+
+    // Validation
+    useEffect(() => {
+        setHackTitleError(false)
+    }, [hackTitleState])
+
+    useEffect(() => {
+        setContributionError(false)
+    }, [contributionState])
+
+    useEffect(() => {
+        setIndustryError(false)
+    }, [industryState])
 
 
     let industry = {
@@ -92,11 +106,23 @@ function useSubmissionForm(state, uid) {
         pmRange = {
         state: pmRangeState,
             setPmRange
+        },
+        hackTitleErr = {
+        state: hackTitleError,
+            setHackTitleError
+        },
+        industryErr = {
+        state: industryError,
+            setIndustryError
+        },
+        contributionErr = {
+        state: contributionError,
+            setContributionError
         }
 
-    useDebugValue({ industry, contribution, hackTitle, limits })
+    useDebugValue({ industry, contribution, hackTitle, limits, hackTitleErr, industryErr, contributionErr })
 
-    return [industry, contribution, hackTitle, engRange, designRange, pmRange, limits]
+    return [industry, contribution, hackTitle, engRange, designRange, pmRange, limits, hackTitleErr, industryErr, contributionErr]
 }
 
 
@@ -112,14 +138,16 @@ let SubmissionForm = props => {
         engRange,
         designRange,
         pmRange,
-        limits] = useSubmissionForm(submissionState?.[props.hack?.hackId], uid)
+        limits,
+        hackTitleErr,
+        industryErr,
+        contributionErr] = useSubmissionForm(submissionState?.[props.hack?.hackId], uid)
     let [apiProgress, setApiProgress] = useState('idle')
     const [open, setOpen] = useState(false)
     let [focus, setFocus] = useState('default')
 
     // Styles
-    const formControlClasses = MaterialStyles().classesFormControl
-    const inputsClasses = MaterialStyles().classesInput
+    const { classesFormControl, classesInput, classesPopup: { paper }, classesDialogText: { root } } = MaterialStyles()
     const getProgress = state =>  {
         return { display: apiProgress === state ? 'block' : 'none' }
     }
@@ -150,7 +178,6 @@ let SubmissionForm = props => {
 
         // Needs to be for put and post
         try {
-
             switch(props.usage) {
                 case 'add':
                     await submissionActions.update(params)
@@ -165,32 +192,46 @@ let SubmissionForm = props => {
         }
     }
     const handleOpen = () => {
-        setOpen(true)
-        setApiProgress('idle')
+        let valid = true
+        if (hackTitle.state === '') {
+            hackTitleErr.setHackTitleError(true)
+            valid = false
+        }
+        if (industry.state === '') {
+            industryErr.setIndustryError(true)
+            valid = false
+        }
+        if (contribution.state === '') {
+            contributionErr.setContributionError(true)
+            valid = false
+        }
+
+        if (valid) {
+            setOpen(true)
+            setApiProgress('idle')
+        }
     }
 
     return (
         <Col>
             <Row className="justify-content-center">
-                <FormControl required variant="outlined"
-                             classes={formControlClasses}
-                             onMouseDown={() => setFocus('industry')}>
+                <FormControl required variant="outlined" classes={classesFormControl}
+                             onMouseDown={() => setFocus('industry')} error={industryErr.state}>
                     <TextField
                         variant="outlined"
                         value={industry.state}
                         onChange={e => { industry.setIndustry(e.target.value) }}
                         label="Industry"
                         color="primary"
-                        classes={inputsClasses}
+                        classes={classesInput}
                         select
                         required
                     >
                         <MenuItem value='Recruiting & Staffing'>Recruiting & Staffing</MenuItem>
                     </TextField>
                 </FormControl>
-                <FormControl required variant="outlined"
-                             classes={formControlClasses}
-                             onMouseDown={() => setFocus('contribution')}>
+                <FormControl required variant="outlined" classes={classesFormControl}
+                             onMouseDown={() => setFocus('contribution')} error={contributionErr.state}>
                     <TextField
                         variant="outlined"
                         value={contribution.state}
@@ -204,18 +245,18 @@ let SubmissionForm = props => {
                         <MenuItem value='pm'>Product Management</MenuItem>
                     </TextField>
                 </FormControl>
-                <FormControl variant="outlined" classes={formControlClasses} onMouseDown={() => setFocus('title')}>
+                <FormControl variant="outlined" classes={classesFormControl} onMouseDown={() => setFocus('title')}
+                             required error={hackTitleErr.state}>
                     <TextField
                         variant="outlined"
                         value={hackTitle.state}
                         onChange={e => { hackTitle.setHackTitle(e.target.value) }}
                         color="primary"
                         label="Title" />
-                    <FormHelperText>Optional</FormHelperText>
                 </FormControl>
             </Row>
             <Row className="justify-content-center">
-                <FormControl classes={formControlClasses} onMouseDown={() => setFocus('eng')}>
+                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('eng')}>
                     <label id="eng-range" className="slider-label">Engineering</label>
                     <Slider
                         max={5}
@@ -227,7 +268,7 @@ let SubmissionForm = props => {
                         color="primary"
                     />
                 </FormControl>
-                <FormControl classes={formControlClasses} onMouseDown={() => setFocus('design')}>
+                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('design')}>
                     <label id="design-range" className="slider-label">Design</label>
                     <Slider
                         max={5}
@@ -239,7 +280,7 @@ let SubmissionForm = props => {
                         color='secondary'
                     />
                 </FormControl>
-                <FormControl classes={formControlClasses} onMouseDown={() => setFocus('pm')}>
+                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('pm')}>
                     <label id="pm-range" className="slider-label">Product Managers</label>
                     <Slider
                         max={5}
@@ -260,12 +301,12 @@ let SubmissionForm = props => {
                 open={open}
                 onClose={() => setOpen(false)}
                 aria-labelledby="confirm"
-                PaperProps={{ className: MaterialStyles().classesPopup.paper }}
+                PaperProps={{ className: paper }}
             >
                 <div style={getProgress('idle')}>
                     <DialogTitle id="confirm" className="text-center">Confirm</DialogTitle>
                     <DialogContent>
-                        <DialogContentText className={MaterialStyles().classesDialogText.root}>Yes? You're ready to submit?</DialogContentText>
+                        <DialogContentText className={root}>Yes? You're ready to submit?</DialogContentText>
                     </DialogContent>
                     <DialogActions className="justify-content-center">
                         <Button className="btn btn-primary" onClick={handleSubmit}>SUBMIT</Button>

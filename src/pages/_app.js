@@ -6,16 +6,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'styles/mixins.scss';
 import 'styles/variables.scss';
 import 'styles/index.scss';
-//calendar styles
+
+// Material UI
+import theme from 'lib/AppTheme'
+import { ThemeProvider } from '@material-ui/core/styles'
+
+// Calendar styles
 import 'react-calendar/dist/Calendar.css';
 
+// Store
 import { Store } from 'store'
 
 function Application({ Component, pageProps }) {
     return (
-        <Store>
-            <Component {...pageProps} />
-        </Store>
+        <ThemeProvider theme={theme} >
+            <Store>
+                <Component {...pageProps} />
+            </Store>
+        </ThemeProvider>
     )
 }
 

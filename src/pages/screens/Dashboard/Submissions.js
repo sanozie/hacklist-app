@@ -15,7 +15,7 @@ let Submissions = ({ data }) => {
     let submissionCount = submissionValues.length
 
     return (
-        <Row className="py-2 w-100" onClick={() => {router.push('/[screen]', '/SubmissionDash')}}>
+        <Row className="py-2 w-100">
             <Col xs="2" className="position-relative">
                 {(submissionCount === 0) && (
                     <div className={styles.strong_number}>0</div>
