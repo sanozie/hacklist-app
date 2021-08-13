@@ -4,6 +4,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
 import Dialog from '@material-ui/core/Dialog'
+import Typography from '@material-ui/core/Typography'
 
 // Bootstrap
 import Button from 'react-bootstrap/Button'
@@ -16,7 +17,9 @@ const DeleteDialog = props => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title" className="text-center">{ `Delete the ${props.hack?.title} hack?`}</DialogTitle>
+            <DialogTitle id="alert-dialog-title" className="text-center">
+                <Typography variant="h1">{ `Delete the ${props.hack?.title} hack?`}</Typography>
+            </DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description" className="text-center">
                     You can't undo this action.

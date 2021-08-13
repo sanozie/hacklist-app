@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 
 //Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -38,7 +37,7 @@ let explainer = {
     },
     pm: {
         title: "Product Managers",
-        desc: "Please select the min and max number of Pproduct managers you'd like to sign up to your hack! (Keep in mind that you'll have to talk to those that sign up!)"
+        desc: "Please select the min and max number of product managers you'd like to sign up to your hack! (Keep in mind that you'll have to talk to those that sign up!)"
     }
 }
 

@@ -5,6 +5,7 @@ import SubmissionForm from 'components/Forms/SubmissionForm'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import Dialog from '@material-ui/core/Dialog'
+import Typography from '@material-ui/core/Typography'
 
 const EditDialog = props => {
     return (
@@ -14,7 +15,9 @@ const EditDialog = props => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">{ `Editing ${props.hack?.title}`}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">
+                <Typography variant="h1" className="text-center">{ `Editing ${props.hack?.title}`}</Typography>
+            </DialogTitle>
             <DialogContent>
                 <SubmissionForm hack={props.hack} usage='update' finished={props.finished} handleFinish={props.handleSubmit}/>
             </DialogContent>
