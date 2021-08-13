@@ -44,34 +44,52 @@ let Dashboard = () => {
         localStorage.setItem('lastVisited', 'Dashboard')
     }, [])
 
+    const showSubmissionBadges = () => {
+        setSubmissionBadges(true)
+        setSignupBadges(false)
+    }
+
+    const closeSubmissionBadges = () => {
+        setSubmissionBadges(false)
+    }
+
+    const showSignupBadges = () => {
+        setSignupBadges(true)
+        setSubmissionBadges(false)
+    }
+
+    const closeSignupBadges = () => {
+        setSignupBadges(false)
+    }
+
     /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
         it will probably just have a loading screen forever.
      */
-
-    if (!signupsState || !submissionsState || !portfolioState) return <MainProgression />
+    if (!signupsState || !submissionsState || !portfolioState) return <MainProgression message="Loading your data" />
 
     return (
         <Layout title="Dashboard | DIYHacks" nav={true}>
             <Container className={styles.body}>
-                <Row className="my-2 pt-5 pb-3">
+                <Row className="my-2 pt-5 pb-3 justify-content-center">
                     <h1 className="page-header pl-2">YOUR STATS</h1>
                 </Row>
                 <Row className="justify-content-center">
-                    <Col md="8" className={styles.status_env}>
+                    <Col xs="6" md="8" className={`${styles.status_env} my-2 my-md-0`}>
                         {/* Figure out a better way to update this hover */}
                         <Row className="status-wrapper"
-                             onMouseEnter={() => setSubmissionBadges(true)}
-                             onMouseLeave={() => setSubmissionBadges(false)}>
+                             onMouseEnter={showSubmissionBadges}
+                             onMouseLeave={closeSubmissionBadges}
+                             onClick={showSubmissionBadges}>
                             <Badge title="Edit Submissions" display={submissionBadges} type="edit" link="/SubmissionDash/"
                                    placement="tr" />
                             <Badge title="Add Submissions" display={submissionBadges} type="add" link="/AddSubmission/"
                                    placement="br" />
                             <Col className="d-flex flex-column">
                                 <Row>
-                                    <h2 className="pl-4 pt-4">Hack Submissions</h2>
+                                    <h2 className="pl-0 pl-md-4 pt-4 status-title">Hack Submissions</h2>
                                 </Row>
                                 <Row className="flex-grow-1">
-                                    <Col xs="12" className="center-vert">
+                                    <Col xs="12" className="center-vert p-0 p-md-2">
                                         <div className="center-vert-env w-100">
                                             <Submissions data={submissionsState} />
                                         </div>
@@ -80,22 +98,24 @@ let Dashboard = () => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col md="4" className={styles.status_env}>
-                        <Row className="status-wrapper" onMouseEnter={() => setSignupBadges(true)}
-                             onMouseLeave={() => setSignupBadges(false)}>
+                    <Col xs="6" md="4" className={`${styles.status_env} my-2 my-md-0`}>
+                        <Row className="status-wrapper"
+                             onMouseEnter={showSignupBadges}
+                             onMouseLeave={closeSignupBadges}
+                             onClick={showSignupBadges}>
                             <Badge title="Signup For A Hack" display={signupBadges}
                                    link="/Signup/" placement="br" type="add" />
                             <Badge title="Edit Your Signups" display={signupBadges}
                                    link="/SignupDash/" placement="tr" type="edit" />
                             <Col>
                                 <Row>
-                                    <h2 className="pl-4 pt-4">Signups</h2>
+                                    <h2 className="pl-0 pl-md-4 pt-4 status-title">Signups</h2>
                                 </Row>
                                 <Signups data={signupsState} />
                             </Col>
                         </Row>
                     </Col>
-                    <Col md="12" className={styles.status_env}>
+                    <Col md="12" className={`${styles.status_env} my-2 my-md-0`}>
                         <Row className="status-wrapper">
                             <Col>
                                 <Row>

@@ -11,16 +11,14 @@ import Button from 'react-bootstrap/Button'
 import FormControl from '@material-ui/core/FormControl'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Slider from '@material-ui/core/Slider'
-import { MaterialStyles } from 'lib/MaterialStyles'
+import { MaterialStyles, Slider } from 'lib/MaterialStyles'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
+import Typography from '@material-ui/core/Typography'
 import {Progression} from '../Progression'
 import Dialog from '@material-ui/core/Dialog'
-import {firebase} from '../../db/client'
 
 // Store
 import { Submissions } from 'store'
@@ -32,8 +30,11 @@ import { User } from 'store'
  */
 function useSubmissionForm(state, uid) {
     let [industryState, setIndustry] = useState(state ? state.industry : '')
+    let [industryError, setIndustryError] = useState(false)
     let [contributionState, setContribution] = useState(state ? state.signups[uid].skill : '')
+    let [contributionError, setContributionError] = useState(false)
     let [hackTitleState, setHackTitle] = useState(state ? state.title : '')
+    let [hackTitleError, setHackTitleError] = useState(false)
     let [engRangeState, setEngRange] = useState([
         state ? state.limits.eng.min : 1,
         state ? state.limits.eng.max : 3
@@ -48,6 +49,7 @@ function useSubmissionForm(state, uid) {
     ])
     let [limits, setLimits] = useState({})
 
+    // Building limit map
     useEffect(() => {
         let limitMap = {
             max: designRangeState[1] + engRangeState[1] + pmRangeState[1],
@@ -67,6 +69,19 @@ function useSubmissionForm(state, uid) {
         }
         setLimits(limitMap)
     }, [engRangeState, designRangeState, pmRangeState])
+
+    // Validation
+    useEffect(() => {
+        setHackTitleError(false)
+    }, [hackTitleState])
+
+    useEffect(() => {
+        setContributionError(false)
+    }, [contributionState])
+
+    useEffect(() => {
+        setIndustryError(false)
+    }, [industryState])
 
 
     let industry = {
@@ -92,11 +107,23 @@ function useSubmissionForm(state, uid) {
         pmRange = {
         state: pmRangeState,
             setPmRange
+        },
+        hackTitleErr = {
+        state: hackTitleError,
+            setHackTitleError
+        },
+        industryErr = {
+        state: industryError,
+            setIndustryError
+        },
+        contributionErr = {
+        state: contributionError,
+            setContributionError
         }
 
-    useDebugValue({ industry, contribution, hackTitle, limits })
+    useDebugValue({ industry, contribution, hackTitle, limits, hackTitleErr, industryErr, contributionErr })
 
-    return [industry, contribution, hackTitle, engRange, designRange, pmRange, limits]
+    return { industry, contribution, hackTitle, engRange, designRange, pmRange, limits, hackTitleErr, industryErr, contributionErr }
 }
 
 
@@ -106,20 +133,13 @@ let SubmissionForm = props => {
     const submissionState = useContext(Submissions.State)?.state,
         submissionActions = useContext(Submissions.Dispatch)
 
-    let [industry,
-        contribution,
-        hackTitle,
-        engRange,
-        designRange,
-        pmRange,
-        limits] = useSubmissionForm(submissionState?.[props.hack?.hackId], uid)
+    let form = useSubmissionForm(submissionState?.[props.hack?.hackId], uid)
     let [apiProgress, setApiProgress] = useState('idle')
     const [open, setOpen] = useState(false)
     let [focus, setFocus] = useState('default')
 
     // Styles
-    const formControlClasses = MaterialStyles().classesFormControl
-    const inputsClasses = MaterialStyles().classesInput
+    const { classesFormControl, classesInput, classesPopup: { paper }, classesDialogText: { root } } = MaterialStyles()
     const getProgress = state =>  {
         return { display: apiProgress === state ? 'block' : 'none' }
     }
@@ -137,10 +157,10 @@ let SubmissionForm = props => {
             usage: props.usage,
             uid,
             data: {
-                industry: industry.state,
-                contribution: contribution.state,
-                hackTitle: hackTitle.state,
-                limits,
+                industry: form.industry.state,
+                contribution: form.contribution.state,
+                hackTitle: form.hackTitle.state,
+                limits: form.limits,
                 submitter_name: displayName,
                 submitter: uid,
                 hackId: props.hack?.hackId,
@@ -150,7 +170,6 @@ let SubmissionForm = props => {
 
         // Needs to be for put and post
         try {
-
             switch(props.usage) {
                 case 'add':
                     await submissionActions.update(params)
@@ -165,107 +184,146 @@ let SubmissionForm = props => {
         }
     }
     const handleOpen = () => {
-        setOpen(true)
-        setApiProgress('idle')
+        let valid = true
+        if (form.hackTitle.state === '') {
+            form.hackTitleErr.setHackTitleError(true)
+            valid = false
+        }
+        if (form.industry.state === '') {
+            form.industryErr.setIndustryError(true)
+            valid = false
+        }
+        if (form.contribution.state === '') {
+            form.contributionErr.setContributionError(true)
+            valid = false
+        }
+
+        if (valid) {
+            setOpen(true)
+            setApiProgress('idle')
+        }
     }
+
+    useEffect(() =>{
+        console.log(form.hackTitleErr.state)
+    }, [form.hackTitleErr])
 
     return (
         <Col>
             <Row className="justify-content-center">
-                <FormControl required variant="outlined"
-                             classes={formControlClasses}
+                <FormControl required variant="outlined" classes={classesFormControl}
                              onMouseDown={() => setFocus('industry')}>
                     <TextField
                         variant="outlined"
-                        value={industry.state}
-                        onChange={e => { industry.setIndustry(e.target.value) }}
+                        value={form.industry.state}
+                        onChange={e => { form.industry.setIndustry(e.target.value) }}
                         label="Industry"
                         color="primary"
-                        classes={inputsClasses}
+                        classes={classesInput}
                         select
                         required
+                        error={form.industryErr.state}
                     >
-                        <MenuItem value='Recruiting & Staffing'>Recruiting & Staffing</MenuItem>
+                        <MenuItem value='Recruiting & Staffing'>
+                            <Typography>Recruiting & Staffing</Typography>
+                        </MenuItem>
                     </TextField>
                 </FormControl>
-                <FormControl required variant="outlined"
-                             classes={formControlClasses}
+                <FormControl required variant="outlined" classes={classesFormControl}
                              onMouseDown={() => setFocus('contribution')}>
                     <TextField
                         variant="outlined"
-                        value={contribution.state}
-                        onChange={e => { contribution.setContribution(e.target.value) }}
+                        value={form.contribution.state}
+                        onChange={e => { form.contribution.setContribution(e.target.value) }}
                         label="Contribution"
                         color="primary"
                         select
-                        required>
-                        <MenuItem value='eng'>Engineering</MenuItem>
-                        <MenuItem value='design'>Design</MenuItem>
-                        <MenuItem value='pm'>Product Management</MenuItem>
+                        required
+                        error={form.contributionErr.state}>
+                        <MenuItem value='eng'>
+                            <Typography>Engineering</Typography>
+                        </MenuItem>
+                        <MenuItem value='design'>
+                            <Typography>Design</Typography>
+                        </MenuItem>
+                        <MenuItem value='pm'>
+                            <Typography>Product Management</Typography>
+                        </MenuItem>
                     </TextField>
                 </FormControl>
-                <FormControl variant="outlined" classes={formControlClasses} onMouseDown={() => setFocus('title')}>
+                <FormControl variant="outlined" classes={classesFormControl} onMouseDown={() => setFocus('title')}>
                     <TextField
                         variant="outlined"
-                        value={hackTitle.state}
-                        onChange={e => { hackTitle.setHackTitle(e.target.value) }}
+                        value={form.hackTitle.state}
+                        onChange={e => { form.hackTitle.setHackTitle(e.target.value) }}
                         color="primary"
-                        label="Title" />
-                    <FormHelperText>Optional</FormHelperText>
+                        label="Title"
+                        required
+                        error={form.hackTitleErr.state} />
                 </FormControl>
             </Row>
             <Row className="justify-content-center">
-                <FormControl classes={formControlClasses} onMouseDown={() => setFocus('eng')}>
-                    <label id="eng-range" className="slider-label">Engineering</label>
+                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('eng')}>
+                    <label id="eng-range" className="slider-label">
+                        <Typography>Engineering</Typography>
+                    </label>
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
-                        value={engRange.state}
+                        value={form.engRange.state}
                         valueLabelDisplay="auto"
                         aria-labelledby="eng-range"
-                        onChange={(event, newVal) => engRange.setEngRange(newVal)}
+                        onChange={(event, newVal) => form.engRange.setEngRange(newVal)}
                         color="primary"
                     />
                 </FormControl>
-                <FormControl classes={formControlClasses} onMouseDown={() => setFocus('design')}>
-                    <label id="design-range" className="slider-label">Design</label>
+                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('design')}>
+                    <label id="design-range" className="slider-label">
+                        <Typography>Design</Typography>
+                    </label>
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
-                        value={designRange.state}
+                        value={form.designRange.state}
                         valueLabelDisplay="auto"
                         aria-labelledby="design-range"
-                        onChange={(event, newVal) => designRange.setDesignRange(newVal)}
+                        onChange={(event, newVal) => form.designRange.setDesignRange(newVal)}
                         color='secondary'
                     />
                 </FormControl>
-                <FormControl classes={formControlClasses} onMouseDown={() => setFocus('pm')}>
-                    <label id="pm-range" className="slider-label">Product Managers</label>
+                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('pm')}>
+                    <label id="pm-range" className="slider-label">
+                        <Typography>Product Managers</Typography>
+                    </label>
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
-                        value={pmRange.state}
+                        value={form.pmRange.state}
                         valueLabelDisplay="auto"
                         aria-labelledby="pm-range"
-                        onChange={(event, newVal) => pmRange.setPmRange(newVal)}
+                        onChange={(event, newVal) => form.pmRange.setPmRange(newVal)}
                         color="tertiary"
                     />
                 </FormControl>
             </Row>
             <Row className="justify-content-center">
-                <button className="btn btn-secondary" onClick={handleOpen}>SUBMIT</button>
+                <Button variant="outline-light" onClick={handleOpen}>SUBMIT</Button>
             </Row>
             <Dialog
                 maxWidth={'xs'}
                 open={open}
                 onClose={() => setOpen(false)}
                 aria-labelledby="confirm"
-                PaperProps={{ className: MaterialStyles().classesPopup.paper }}
+                PaperProps={{ className: paper }}
             >
                 <div style={getProgress('idle')}>
-                    <DialogTitle id="confirm" className="text-center">Confirm</DialogTitle>
+                    <DialogTitle id="confirm" className="text-center">
+                        <Typography variant="h1">Confirm</Typography>
+                    </DialogTitle>
                     <DialogContent>
-                        <DialogContentText className={MaterialStyles().classesDialogText.root}>Yes? You're ready to submit?</DialogContentText>
+                        <DialogContentText className={root}>
+                            <Typography>Yes? You're ready to submit?</Typography>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions className="justify-content-center">
                         <Button className="btn btn-primary" onClick={handleSubmit}>SUBMIT</Button>
@@ -281,10 +339,10 @@ let SubmissionForm = props => {
                 <div style={getProgress('success')}>
                     <DialogTitle id="confirm" className="text-center">Submissions Updated</DialogTitle>
                     <DialogActions className="justify-content-center">
-                        <button className="btn btn-primary"
+                        <Button className="btn btn-primary"
                                 onClick={() => {router.push('/[screen]', '/Dashboard')}}>
                             BACK TO DASHBOARD
-                        </button>
+                        </Button>
                     </DialogActions>
                 </div>
             </Dialog>

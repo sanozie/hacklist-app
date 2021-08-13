@@ -1,121 +1,111 @@
-import {makeStyles, withStyles} from "@material-ui/core/styles";
-import Chip from "@material-ui/core/Chip";
-import Tooltip from "@material-ui/core/Tooltip";
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import Chip from '@material-ui/core/Chip'
+import MuiSlider from '@material-ui/core/Slider'
+import Tooltip from '@material-ui/core/Tooltip'
 
-const useFormControl = makeStyles(theme => ({
+// Make Styles
+const useFormControl = makeStyles(() => ({
     root: {
-        flexWrap: "wrap",
-        minWidth: "200px !important",
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 50,
-        transition: '0.2s ease-in-out',
-        "& .slider-label": {
-            color: "rgba(255,255,255,0.5)"
-        }
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
+        flexWrap: 'wrap',
+        minWidth: '200px !important',
+        margin: '0.5rem !important',
+        color: 'white',
     }
-}));
+}))
 
 const useStylesInput = makeStyles(() => ({
     root: {
         minWidth: 200,
-        boxShadow: "0px 2px 3px rgba(0,0,0,0.2)",
+        boxShadow: '0px 2px 3px rgba(0,0,0,0.2)',
     }
-}));
-
-
-const useStyleSliderEng = makeStyles(theme => ({
-    root: {
-        color: theme.primary
-    }
-})), useStyleSliderDesign = makeStyles(theme => ({
-    root: {
-        color: theme.secondary
-    }
-})), useStyleSliderPM = makeStyles({
-    root: {
-        color: "#FFE600"
-    }
-})
+}))
 
 const usePopupStyles = makeStyles(() => ({
     paper: {
-        backgroundColor: "#2b2b2b",
+        backgroundColor: '#2b2b2b',
         color: 'white',
         minWidth: 200
     }
-})), useDialogueText = makeStyles({
+}))
+
+const useDialogueText = makeStyles({
     root: {
-        color: "white"
+        color: 'white'
     }
 })
 
-const EngChip = withStyles({
-    root: {
-        transition: '0.2s ease-in-out',
-        margin: '0.5rem'
-    },
-    clickable: {
-        "&:hover, $deletable&:hover": {
-            opacity: 0.9
-        }
-    },
-    outlinedPrimary: {
-        color: '#9D67E3 !important',
-        border: '1px solid #9D67E3 !important',
-    },
-    outlinedSecondary: {
-        backgroundColor: '#9D67E3 !important',
-        color: '#2b2b2b !important',
-        border: 'none'
-    }
-})(Chip);
+// With Styles
+const Slider = withStyles(theme => ({
+    root: props =>
+        props.color === "tertiary"
+            ? {
+                color: theme.palette.tertiary.main,
+            }
+            : {}
+}))(MuiSlider)
 
-const DesignChip = withStyles({
+const EngChip = withStyles(theme => ({
     root: {
         transition: '0.2s ease-in-out',
         margin: '0.5rem'
     },
     clickable: {
-        "&:hover, $deletable&:hover": {
+        '&:hover, $deletable&:hover': {
             opacity: 0.9
         }
     },
     outlinedPrimary: {
-        color: '#50E3C1 !important',
-        border: '1px solid #50E3C1 !important',
+        color: `${theme.palette.primary.main} !important`,
+        border: `1px solid ${theme.palette.primary.main} !important`,
     },
     outlinedSecondary: {
-        backgroundColor: '#50E3C1 !important',
-        color: '#2b2b2b !important',
+        backgroundColor: `${theme.palette.primary.main} !important`,
+        color: `${theme.palette.base.main} !important`,
         border: 'none'
     }
-})(Chip);
+}))(Chip)
 
-const PMChip = withStyles({
+const DesignChip = withStyles(theme => ({
     root: {
         transition: '0.2s ease-in-out',
         margin: '0.5rem'
     },
     clickable: {
-        "&:hover, $deletable&:hover": {
+        '&:hover, $deletable&:hover': {
             opacity: 0.9
         }
     },
     outlinedPrimary: {
-        color: '#FFE600',
-        border: '1px solid #FFE600',
+        color: `${theme.palette.secondary.main} !important`,
+        border: `1px solid ${theme.palette.secondary.main} !important`,
     },
     outlinedSecondary: {
-        backgroundColor: '#FFE600 !important',
-        color: '#2b2b2b !important',
+        backgroundColor: `${theme.palette.secondary.main} !important`,
+        color: `${theme.palette.base.main} !important`,
         border: 'none'
     }
-})(Chip)
+}))(Chip)
+
+const PMChip = withStyles(theme => ({
+    root: {
+        transition: '0.2s ease-in-out',
+        margin: '0.5rem'
+    },
+    clickable: {
+        '&:hover, $deletable&:hover': {
+            opacity: 0.9
+        }
+    },
+    outlinedPrimary: {
+        color: `${theme.palette.tertiary.main} !important`,
+        border: `1px solid ${theme.palette.tertiary.main} !important`,
+    },
+    outlinedSecondary: {
+        backgroundColor: `${theme.palette.tertiary.main} !important`,
+        color: `${theme.palette.base.main} !important`,
+        border: 'none'
+    }
+}))(Chip)
 
 const Tag = withStyles({
     root: {
@@ -123,14 +113,14 @@ const Tag = withStyles({
         margin: '0.3rem',
     },
     deletable: {
-        "&:hover, $deletable&:hover": {
+        '&:hover, $deletable&:hover': {
             opacity: 0.9
         }
     },
     deleteIconSmall: {
         fill: 'rgba(255,255,255,0.5)'
     }
-})(Chip);
+})(Chip)
 
 const HtmlTooltip = withStyles((theme) => ({
     tooltip: {
@@ -140,21 +130,15 @@ const HtmlTooltip = withStyles((theme) => ({
         fontSize: theme.typography.pxToRem(12),
         border: '1px solid #dadde9',
     },
-}))(Tooltip);
+}))(Tooltip)
 
-// TODO: Potentially make this a functional class
-let MaterialStyles = () => {
+const MaterialStyles = () => {
     const classesFormControl = useFormControl();
     const classesInput = useStylesInput();
-    const classesSliderEng = useStyleSliderEng();
-    const classesSliderDesign = useStyleSliderDesign();
-    const classesSliderPM = useStyleSliderPM();
     const classesPopup = usePopupStyles();
     const classesDialogText = useDialogueText();
 
-
-    return { classesFormControl, classesInput, classesSliderEng, classesSliderDesign, classesSliderPM, classesPopup, classesDialogText }
+    return { classesFormControl, classesInput, classesPopup, classesDialogText }
 }
 
-
-export { MaterialStyles, EngChip, DesignChip, PMChip, Tag, HtmlTooltip }
+export { MaterialStyles, EngChip, DesignChip, PMChip, Slider, Tag, HtmlTooltip }

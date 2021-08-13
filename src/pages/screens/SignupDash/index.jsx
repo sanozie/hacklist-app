@@ -13,6 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
+import Typography from '@material-ui/core/Typography'
 
 // Components
 import Layout from 'components/Layout'
@@ -69,13 +70,15 @@ const SignupDash = ({user}) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{ `Withdraw your signup from ${confirmHack}?`}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">
+                    <Typography variant="h1" className="text-center">{ `Withdraw your signup from ${confirmHack}?`}</Typography>
+                </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText id="alert-dialog-description" className="text-center">
                         You'll have to sign up again manually if you continue.
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions className="justify-content-center">
                     <Button onClick={handleClose} variant="outline-lignt" color="primary">
                         CANCEL
                     </Button>

@@ -7,11 +7,12 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
 // Material UI
-import Popover from "@material-ui/core/Popover";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import { MaterialStyles } from "lib/MaterialStyles";
+import Popover from '@material-ui/core/Popover'
+import TextField from '@material-ui/core/TextField'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Typography from '@material-ui/core/Typography'
+import { MaterialStyles } from 'lib/MaterialStyles'
 
 // Components
 import Hack from 'components/Hacks/Hack'
@@ -26,12 +27,13 @@ import { Signups }  from 'store'
 */
 let SignupConfig = props => {
     //Style Hooks
-    let classes = MaterialStyles().classesFormControl
+    const { classesFormControl } = MaterialStyles()
 
     // Util Hooks
     let [hackOwner, setHackOwner] = useState(false)
     let [skill, setSkill] = useState('')
     let [submitted, setSubmitted] = useState(false)
+    let [submitErr, setSubmitErr] = useState(false)
 
 
     let submitButton = useRef(null)
@@ -53,6 +55,10 @@ let SignupConfig = props => {
         }
     })
 
+    useEffect(() => {
+        setSubmitErr(false)
+    }, [skill])
+
     let handleClose = () => {
         setOpenSubmit(false)
         setPopoverSubmitButton(null)
@@ -64,11 +70,15 @@ let SignupConfig = props => {
     }
 
     let handleSubmit = () => {
-        signupActions.update({ hackId: props.hackId, uid: props.uid, skill, hack: props.hack })
-        if (!props.dash) {
-            setSubmitted(true)
+        if(skill === '') {
+            setSubmitErr(true)
+        } else {
+            signupActions.update({ hackId: props.hackId, uid: props.uid, skill, hack: props.hack })
+            if (!props.dash) {
+                setSubmitted(true)
+            }
+            handleClose()
         }
-        handleClose()
     }
 
     let handleWithdraw = () => {
@@ -86,9 +96,8 @@ let SignupConfig = props => {
         })
     }
 
-
     return (
-        <Col md={12} className="m-3">
+        <Col md={12} className="m-md-3 p-0">
             <Row>
                 <Col xs={10}>
                     <Hack {...props.hack} />
@@ -117,22 +126,37 @@ let SignupConfig = props => {
                                                 vertical: 'center',
                                                 horizontal: 'center',
                                             }}>
-                                            <p>Sign up as:</p>
-                                            <FormControl required variant="outlined"
-                                                         className={`${classes.formControl} w-100`}>
-                                                <TextField
-                                                    variant="outlined"
-                                                    value={skill}
-                                                    onChange={e => { setSkill(e.target.value) }}
-                                                    label="Skill"
-                                                    size="small"
-                                                    select>
-                                                    <MenuItem value='eng'>Engineer</MenuItem>
-                                                    <MenuItem value='design'>Designer</MenuItem>
-                                                    <MenuItem value='pm'>Product Manager</MenuItem>
-                                                </TextField>
-                                            </FormControl>
-                                            <Button variant="outline-success" color="primary" onClick={handleSubmit}>Confirm</Button>
+                                            <Col className="my-1">
+                                                <Row className="my-3 justify-content-center text-center">
+                                                    <p>Sign up as:</p>
+                                                </Row>
+                                                <Row className="my-1">
+                                                    <FormControl required variant="outlined"
+                                                                 className={`${classesFormControl.formControl} w-100`}>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            value={skill}
+                                                            onChange={e => { setSkill(e.target.value) }}
+                                                            label="Skill"
+                                                            size="small"
+                                                            select
+                                                            error={submitErr}>
+                                                            <MenuItem value='eng'>
+                                                                <Typography>Engineer</Typography>
+                                                            </MenuItem>
+                                                            <MenuItem value='design'>
+                                                                <Typography>Designer</Typography>
+                                                            </MenuItem>
+                                                            <MenuItem value='pm'>
+                                                                <Typography>Product Manager</Typography>
+                                                            </MenuItem>
+                                                        </TextField>
+                                                    </FormControl>
+                                                </Row>
+                                                <Row className="mt-2 mb-3 justify-content-center" >
+                                                    <Button className="btn btn-primary" onClick={handleSubmit}>CONFIRM</Button>
+                                                </Row>
+                                            </Col>
                                         </Popover>
                                     </>
                                 </Row>

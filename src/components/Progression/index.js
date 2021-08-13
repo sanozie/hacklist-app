@@ -1,6 +1,7 @@
 import styles from './Progression.module.scss'
-import LinearProgress from '@material-ui/core/LinearProgress';
-import {makeStyles} from "@material-ui/core/styles";
+import LinearProgress from '@material-ui/core/LinearProgress'
+import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -19,9 +20,17 @@ let Progression = () => {
     return <LinearProgress classes={progressionStyles} />
     
 }
-let MainProgression = () => {
+
+let MainProgression = props => {
     const classes = useStyles();
-    return <div className="poster center"><div className={classes.root}><Progression /></div></div>
+    return (
+        <div className="poster center">
+            <div className={classes.root}>
+                <Typography className="text-center mb-2">{props.message}</Typography>
+                <Progression />
+            </div>
+        </div>
+    )
 }
 
 export { Progression, MainProgression }

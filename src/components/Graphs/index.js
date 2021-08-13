@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 
 
 
-const SubmissionGraph = (props) => {
+const SubmissionGraph = props => {
     let classes = `${styles.submissions_graph} ${props.classes}`
     let title = ""
     switch (props.type) {
@@ -37,13 +37,13 @@ const SubmissionGraph = (props) => {
     )
 }
 
-const SubmissionGraphOverflow = (props) => {
+const SubmissionGraphOverflow = props => {
     return (
         <div className={styles.submissions_graph_overflow} style={{ width: props.width }} />
     )
 }
 
-const CircleGraph = (props) => {
+const CircleGraph = props => {
     let title = "",
         style = {},
         engCircle = {
@@ -96,14 +96,14 @@ const CircleGraph = (props) => {
             }
             placement="top"
         >
-            <CircularProgress variant="static" value={props.value} classes={style} />
+            <CircularProgress variant="determinate" value={props.value} classes={style} />
         </HtmlTooltip>
     )
 }
 
 const SubmissionGraphRow = ({sizeData}) => {
     return (
-        <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative`}>
+        <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative mr-0`}>
             <SubmissionGraph classes={styles.eng_graph} width={`${sizeData.eng.width}%`} type="eng" signups={sizeData.eng.min_signup_num} />
             <SubmissionGraph classes={styles.design_graph} width={`${sizeData.design.width}%`} type="design" signups={sizeData.design.min_signup_num} />
             <SubmissionGraph classes={styles.pm_graph} width={`${sizeData.pm.width}%`} type="pm" signups={sizeData.pm.min_signup_num} />

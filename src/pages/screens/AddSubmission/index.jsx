@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 
 //Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -38,7 +37,7 @@ let explainer = {
     },
     pm: {
         title: "Product Managers",
-        desc: "Please select the min and max number of Pproduct managers you'd like to sign up to your hack! (Keep in mind that you'll have to talk to those that sign up!)"
+        desc: "Please select the min and max number of product managers you'd like to sign up to your hack! (Keep in mind that you'll have to talk to those that sign up!)"
     }
 }
 
@@ -65,10 +64,10 @@ let AddSubmission = () => {
                     </Col>
                 </Row>
                 <Row className="flex-grow-1">
-                    <Col className="py-5 my-5">
-                        <Row>
+                    <Col className="py-5 my-0 my-xl-5">
+                        <Row className="flex-column-reverse flex-md-row">
                             <SubmissionForm focusListener={field => setFocus(field)} usage='add' />
-                            <Col>
+                            <Col className="mb-3 mb-md-0">
                                 <Row className={styles.desc_wrapper}>
                                     <Col>
                                         <Row>
