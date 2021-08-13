@@ -103,10 +103,10 @@ let Filters = ({ setFilterData }) => {
     }
 
     return (
-    <Col xs="4">
+    <Col md="4" className="mt-4 mt-md-0">
         <Row>
             <Col>
-                <Row className="justify-content-center">
+                <Row className="justify-content-center mb-3 d-none d-md-flex">
                     <h2>Filters</h2>
                 </Row>
                 <Row>
@@ -127,127 +127,130 @@ let Filters = ({ setFilterData }) => {
                         </TextField>
                     </FormControl>
                 </Row>
-                <Row className="justify-content-center mt-4">
+                <p className="d-none d-md-block">Below filters will be implemented soon!</p>
+                <span className="d-none d-md-block">
+                    <Row className="justify-content-center mt-4">
                     <h4>Skills</h4>
                 </Row>
-                <Row className="justify-content-center">
-                    <EngChip
-                        label="Engineering"
-                        onClick={() => handleSkill('eng')}
-                        variant="outlined"
-                        color={skills.includes('eng') || (skills === []) ? 'secondary' : 'primary'}
-                    />
-                    <DesignChip
-                        label="Design"
-                        onClick={() => handleSkill('design')}
-                        variant="outlined"
-                        color={skills.includes('design') || (skills === []) ? 'secondary' : 'primary'}
-                    />
-                    <PMChip
-                        label="Product Management"
-                        onClick={() => handleSkill('pm')}
-                        variant="outlined"
-                        color={skills.includes('pm') || (skills === []) ? 'secondary' : 'primary'}
-                    />
-                </Row>
-                <Row className="justify-content-center mt-3 mb-1">
-                    <h4>Industry</h4>
-                    <AddIcon ref={addIndustryEl} onClick={handleAddIndustry} fontSize="small" className={addIconClass.root} aria-describedby="addindustry"/>
-                    <Popover
-                        id="addindustry"
-                        open={openPopoverIndustry}
-                        anchorEl={popoverAnchorIndustry}
-                        onClose={handleCloseAddIndustry}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'center',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <Col>
-                            <Row className="my-3">
-                                <p>Add an industry (Enter)</p>
-                            </Row>
-                            <Row className="mt-1 mb-3">
-                                <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
-                                    <TextField
-                                        variant="outlined"
-                                        value={newIndustry}
-                                        onChange={e => { setNewIndustry(e.target.value) }}
-                                        onKeyDown={e => {handleAddIndustryEnter(e)}}
-                                        label="Industry"
-                                        size="small"
-                                        select
-                                    >
-                                        <MenuItem value='Marketing'>Marketing</MenuItem>
-                                        <MenuItem value='Recruitment & Staffing'>Recruitment & Staffing</MenuItem>
-                                    </TextField>
-                                </FormControl>
-                            </Row>
-                        </Col>
-                    </Popover>
-                </Row>
-                <Row>
-                    {industry.map(item => (
-                            <Tag
-                                label={item}
-                                onDelete={() => deleteIndustry(item)}
-                                size="small"
-                                variant="outlined"
-                            />
-                        )
-                    )}
-                </Row>
-                <Row className="justify-content-center mt-3 mb-1">
-                    <h4>Tags</h4>
-                    <AddIcon ref = {addTagEl} onClick={handleAddTag} fontSize="small" className={addIconClass.root} aria-describedby="addtag"/>
-                    <Popover
-                        id="addtag"
-                        open={openPopoverTag}
-                        anchorEl={popoverAnchorTag}
-                        onClose={handleCloseAddTag}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'center',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <Col>
-                            <Row className="my-3">
-                                <p>Add a tag (enter)</p>
-                            </Row>
-                            <Row className="mt-1 mb-3">
-                                <FormControl required variant="outlined" className={classes.formControl}>
-                                    <TextField
-                                        variant="outlined"
-                                        value={newTag}
-                                        onChange={e => { setNewTag(e.target.value) }}
-                                        onKeyDown={e => {handleAddTagEnter(e)}}
-                                        label="New Tag"
-                                        size="small"
-                                    />
-                                </FormControl>
-                            </Row>
-                        </Col>
-                    </Popover>
-                </Row>
-                <Row>
-                    {tags.map(item => (
-                            <Tag
-                                label={item}
-                                onDelete={() => deleteTag(item)}
-                                size="small"
-                                variant="outlined"
-                            />
-                        )
-                    )}
-                </Row>
+                    <Row className="justify-content-center">
+                        <EngChip
+                            label="Engineering"
+                            onClick={() => handleSkill('eng')}
+                            variant="outlined"
+                            color={skills.includes('eng') || (skills === []) ? 'secondary' : 'primary'}
+                        />
+                        <DesignChip
+                            label="Design"
+                            onClick={() => handleSkill('design')}
+                            variant="outlined"
+                            color={skills.includes('design') || (skills === []) ? 'secondary' : 'primary'}
+                        />
+                        <PMChip
+                            label="Product Management"
+                            onClick={() => handleSkill('pm')}
+                            variant="outlined"
+                            color={skills.includes('pm') || (skills === []) ? 'secondary' : 'primary'}
+                        />
+                    </Row>
+                    <Row className="justify-content-center mt-3 mb-1">
+                        <h4>Industry</h4>
+                        <AddIcon ref={addIndustryEl} onClick={handleAddIndustry} fontSize="small" className={addIconClass.root} aria-describedby="addindustry"/>
+                        <Popover
+                            id="addindustry"
+                            open={openPopoverIndustry}
+                            anchorEl={popoverAnchorIndustry}
+                            onClose={handleCloseAddIndustry}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'center',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <Col>
+                                <Row className="my-3">
+                                    <p>Add an industry (Enter)</p>
+                                </Row>
+                                <Row className="mt-1 mb-3">
+                                    <FormControl required variant="outlined" className={`${classes.formControl} w-100`}>
+                                        <TextField
+                                            variant="outlined"
+                                            value={newIndustry}
+                                            onChange={e => { setNewIndustry(e.target.value) }}
+                                            onKeyDown={e => {handleAddIndustryEnter(e)}}
+                                            label="Industry"
+                                            size="small"
+                                            select
+                                        >
+                                            <MenuItem value='Marketing'>Marketing</MenuItem>
+                                            <MenuItem value='Recruitment & Staffing'>Recruitment & Staffing</MenuItem>
+                                        </TextField>
+                                    </FormControl>
+                                </Row>
+                            </Col>
+                        </Popover>
+                    </Row>
+                    <Row>
+                        {industry.map(item => (
+                                <Tag
+                                    label={item}
+                                    onDelete={() => deleteIndustry(item)}
+                                    size="small"
+                                    variant="outlined"
+                                />
+                            )
+                        )}
+                    </Row>
+                    <Row className="justify-content-center mt-3 mb-1">
+                        <h4>Tags</h4>
+                        <AddIcon ref = {addTagEl} onClick={handleAddTag} fontSize="small" className={addIconClass.root} aria-describedby="addtag"/>
+                        <Popover
+                            id="addtag"
+                            open={openPopoverTag}
+                            anchorEl={popoverAnchorTag}
+                            onClose={handleCloseAddTag}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'center',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <Col>
+                                <Row className="my-3">
+                                    <p>Add a tag (enter)</p>
+                                </Row>
+                                <Row className="mt-1 mb-3">
+                                    <FormControl required variant="outlined" className={classes.formControl}>
+                                        <TextField
+                                            variant="outlined"
+                                            value={newTag}
+                                            onChange={e => { setNewTag(e.target.value) }}
+                                            onKeyDown={e => {handleAddTagEnter(e)}}
+                                            label="New Tag"
+                                            size="small"
+                                        />
+                                    </FormControl>
+                                </Row>
+                            </Col>
+                        </Popover>
+                    </Row>
+                    <Row>
+                        {tags.map(item => (
+                                <Tag
+                                    label={item}
+                                    onDelete={() => deleteTag(item)}
+                                    size="small"
+                                    variant="outlined"
+                                />
+                            )
+                        )}
+                    </Row>
+                </span>
             </Col>
         </Row>
     </Col>

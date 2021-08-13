@@ -44,6 +44,24 @@ let Dashboard = () => {
         localStorage.setItem('lastVisited', 'Dashboard')
     }, [])
 
+    const showSubmissionBadges = () => {
+        setSubmissionBadges(true)
+        setSignupBadges(false)
+    }
+
+    const closeSubmissionBadges = () => {
+        setSubmissionBadges(false)
+    }
+
+    const showSignupBadges = () => {
+        setSignupBadges(true)
+        setSubmissionBadges(false)
+    }
+
+    const closeSignupBadges = () => {
+        setSignupBadges(false)
+    }
+
     /* TODO: Set up error handling for this component, prefeably by making a form. Right now, if there's an error,
         it will probably just have a loading screen forever.
      */
@@ -59,8 +77,9 @@ let Dashboard = () => {
                     <Col xs="6" md="8" className={`${styles.status_env} my-2 my-md-0`}>
                         {/* Figure out a better way to update this hover */}
                         <Row className="status-wrapper"
-                             onMouseEnter={() => setSubmissionBadges(true)}
-                             onMouseLeave={() => setSubmissionBadges(false)}>
+                             onMouseEnter={showSubmissionBadges}
+                             onMouseLeave={closeSubmissionBadges}
+                             onClick={showSubmissionBadges}>
                             <Badge title="Edit Submissions" display={submissionBadges} type="edit" link="/SubmissionDash/"
                                    placement="tr" />
                             <Badge title="Add Submissions" display={submissionBadges} type="add" link="/AddSubmission/"
@@ -80,8 +99,10 @@ let Dashboard = () => {
                         </Row>
                     </Col>
                     <Col xs="6" md="4" className={`${styles.status_env} my-2 my-md-0`}>
-                        <Row className="status-wrapper" onMouseEnter={() => setSignupBadges(true)}
-                             onMouseLeave={() => setSignupBadges(false)}>
+                        <Row className="status-wrapper"
+                             onMouseEnter={showSignupBadges}
+                             onMouseLeave={closeSignupBadges}
+                             onClick={showSignupBadges}>
                             <Badge title="Signup For A Hack" display={signupBadges}
                                    link="/Signup/" placement="br" type="add" />
                             <Badge title="Edit Your Signups" display={signupBadges}

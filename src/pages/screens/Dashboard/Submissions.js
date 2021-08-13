@@ -15,7 +15,7 @@ let Submissions = ({ data }) => {
 
     return (
         <Row className="py-4 py-md-2 w-100">
-            <Col xs="2" className="d-none d-xs-flex position-relative">
+            <Col xs="2" className="d-none d-md-flex position-relative">
                 {(submissionCount === 0) && (
                     <div className={styles.strong_number}>0</div>
                 )}
@@ -35,23 +35,21 @@ let Submissions = ({ data }) => {
                         <Col lg="3"><h5>Maximums</h5></Col>
                     </Row>
                 )}
-                {(submissionCount > 0) && submissionValues.map(item => {
-                    return (
-                        <Row className="py-1">
-                            <Col lg="2" className="d-flex align-items-center">
-                                <h4 className="submitted_hack_title flex-grow-1">
-                                    {item.title}
-                                </h4>
-                            </Col>
-                            <Col lg="7" xs="12" className="align-items-center py-1 pr-0 ">
-                                <SubmissionGraphRow sizeData={item.sizeData} />
-                            </Col>
-                            <Col lg="3" className="d-none d-lg-block">
-                                <SubmissionCircleRow sizeData={item.sizeData} />
-                            </Col>
-                        </Row>
-                    )
-                })}
+                {(submissionCount > 0) && submissionValues.map(item => (
+                    <Row className="py-1">
+                        <Col lg="2" className="d-flex align-items-center">
+                            <h4 className="submitted_hack_title flex-grow-1">
+                                {item.title}
+                            </h4>
+                        </Col>
+                        <Col lg="7" xs="12" className="align-items-center py-1 pr-0 ">
+                            <SubmissionGraphRow sizeData={item.sizeData} />
+                        </Col>
+                        <Col lg="3" className="d-none d-lg-block">
+                            <SubmissionCircleRow sizeData={item.sizeData} />
+                        </Col>
+                    </Row>
+                ))}
             </Col>
         </Row>
     )

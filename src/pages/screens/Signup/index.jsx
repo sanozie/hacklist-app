@@ -86,19 +86,19 @@ let Signup = ({user}) => {
             <Container className={styles.body}>
                 <Row className="mt-5 pt-5">
                     <Col className="text-center">
-                        <h1>SUBMIT A HACK</h1>
+                        <h1>SIGNUP FOR HACKS</h1>
                     </Col>
                 </Row>
-                <Row className="flex-grow-1">
+                <Row>
                     {!fetched && (<MainProgression message="Fetching data" />)}
                     {fetched && (
                         <>
                             <Filters setFilterData={filterData => setFilterData(filterData)} />
-                            <Col xs="8">
+                            <Col xs="12" md="8" className="mt-3 mt-md-0">
                                 <Row>
                                     {(filteredHacks.length !== 0) && filteredHacks.map(([id, hack]) => (
                                         <SignupConfig hack={hack} hackId={id} uid={user.uid}
-                                                      emitSignup={() => setSignup(!signup)} />
+                                                          emitSignup={() => setSignup(!signup)} />
                                     ))}
                                     {(filteredHacks.length === 0) && (
                                         <h3>No Hacks available for signup at this time. Check again soon!</h3>

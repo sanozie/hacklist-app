@@ -65,8 +65,8 @@ let AddSubmission = () => {
                     </Col>
                 </Row>
                 <Row className="flex-grow-1">
-                    <Col className="py-5 my-5">
-                        <Row>
+                    <Col className="py-5 my-0 my-xl-5">
+                        <Row className="flex-column-reverse flex-md-row">
                             <SubmissionForm focusListener={field => setFocus(field)} usage='add' />
                             <Col>
                                 <Row className={styles.desc_wrapper}>

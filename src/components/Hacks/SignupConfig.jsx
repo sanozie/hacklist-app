@@ -7,11 +7,12 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
 // Material UI
-import Popover from "@material-ui/core/Popover";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import { MaterialStyles } from "lib/MaterialStyles";
+import Popover from '@material-ui/core/Popover'
+import TextField from '@material-ui/core/TextField'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Typography from '@material-ui/core/Typography'
+import { MaterialStyles } from 'lib/MaterialStyles'
 
 // Components
 import Hack from 'components/Hacks/Hack'
@@ -140,9 +141,15 @@ let SignupConfig = props => {
                                                             size="small"
                                                             select
                                                             error={submitErr}>
-                                                            <MenuItem value='eng'>Engineer</MenuItem>
-                                                            <MenuItem value='design'>Designer</MenuItem>
-                                                            <MenuItem value='pm'>Product Manager</MenuItem>
+                                                            <MenuItem value='eng'>
+                                                                <Typography>Engineer</Typography>
+                                                            </MenuItem>
+                                                            <MenuItem value='design'>
+                                                                <Typography>Designer</Typography>
+                                                            </MenuItem>
+                                                            <MenuItem value='pm'>
+                                                                <Typography>Product Manager</Typography>
+                                                            </MenuItem>
                                                         </TextField>
                                                     </FormControl>
                                                 </Row>

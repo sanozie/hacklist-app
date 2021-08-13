@@ -27,28 +27,26 @@ let Signups = ({ data }) => {
                     <img src={`/dashboard/signup-${signupCount}.png`} className="img-fluid" />
                 )}
             </Col>
-            <Col xs="12" md="6" className="center-vert h-100" style={{ padding: 0 }}>
-                <div className="center-vert-env">
+            <Col xs="12" md="6" className="center h-100" style={{ padding: 0 }}>
+                <div className="center-env">
                     {(signupCount == 0) && (
                         <p className={styles.new_info}>Hacks you sign up for will be here. <br /> You can sign up for 3 hacks at once.</p>
                     )}
-                    {(signupCount > 0) && signupValues.map(hack => {
-                        return (
-                            <Row key={hack.title}>
-                                <Col xs="10" style={{ padding: 0 }}>
-                                    <Row>
-                                        <h4>{hack.title}</h4>
-                                    </Row>
-                                    <Row>
-                                        <p className={styles.submitter_name}>{hack.submitter_name}</p>
-                                    </Row>
-                                </Col>
-                                <Col xs="2" style={{ padding: 0 }}>
-                                    <CircleGraph value={hack.circle} type="signup" signups={Object.keys(hack.signups).length} />
-                                </Col>
-                            </Row>
-                        )
-                    })}
+                    {(signupCount > 0) && signupValues.map(hack => (
+                        <Row key={hack.title}>
+                            <Col xs="10" style={{ padding: 0 }}>
+                                <Row>
+                                    <h4>{hack.title}</h4>
+                                </Row>
+                                <Row>
+                                    <p className={styles.submitter_name}>{hack.submitter_name}</p>
+                                </Row>
+                            </Col>
+                            <Col xs="2" style={{ padding: 0 }}>
+                                <CircleGraph value={hack.circle} type="signup" signups={Object.keys(hack.signups).length} />
+                            </Col>
+                        </Row>
+                    ))}
                 </div>
             </Col>
         </Row>

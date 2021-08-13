@@ -16,6 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
+import Typography from '@material-ui/core/Typography'
 import {Progression} from '../Progression'
 import Dialog from '@material-ui/core/Dialog'
 
@@ -223,7 +224,9 @@ let SubmissionForm = props => {
                         required
                         error={form.industryErr.state}
                     >
-                        <MenuItem value='Recruiting & Staffing'>Recruiting & Staffing</MenuItem>
+                        <MenuItem value='Recruiting & Staffing'>
+                            <Typography>Recruiting & Staffing</Typography>
+                        </MenuItem>
                     </TextField>
                 </FormControl>
                 <FormControl required variant="outlined" classes={classesFormControl}
@@ -237,13 +240,18 @@ let SubmissionForm = props => {
                         select
                         required
                         error={form.contributionErr.state}>
-                        <MenuItem value='eng'>Engineering</MenuItem>
-                        <MenuItem value='design'>Design</MenuItem>
-                        <MenuItem value='pm'>Product Management</MenuItem>
+                        <MenuItem value='eng'>
+                            <Typography>Engineering</Typography>
+                        </MenuItem>
+                        <MenuItem value='design'>
+                            <Typography>Design</Typography>
+                        </MenuItem>
+                        <MenuItem value='pm'>
+                            <Typography>Product Management</Typography>
+                        </MenuItem>
                     </TextField>
                 </FormControl>
-                <FormControl variant="outlined" classes={classesFormControl} onMouseDown={() => setFocus('title')}
-                              >
+                <FormControl variant="outlined" classes={classesFormControl} onMouseDown={() => setFocus('title')}>
                     <TextField
                         variant="outlined"
                         value={form.hackTitle.state}
@@ -256,7 +264,9 @@ let SubmissionForm = props => {
             </Row>
             <Row className="justify-content-center">
                 <FormControl classes={classesFormControl} onMouseDown={() => setFocus('eng')}>
-                    <label id="eng-range" className="slider-label">Engineering</label>
+                    <label id="eng-range" className="slider-label">
+                        <Typography>Engineering</Typography>
+                    </label>
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
@@ -268,7 +278,9 @@ let SubmissionForm = props => {
                     />
                 </FormControl>
                 <FormControl classes={classesFormControl} onMouseDown={() => setFocus('design')}>
-                    <label id="design-range" className="slider-label">Design</label>
+                    <label id="design-range" className="slider-label">
+                        <Typography>Design</Typography>
+                    </label>
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
@@ -280,7 +292,9 @@ let SubmissionForm = props => {
                     />
                 </FormControl>
                 <FormControl classes={classesFormControl} onMouseDown={() => setFocus('pm')}>
-                    <label id="pm-range" className="slider-label">Product Managers</label>
+                    <label id="pm-range" className="slider-label">
+                        <Typography>Product Managers</Typography>
+                    </label>
                     <Slider
                         max={5}
                         defaultValue={[1, 3]}
@@ -303,9 +317,13 @@ let SubmissionForm = props => {
                 PaperProps={{ className: paper }}
             >
                 <div style={getProgress('idle')}>
-                    <DialogTitle id="confirm" className="text-center">Confirm</DialogTitle>
+                    <DialogTitle id="confirm" className="text-center">
+                        <Typography variant="h1">Confirm</Typography>
+                    </DialogTitle>
                     <DialogContent>
-                        <DialogContentText className={root}>Yes? You're ready to submit?</DialogContentText>
+                        <DialogContentText className={root}>
+                            <Typography>Yes? You're ready to submit?</Typography>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions className="justify-content-center">
                         <Button className="btn btn-primary" onClick={handleSubmit}>SUBMIT</Button>
