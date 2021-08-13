@@ -56,7 +56,7 @@ let Dashboard = () => {
                     <h1 className="page-header pl-2">YOUR STATS</h1>
                 </Row>
                 <Row className="justify-content-center">
-                    <Col md="8" className={`${styles.status_env} my-2 my-md-0`}>
+                    <Col xs="6" md="8" className={`${styles.status_env} my-2 my-md-0`}>
                         {/* Figure out a better way to update this hover */}
                         <Row className="status-wrapper"
                              onMouseEnter={() => setSubmissionBadges(true)}
@@ -67,10 +67,10 @@ let Dashboard = () => {
                                    placement="br" />
                             <Col className="d-flex flex-column">
                                 <Row>
-                                    <h2 className="pl-4 pt-4">Hack Submissions</h2>
+                                    <h2 className="pl-0 pl-md-4 pt-4 status-title">Hack Submissions</h2>
                                 </Row>
                                 <Row className="flex-grow-1">
-                                    <Col xs="12" className="center-vert">
+                                    <Col xs="12" className="center-vert p-0 p-md-2">
                                         <div className="center-vert-env w-100">
                                             <Submissions data={submissionsState} />
                                         </div>
@@ -79,7 +79,7 @@ let Dashboard = () => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col md="4" className={`${styles.status_env} my-2 my-md-0`}>
+                    <Col xs="6" md="4" className={`${styles.status_env} my-2 my-md-0`}>
                         <Row className="status-wrapper" onMouseEnter={() => setSignupBadges(true)}
                              onMouseLeave={() => setSignupBadges(false)}>
                             <Badge title="Signup For A Hack" display={signupBadges}
@@ -88,7 +88,7 @@ let Dashboard = () => {
                                    link="/SignupDash/" placement="tr" type="edit" />
                             <Col>
                                 <Row>
-                                    <h2 className="pl-4 pt-4">Signups</h2>
+                                    <h2 className="pl-0 pl-md-4 pt-4 status-title">Signups</h2>
                                 </Row>
                                 <Signups data={signupsState} />
                             </Col>

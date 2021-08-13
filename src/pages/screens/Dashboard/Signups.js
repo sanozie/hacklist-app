@@ -19,7 +19,7 @@ let Signups = ({ data }) => {
 
     return (
         <Row className="py-4">
-            <Col xs="6">
+            <Col md="6" className="d-none d-md-flex">
                 {(signupCount == 0) && (
                     <img src='/dashboard/signup-0.png' className="img-fluid" />
                 )}
@@ -27,7 +27,7 @@ let Signups = ({ data }) => {
                     <img src={`/dashboard/signup-${signupCount}.png`} className="img-fluid" />
                 )}
             </Col>
-            <Col xs="6" className="center-vert h-100" style={{ padding: 0 }}>
+            <Col xs="12" md="6" className="center-vert h-100" style={{ padding: 0 }}>
                 <div className="center-vert-env">
                     {(signupCount == 0) && (
                         <p className={styles.new_info}>Hacks you sign up for will be here. <br /> You can sign up for 3 hacks at once.</p>

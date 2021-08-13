@@ -103,7 +103,7 @@ const CircleGraph = props => {
 
 const SubmissionGraphRow = ({sizeData}) => {
     return (
-        <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative`}>
+        <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative mr-0`}>
             <SubmissionGraph classes={styles.eng_graph} width={`${sizeData.eng.width}%`} type="eng" signups={sizeData.eng.min_signup_num} />
             <SubmissionGraph classes={styles.design_graph} width={`${sizeData.design.width}%`} type="design" signups={sizeData.design.min_signup_num} />
             <SubmissionGraph classes={styles.pm_graph} width={`${sizeData.pm.width}%`} type="pm" signups={sizeData.pm.min_signup_num} />

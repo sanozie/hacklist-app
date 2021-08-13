@@ -24,6 +24,7 @@ p {
     color: white;
     margin: 0;
     padding: 0;
+    text-overflow: ellipsis;
 }
 
 h2,
@@ -94,6 +95,12 @@ p {
     transition: 0.3s ease-in-out;
     position: relative;
     overflow: hidden;
+    
+    .status-title {
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 }
 
 $bgLighten: lighten($bgColor, 2%);

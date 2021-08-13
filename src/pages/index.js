@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
-import { useEffect } from "react";
+import { useEffect } from 'react'
+
+import { MainProgression } from 'components/Progression'
 
 export default function Home() {
     const router = useRouter()
@@ -12,5 +14,5 @@ export default function Home() {
         router.push('/[screen]', `/${startPage}`)
     }, [])
 
-    return <div>Welcome</div>
+    return <MainProgression message="Welcome" />
 }

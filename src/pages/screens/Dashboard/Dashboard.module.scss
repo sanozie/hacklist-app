@@ -70,7 +70,6 @@
 .submitter_name {
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .signup_circle {
@@ -84,27 +83,4 @@
 .new_info {
     opacity: 0.7;
     text-align: center;
-}
-
-//Add button
-.add_btn_root {
-    position: fixed !important;
-    bottom: 30px;
-    right: 30px;
-    background: linear-gradient(100deg, $priColor, $secColor) !important;
-}
-
-.add_btn_root:focus {
-    border: none !important;
-    outline: none;
-}
-
-.close_btn_root {
-    background: black !important;
-    border: 1px solid white;
-    color: white;
-}
-
-.close_btn_root:focus {
-    outline: none;
 }

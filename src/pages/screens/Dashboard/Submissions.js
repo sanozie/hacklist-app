@@ -14,8 +14,8 @@ let Submissions = ({ data }) => {
     let submissionCount = submissionValues.length
 
     return (
-        <Row className="py-2 w-100">
-            <Col xs="2" className="position-relative">
+        <Row className="py-4 py-md-2 w-100">
+            <Col xs="2" className="d-none d-xs-flex position-relative">
                 {(submissionCount === 0) && (
                     <div className={styles.strong_number}>0</div>
                 )}
@@ -23,7 +23,7 @@ let Submissions = ({ data }) => {
                     <div className={styles.strong_number}>{submissionCount}</div>
                 )}
             </Col>
-            <Col xs="10" className="align-items-center my-auto align-items-center">
+            <Col xs="12" md="10" className="align-items-center my-auto align-items-center p-0">
                 {(submissionCount === 0) && (
                     <p className={styles.new_info}>Data on hacks you submit will be here.
                         <br />
@@ -43,7 +43,7 @@ let Submissions = ({ data }) => {
                                     {item.title}
                                 </h4>
                             </Col>
-                            <Col lg="7" xs="12" className="align-items-center py-1">
+                            <Col lg="7" xs="12" className="align-items-center py-1 pr-0 ">
                                 <SubmissionGraphRow sizeData={item.sizeData} />
                             </Col>
                             <Col lg="3" className="d-none d-lg-block">
