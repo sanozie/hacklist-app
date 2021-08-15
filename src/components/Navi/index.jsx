@@ -1,18 +1,15 @@
+// React & Next
 import { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
-
 // Bootstrap
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-
 // Material UI
 import Avatar from '@material-ui/core/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-
 // Styles
 import styles from './navi.module.scss'
-
 // Store
 import { User } from 'store'
 
@@ -43,7 +40,7 @@ let Navi = () => {
     return (
         <>
             <Navbar bg="light" expand="lg" id={styles.navbar}>
-                <Navbar.Brand onClick={() => router.push('/[screen]', '/Dashboard')} id={styles.logo}>DIYHACKS</Navbar.Brand>
+                <Navbar.Brand onClick={() => router.push('/[screen]', '/Dashboard')} id={styles.logo}>HACKLIST</Navbar.Brand>
                 <Navbar.Toggle className="ml-auto" aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto ">

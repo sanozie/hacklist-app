@@ -1,13 +1,11 @@
+// React
 import { useState, useEffect, useContext, useDebugValue } from 'react'
-
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-// Local
+// Styles
 import styles from './Dashboard.module.scss'
-
 // Components
 import Signups from './Signups'
 import Portfolio from './Portfolio'
@@ -15,7 +13,6 @@ import Submissions from './Submissions'
 import { MainProgression } from 'components/Progression'
 import Badge from 'components/Badge'
 import Layout from 'components/Layout'
-
 // Store
 import { Submissions as SubmissionContext, Signups as SignupContext, Portfolio as PortfolioContext } from 'store'
 
@@ -68,7 +65,7 @@ let Dashboard = () => {
     if (!signupsState || !submissionsState || !portfolioState) return <MainProgression message="Loading your data" />
 
     return (
-        <Layout title="Dashboard | DIYHacks" nav={true}>
+        <Layout title="Dashboard | Hacklist" nav={true}>
             <Container className={styles.body}>
                 <Row className="my-2 pt-5 pb-3 justify-content-center">
                     <h1 className="page-header pl-2">YOUR STATS</h1>

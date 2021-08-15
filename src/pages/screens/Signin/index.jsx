@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
-import Router, { useRouter } from 'next/router'
+// React & Next
+import { useEffect } from 'react'
+import Router from 'next/router'
 //Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-//Local
+// Components
 import Layout from 'components/Layout'
+// Styles
 import styles from './Signin.module.scss'
-
 // Firebase
 import { auth, firebase } from 'db/client'
 
@@ -39,7 +39,7 @@ let Signin = () => {
             });
     }
     return (
-        <Layout title="Signin | DIYHacks" nav={false} signin={true}>
+        <Layout title="Signin | Hacklist" nav={false} signin={true}>
             <Container>
                 <Row className="poster">
                     <Col sm className={styles.left_design }/>
@@ -47,7 +47,7 @@ let Signin = () => {
                         <Row className="w-100">
                             <Col>
                                 <Row className="justify-content-center py-2">
-                                    <h1 id={styles.logo}>DIYHACKS</h1>
+                                    <h1 id={styles.logo}>HACKLIST</h1>
                                 </Row>
                                 <Row className="justify-content-center w-100 px-5 py-2">
                                     <Col md="3" className="text-center">

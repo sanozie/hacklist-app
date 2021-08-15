@@ -1,6 +1,9 @@
-import styles from './Dashboard.module.scss'
+// Boostrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+// Styles
+import styles from './Dashboard.module.scss'
+// Components
 import { CircleGraph } from 'components/Graphs'
 
 /**

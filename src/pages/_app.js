@@ -1,19 +1,15 @@
-import React from 'react'
+// React & Next
 import App from 'next/app'
-
 // Styles
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'styles/mixins.scss';
-import 'styles/variables.scss';
-import 'styles/index.scss';
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'styles/mixins.scss'
+import 'styles/variables.scss'
+import 'styles/index.scss'
 // Material UI
 import theme from 'lib/AppTheme'
 import { ThemeProvider } from '@material-ui/core/styles'
-
 // Calendar styles
-import 'react-calendar/dist/Calendar.css';
-
+import 'react-calendar/dist/Calendar.css'
 // Store
 import { Store } from 'store'
 

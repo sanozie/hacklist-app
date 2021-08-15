@@ -5,7 +5,6 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
 import Dialog from '@material-ui/core/Dialog'
 import Typography from '@material-ui/core/Typography'
-
 // Bootstrap
 import Button from 'react-bootstrap/Button'
 

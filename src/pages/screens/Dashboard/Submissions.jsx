@@ -1,9 +1,10 @@
-import { useRouter } from 'next/router'
-
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import styles from "./Dashboard.module.scss";
-import { SubmissionCircleRow, SubmissionGraphRow } from "components/Graphs";
+// Bootstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+// Styles
+import styles from './Dashboard.module.scss'
+// Components
+import { SubmissionCircleRow, SubmissionGraphRow } from 'components/Graphs'
 
 /**
  * Graph   shows Hack Submission data

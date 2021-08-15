@@ -1,12 +1,11 @@
-// React
+// React & Next
 import { useState, useContext } from 'react'
-
+import { useRouter } from 'next/router'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
 // Material UI
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -14,20 +13,18 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import Typography from '@material-ui/core/Typography'
-
 // Components
 import Layout from 'components/Layout'
 import SignupConfig from 'components/Hacks/SignupConfig'
-
+import { MainProgression } from 'components/Progression'
 // Store
 import { Signups } from 'store'
-import { MainProgression } from 'components/Progression'
-
 // Utils
 import { useDialog } from 'utils/materialui'
 
 
 const SignupDash = ({user}) => {
+    const router = useRouter()
     const signupsState = useContext(Signups.State)?.state
     let [confirmHack, setConfirmHack] = useState(null)
 
@@ -46,14 +43,21 @@ const SignupDash = ({user}) => {
     if (!signupsState) return <MainProgression />
 
     return (
-        <Layout title="Submissions | DIYHacks" nav={true}>
+        <Layout title="Submissions | Hacklist" nav={true}>
             <Container>
                 <Row className="my-2 pt-5 pb-3">
                     <Col className="text-center">
                         <Row>
                             <h1 className="page-header">Your Signups</h1>
                         </Row>
-                        { Object.entries(signupsState).map(([id, hack]) => {
+                        { Object.keys(signupsState).length === 0 ? (
+                            <Row className="my-5">
+                                <Col>
+                                    <Typography className="my-3">It looks like you haven't signed up to any hacks yet.</Typography>
+                                    <Button onClick={() => router.push('/[screen]', '/Signup')}>SIGNUP TO HACKS</Button>
+                                </Col>
+                            </Row>
+                        ) : Object.entries(signupsState).map(([id, hack]) => {
                             return (
                                 <Row className="my-3">
                                     <SignupConfig hack={hack} uid={user.uid} hackId={id}

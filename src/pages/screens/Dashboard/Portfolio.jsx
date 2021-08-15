@@ -1,7 +1,8 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import styles from "./Dashboard.module.scss";
-
+// Boostrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+// Styles
+import styles from './Dashboard.module.scss'
 // react-calendar (with custom styles on Github).
 import Calendar from 'react-calendar'
 
@@ -76,9 +77,7 @@ let Portfolio = ({ data }) => {
 
             </Col>
             <Col lg="4" className="center">
-                <Calendar className={styles.diyhacks_calendar}
-                          tileClassName={styles.diyhacks_calendar_tiles}
-                          value={calendarData[0]}
+                <Calendar value={calendarData[0]}
                           nextLabel={null} next2Label={null}
                           prevLabel={null} prev2Label={null} />
             </Col>

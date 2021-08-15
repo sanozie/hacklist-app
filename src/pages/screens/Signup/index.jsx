@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useDebugValue } from 'react'
-
+// React
+import { useState, useEffect, useDebugValue } from 'react'
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-// Local
+// Components
 import Layout from 'components/Layout'
 import styles from './Signup.module.scss'
 import SignupConfig from 'components/Hacks/SignupConfig'
 import Filters from './Filters'
 import { MainProgression } from 'components/Progression'
-
 // Utils
 import dateMap from 'utils/data/datemap'
-
 // Process
 const MAX_TIMELINE = process.env.MAX_TIMELINE
 
@@ -82,7 +79,7 @@ let Signup = ({user}) => {
     }, [])
 
     return (
-        <Layout title="Signup | DIYHacks" nav={true}>
+        <Layout title="Signup | Hacklist" nav={true}>
             <Container className={styles.body}>
                 <Row className="mt-5 pt-5">
                     <Col className="text-center">

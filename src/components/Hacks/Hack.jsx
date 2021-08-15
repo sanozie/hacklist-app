@@ -1,14 +1,10 @@
 // Utils
-import dateFormatter from 'utils/data/dateformatter';
-
+import dateFormatter from 'utils/data/dateformatter'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
 // Components
-import { SubmissionCircleRow, SubmissionGraphRow } from 'components/Graphs';
-import Badge from 'components/Badge'
-
+import { SubmissionCircleRow, SubmissionGraphRow } from 'components/Graphs'
 // Styles
 import styles from './Hack.module.scss'
 

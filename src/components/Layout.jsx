@@ -1,5 +1,7 @@
-import Head from "next/head"
-import Navi from "./Navi";
+// Next
+import Head from 'next/head'
+// Components
+import Navi from './Navi'
 
 let Layout = props => {
     return (

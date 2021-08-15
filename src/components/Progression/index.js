@@ -1,4 +1,6 @@
+// Styles
 import styles from './Progression.module.scss'
+// Material UI
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'

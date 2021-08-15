@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "diyhacks---stage",
-    "staging": "diyhacks---stage",
-    "DIYHacks Staging": "diyhacks---stage"
+    "default": "hacklist-stage",
+    "staging": "hacklist-stage",
+    "Hacklist Staging": "hacklist-stage"
   }
 }

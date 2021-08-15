@@ -1,17 +1,18 @@
-// React
+// React & Next
 import { useContext, useState } from 'react'
-
+import { useRouter } from 'next/router'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
+import Button from 'react-bootstrap/Button'
+// Material UI
+import Typography from '@material-ui/core/Typography'
 // Components
 import Layout from 'components/Layout'
 import { MainProgression } from 'components/Progression'
 import DeleteDialog from './DeleteDialog'
 import EditDialog from './EditDialog'
-
 // Store
 import { Submissions } from 'store'
 import SubmissionConfig from 'components/Hacks/SubmissionConfig'
@@ -19,6 +20,7 @@ import { useDialog } from 'utils/materialui'
 
 
 const SubmissionDash = ({user}) => {
+    const router = useRouter()
     const submissionsState = useContext(Submissions.State)?.state
     let [focusedHack, setFocusedHack] = useState(null)
 
@@ -48,14 +50,21 @@ const SubmissionDash = ({user}) => {
 
     // TODO: It looks like hovering causes a rerender.... this should be fixed
     return (
-        <Layout title="Submissions | DIYHacks" nav={true}>
+        <Layout title="Submissions | Hacklist" nav={true}>
             <Container>
                 <Row className="my-2 pt-5 pb-3">
                     <Col className="text-center">
                         <Row>
                             <h1 className="page-header">Your Submissions</h1>
                         </Row>
-                            {Object.entries(submissionsState).map(([id, hack]) => {
+                            { Object.keys(submissionsState).length === 0 ? (
+                                <Row className="my-5">
+                                    <Col>
+                                        <Typography className="my-3">It looks like you haven't submitted any hacks yet.</Typography>
+                                        <Button onClick={() => router.push('/[screen]', '/AddSubmission')}>SUBMIT A HACK</Button>
+                                    </Col>
+                                </Row>
+                            ) : Object.entries(submissionsState).map(([id, hack]) => {
                                 return (
                                     <Row className="my-3">
                                         <SubmissionConfig hack={hack} uid={user.uid} hackId={id} dash={true}

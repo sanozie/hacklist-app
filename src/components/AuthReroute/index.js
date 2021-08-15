@@ -1,3 +1,4 @@
+// Components
 import { MainProgression } from 'components/Progression'
 
 const AuthReroute = () => {

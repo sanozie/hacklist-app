@@ -1,19 +1,19 @@
+// React
 import { useState, useEffect } from 'react'
-
-//Bootstrap
+// Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-//Local
-import Layout from 'components/Layout'
+// Styles
 import styles from './Submission.module.scss'
+// Components
+import Layout from 'components/Layout'
 import SubmissionForm from 'components/Forms/SubmissionForm'
 
 let explainer = {
     default: {
         title: "Submitting Hacks",
-        desc: "DIYHacks will never steal your idea ( because you don't have to tell us what it is )!"
+        desc: "Hacklist will never steal your idea ( because you don't have to tell us what it is )!"
     },
     industry: {
         title: "Industry",
@@ -56,7 +56,7 @@ let AddSubmission = () => {
     }, [focus])
 
     return (
-        <Layout title="Submission | DIYHacks" nav={true}>
+        <Layout title="Submission | Hacklist" nav={true}>
             <Container className={styles.body}>
                 <Row className="mt-5 pt-5">
                     <Col className="text-center">
