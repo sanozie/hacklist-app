@@ -1,5 +1,6 @@
-// React
+// React & Next
 import { useState, useContext } from 'react'
+import { useRouter } from 'next/router'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -23,6 +24,7 @@ import { useDialog } from 'utils/materialui'
 
 
 const SignupDash = ({user}) => {
+    const router = useRouter()
     const signupsState = useContext(Signups.State)?.state
     let [confirmHack, setConfirmHack] = useState(null)
 
@@ -48,7 +50,14 @@ const SignupDash = ({user}) => {
                         <Row>
                             <h1 className="page-header">Your Signups</h1>
                         </Row>
-                        { Object.entries(signupsState).map(([id, hack]) => {
+                        { Object.keys(signupsState).length === 0 ? (
+                            <Row className="my-5">
+                                <Col>
+                                    <Typography className="my-3">It looks like you haven't signed up to any hacks yet.</Typography>
+                                    <Button onClick={() => router.push('/[screen]', '/Signup')}>SIGNUP TO HACKS</Button>
+                                </Col>
+                            </Row>
+                        ) : Object.entries(signupsState).map(([id, hack]) => {
                             return (
                                 <Row className="my-3">
                                     <SignupConfig hack={hack} uid={user.uid} hackId={id}
