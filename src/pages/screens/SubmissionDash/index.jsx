@@ -1,5 +1,5 @@
 // React
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

@@ -1,5 +1,3 @@
-// React
-import React from 'react'
 // Components
 import SubmissionForm from 'components/Forms/SubmissionForm'
 // Material UI

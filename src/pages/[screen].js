@@ -1,5 +1,4 @@
 // React & Next
-import React from 'react'
 import { useRouter } from 'next/router'
 // Auth
 import { useUser } from 'utils/auth/useUser'

@@ -1,5 +1,5 @@
 // React
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from 'react'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

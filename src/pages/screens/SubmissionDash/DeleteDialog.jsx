@@ -1,5 +1,3 @@
-// React
-import React from 'react'
 // Material UI
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'

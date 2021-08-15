@@ -1,11 +1,9 @@
 //React
 import { useState, useEffect, useRef, useContext } from 'react'
-
 //Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-
 // Material UI
 import Popover from '@material-ui/core/Popover'
 import TextField from '@material-ui/core/TextField'
@@ -13,10 +11,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import { MaterialStyles } from 'lib/MaterialStyles'
-
 // Components
 import Hack from 'components/Hacks/Hack'
-
 // Store
 import { Signups }  from 'store'
 

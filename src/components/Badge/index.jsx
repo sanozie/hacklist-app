@@ -1,13 +1,12 @@
+// React & Next
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-
 //Material UI
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import Tooltip from '@material-ui/core/Tooltip';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { makeStyles } from '@material-ui/core/styles';
-
+import AddIcon from '@material-ui/icons/Add'
+import EditIcon from '@material-ui/icons/Edit'
+import Tooltip from '@material-ui/core/Tooltip'
+import withStyles from '@material-ui/core/styles/withStyles'
+import { makeStyles } from '@material-ui/core/styles'
 //Local
 import styles from './Badge.module.scss'
 
@@ -73,9 +72,9 @@ let Badge = props => {
     return (
             <HtmlTooltip
                 title={
-                    <React.Fragment>
+                    <>
                         <b>{props.title}</b>
-                    </React.Fragment>
+                    </>
                 }
                 placement={placement[props.placement].tooltip}
             >

@@ -1,5 +1,5 @@
 // React & Next
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Router from 'next/router'
 //Bootstrap
 import Container from 'react-bootstrap/Container'

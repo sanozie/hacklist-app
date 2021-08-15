@@ -1,18 +1,15 @@
+// React & Next
 import { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
-
 // Bootstrap
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-
 // Material UI
 import Avatar from '@material-ui/core/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-
 // Styles
 import styles from './navi.module.scss'
-
 // Store
 import { User } from 'store'
 

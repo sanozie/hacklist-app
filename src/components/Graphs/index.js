@@ -1,11 +1,11 @@
-import React from 'react'
-import Tooltip from '@material-ui/core/Tooltip';
-//Material UI
-import CircularProgress from '@material-ui/core/CircularProgress';
+// Material UI
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { HtmlTooltip } from 'lib/MaterialStyles'
+// Styles
 import styles from './index.module.scss'
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+// Bootstrap
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 
 
 
@@ -90,9 +90,9 @@ const CircleGraph = props => {
     return (
         <HtmlTooltip
             title={
-                <React.Fragment>
+                <>
                     <b>{title}</b>{` ${props.signups}`}
-                </React.Fragment>
+                </>
             }
             placement="top"
         >
