@@ -79,7 +79,7 @@ let Signup = ({user}) => {
     }, [])
 
     return (
-        <Layout title="Signup | DIYHacks" nav={true}>
+        <Layout title="Signup | Hacklist" nav={true}>
             <Container className={styles.body}>
                 <Row className="mt-5 pt-5">
                     <Col className="text-center">

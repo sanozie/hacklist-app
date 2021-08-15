@@ -45,7 +45,7 @@ const SubmissionDash = ({user}) => {
 
     // TODO: It looks like hovering causes a rerender.... this should be fixed
     return (
-        <Layout title="Submissions | DIYHacks" nav={true}>
+        <Layout title="Submissions | Hacklist" nav={true}>
             <Container>
                 <Row className="my-2 pt-5 pb-3">
                     <Col className="text-center">

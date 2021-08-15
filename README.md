@@ -1,5 +1,5 @@
-[diyhacks.tech](https://diyhacks.tech/)
-## DIYHacks
+[hacklist.co](https://hacklist.co/)
+## Hacklist
 
 Gain skills in the process. Finish up with a prototype you’ll be proud of. And of course, it’s free.
 
@@ -14,4 +14,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Learn More
 
-To learn more about DIYHacks, feel free to shoot me an email!
+To learn more about Hacklist, feel free to shoot me an email!

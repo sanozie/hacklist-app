@@ -43,7 +43,7 @@ let Navi = () => {
     return (
         <>
             <Navbar bg="light" expand="lg" id={styles.navbar}>
-                <Navbar.Brand onClick={() => router.push('/[screen]', '/Dashboard')} id={styles.logo}>DIYHACKS</Navbar.Brand>
+                <Navbar.Brand onClick={() => router.push('/[screen]', '/Dashboard')} id={styles.logo}>HACKLIST</Navbar.Brand>
                 <Navbar.Toggle className="ml-auto" aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto ">

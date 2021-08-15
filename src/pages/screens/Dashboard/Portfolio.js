@@ -79,9 +79,7 @@ let Portfolio = ({ data }) => {
 
             </Col>
             <Col lg="4" className="center">
-                <Calendar className={styles.diyhacks_calendar}
-                          tileClassName={styles.diyhacks_calendar_tiles}
-                          value={calendarData[0]}
+                <Calendar value={calendarData[0]}
                           nextLabel={null} next2Label={null}
                           prevLabel={null} prev2Label={null} />
             </Col>
