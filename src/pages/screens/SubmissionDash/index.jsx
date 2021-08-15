@@ -1,17 +1,14 @@
 // React
-import { useContext, useState } from 'react'
-
+import React, { useContext, useState } from 'react'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // Components
 import Layout from 'components/Layout'
 import { MainProgression } from 'components/Progression'
 import DeleteDialog from './DeleteDialog'
 import EditDialog from './EditDialog'
-
 // Store
 import { Submissions } from 'store'
 import SubmissionConfig from 'components/Hacks/SubmissionConfig'

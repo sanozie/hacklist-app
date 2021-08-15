@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
-
-//Bootstrap
+// React
+import React, { useState, useEffect } from 'react'
+// Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-//Local
-import Layout from 'components/Layout'
+// Styles
 import styles from './Submission.module.scss'
+// Components
+import Layout from 'components/Layout'
 import SubmissionForm from 'components/Forms/SubmissionForm'
 
 let explainer = {

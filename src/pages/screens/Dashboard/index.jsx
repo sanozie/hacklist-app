@@ -1,13 +1,11 @@
-import { useState, useEffect, useContext, useDebugValue } from 'react'
-
+// React
+import React, { useState, useEffect, useContext, useDebugValue } from 'react'
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-// Local
+// Styles
 import styles from './Dashboard.module.scss'
-
 // Components
 import Signups from './Signups'
 import Portfolio from './Portfolio'
@@ -15,7 +13,6 @@ import Submissions from './Submissions'
 import { MainProgression } from 'components/Progression'
 import Badge from 'components/Badge'
 import Layout from 'components/Layout'
-
 // Store
 import { Submissions as SubmissionContext, Signups as SignupContext, Portfolio as PortfolioContext } from 'store'
 

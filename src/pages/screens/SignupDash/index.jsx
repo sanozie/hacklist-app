@@ -1,12 +1,10 @@
 // React
-import { useState, useContext } from 'react'
-
+import React, { useState, useContext } from 'react'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
 // Material UI
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -14,15 +12,12 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import Typography from '@material-ui/core/Typography'
-
 // Components
 import Layout from 'components/Layout'
 import SignupConfig from 'components/Hacks/SignupConfig'
-
+import { MainProgression } from 'components/Progression'
 // Store
 import { Signups } from 'store'
-import { MainProgression } from 'components/Progression'
-
 // Utils
 import { useDialog } from 'utils/materialui'
 

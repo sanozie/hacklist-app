@@ -1,20 +1,17 @@
+// React
 import React, { useState, useEffect, useDebugValue } from 'react'
-
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-// Local
+// Components
 import Layout from 'components/Layout'
 import styles from './Signup.module.scss'
 import SignupConfig from 'components/Hacks/SignupConfig'
 import Filters from './Filters'
 import { MainProgression } from 'components/Progression'
-
 // Utils
 import dateMap from 'utils/data/datemap'
-
 // Process
 const MAX_TIMELINE = process.env.MAX_TIMELINE
 

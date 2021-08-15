@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
-import Router, { useRouter } from 'next/router'
+// React & Next
+import React, { useEffect } from 'react'
+import Router from 'next/router'
 //Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-//Local
+// Components
 import Layout from 'components/Layout'
+// Styles
 import styles from './Signin.module.scss'
-
 // Firebase
 import { auth, firebase } from 'db/client'
 

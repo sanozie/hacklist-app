@@ -1,7 +1,10 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import styles from "./Dashboard.module.scss";
-
+// React
+import React from 'react'
+// Boostrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+// Styles
+import styles from './Dashboard.module.scss'
 // react-calendar (with custom styles on Github).
 import Calendar from 'react-calendar'
 

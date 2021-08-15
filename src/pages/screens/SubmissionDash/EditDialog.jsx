@@ -1,6 +1,7 @@
-// Local
+// React
+import React from 'react'
+// Components
 import SubmissionForm from 'components/Forms/SubmissionForm'
-
 // Material UI
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
