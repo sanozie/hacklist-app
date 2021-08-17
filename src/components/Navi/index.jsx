@@ -21,7 +21,7 @@ let Navi = () => {
     const userState = useContext(User.State)
 
     useEffect(() => {
-        setAvatar(userState.photoURL)
+        setAvatar(userState?.photoURL)
     }, [userState])
 
     const handleClick = (event) => {
