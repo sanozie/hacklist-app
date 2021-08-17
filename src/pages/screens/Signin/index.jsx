@@ -17,7 +17,7 @@ let Signin = () => {
         localStorage.setItem('lastVisited', 'Signin')
     }, [])
 
-    let handleGoogleSignIn = () => {
+    const handleGoogleSignIn = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
             .then(() => {
@@ -28,7 +28,7 @@ let Signin = () => {
             });
     }
 
-    let handleGithubSignIn = () => {
+    const handleGithubSignIn = () => {
         var provider = new firebase.auth.GithubAuthProvider();
         auth.signInWithPopup(provider)
             .then(() => {
@@ -36,6 +36,31 @@ let Signin = () => {
             })
             .catch(err => {
                 alert('There was a problem with your signin. Please try again or contact us.');
+            });
+    }
+
+    const handleLinkedinSignIn = () => {
+        auth
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(()=>{
+                const provider = new firebase.auth.OAuthProvider('linkedin.com');
+                provider.addScope('r_emailaddress');
+                provider.addScope('r_liteprofile');
+                auth
+                    .signInWithPopup(provider)
+                    .then(result=>{
+                        console.group('LinkedIn');
+                        console.log(result);
+                        console.groupEnd();
+                        return result;
+                    })
+                    .catch(error=>{
+                        console.group('LinkedIn - Error');
+                        console.log(error)
+                        console.groupEnd();
+                        throw error;
+                    });
+
             });
     }
     return (
@@ -55,6 +80,9 @@ let Signin = () => {
                                     </Col>
                                     <Col md="3" className="text-center">
                                         <img src='signin/github.png' alt="Github SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleGithubSignIn}/>
+                                    </Col>
+                                    <Col md="3" className="text-center">
+                                        <img src='signin/linkedin.png' alt="Github SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleLinkedinSignIn}/>
                                     </Col>
                                 </Row>
                                 <Row className="justify-content-center">
