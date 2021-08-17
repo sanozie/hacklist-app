@@ -44,14 +44,16 @@ let Navi = () => {
                 <Navbar.Toggle className="ml-auto" aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto ">
-                        <Nav.Link href="#home" className={[styles.navlink, 'px-3']}>Forum</Nav.Link>
-                        <Nav.Link href="#link" className={[styles.navlink, 'px-3']}>About</Nav.Link>
-                        <Nav.Item className='px-3'>
-                            <button id={styles.support} className='btn'>Support DIYH</button>
-                        </Nav.Item>
+                        <Nav.Link href="https://gmail.us4.list-manage.com/subscribe?u=10220f4953ebea0edf51592fb&id=e01dbaccaa"
+                                  className={[styles.navlink, 'px-3']}>Mailing List</Nav.Link>
+                        <Nav.Link href="https://join.slack.com/t/hacklistworkspace/shared_invite/zt-uhfdw4qs-xfqJej0fOsd7tX86ycmv_g"
+                                  className={[styles.navlink, 'px-3']}>Slack</Nav.Link>
+                        {/*<Nav.Item className='px-3'>*/}
+                        {/*    <button id={styles.support} className='btn'>Support</button>*/}
+                        {/*</Nav.Item>*/}
                     </Nav>
                 </Navbar.Collapse>
-                <Nav.Item className='px-3' >
+                <Nav.Item className='px-3 py-2 py-lg-0' >
                     <Avatar alt="Profile Picture" src={avatar} onClick={handleClick}/>
                 </Nav.Item>
             </Navbar>
