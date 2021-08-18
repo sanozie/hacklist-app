@@ -18,7 +18,7 @@ const initializer = async () => {
 const updater = async (update, state) => {
     let { hackId, uid, skill, hack } = update
 
-    fetch(`/api/hacks?type=signup&uid=${uid}`, {
+    await fetch(`/api/hacks?type=signup&uid=${uid}`, {
         method: 'PUT',
         body: JSON.stringify(update)
     })
@@ -40,7 +40,7 @@ const updater = async (update, state) => {
 const deleter = async (update, state) => {
     let { hackId, uid } = update
 
-    fetch(`/api/hacks?type=signup&uid=${uid}`, {
+    await fetch(`/api/hacks?type=signup&uid=${uid}`, {
         method: 'DELETE',
         body: JSON.stringify(update)
     })
