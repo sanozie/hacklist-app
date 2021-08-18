@@ -122,3 +122,29 @@ p {
     height: 100%;
     filter: blur(10px);
 }
+
+// Transitions
+.fade-enter {
+    opacity: 0;
+}
+.fade-exit{
+    opacity: 1;
+}
+.fade-enter-active {
+    opacity: 1;
+}
+.fade-exit-active {
+    opacity: 0;
+}
+.fade-enter-active,
+.fade-exit-active {
+    transition-property: opacity;
+    transition-duration: 100ms;
+}
+
+.fade-enter-active {
+    transition-timing-function: ease-out;
+}
+.fade-exit-active {
+    transition-timing-function: ease-in;
+}

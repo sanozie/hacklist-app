@@ -18,6 +18,7 @@ const Sync = ({children}) => {
 
     // Syncing signups to submissions
     useEffect(() => {
+        console.log("sync")
         signupActions.init()
     }, [submissionState])
 

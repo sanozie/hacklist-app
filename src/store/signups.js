@@ -19,7 +19,7 @@ const updater = async (update, state) => {
     let { hackId, uid, skill, hack } = update
 
     fetch(`/api/hacks?type=signup&uid=${uid}`, {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(update)
     })
 

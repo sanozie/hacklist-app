@@ -60,7 +60,7 @@ const SignupDash = ({user}) => {
                         ) : Object.entries(signupsState).map(([id, hack]) => {
                             return (
                                 <Row className="my-3">
-                                    <SignupConfig hack={hack} uid={user.uid} hackId={id}
+                                    <SignupConfig key={id} hack={hack} uid={user.uid} hackId={id}
                                                   confirmWithdraw={handleWithdraw} dash={true} />
                                 </Row>
                             )
@@ -83,7 +83,7 @@ const SignupDash = ({user}) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions className="justify-content-center">
-                    <Button onClick={handleClose} variant="outline-lignt" color="primary">
+                    <Button onClick={handleClose} variant="outline-light" color="primary">
                         CANCEL
                     </Button>
                     <Button onClick={handleSubmit} variant="danger" color="primary" autoFocus>
