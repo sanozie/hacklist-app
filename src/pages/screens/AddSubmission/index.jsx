@@ -14,7 +14,7 @@ import SubmissionForm from 'components/Forms/SubmissionForm'
 let explainer = {
     default: {
         title: "Submitting Hacks",
-        desc: "Hacklist will never steal your idea ( because you don't have to tell us what it is )!"
+        desc: "Hacklist will never steal your idea ( because you don't have to tell us what it is )! \nDefine how many people you want to sign up to your hack here."
     },
     industry: {
         title: "Industry",

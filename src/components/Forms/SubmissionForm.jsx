@@ -260,6 +260,12 @@ let SubmissionForm = props => {
                         error={form.hackTitleErr.state} />
                 </FormControl>
             </Row>
+            { props.usage === 'add' && (
+                <Row className="justify-content-center flex-column py-3 text-center">
+                    <p>The below sliders are used to notate the number of hackers you'd like to sign up to your hack.</p>
+                    <p>See description for detail</p>
+                </Row>
+            )}
             <Row className="justify-content-center">
                 <FormControl classes={classesFormControl} onFocus={() => setFocus('eng')}>
                     <label id="eng-range" className="slider-label">
