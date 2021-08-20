@@ -8,6 +8,7 @@
 body,
 html {
     height: 100%;
+    cursor: pointer;
 }
 
 body {
@@ -33,17 +34,17 @@ p {
     font-family: $paraFont;
 }
 
-// Sizing values should be synced with lib/MaterialStyles.js if updated
+// Sizing values should be synced with lib/AppTheme.js if updated
 
 h2 {
     font-weight: 800;
-    font-size: calc(1rem + 1vw);
-    letter-spacing: calc(0.05rem + 0.04vw);
+    font-size: calc(0.8rem + 0.8vw);
+    letter-spacing: calc(0.05rem + 0.05vw);
 }
 h3 {
     font-weight: 300;
-    font-size: calc(0.6rem + 0.6vw);
-    letter-spacing: calc(0.03rem + 0.04vw);
+    font-size: calc(0.8rem + 0.8vw);
+    letter-spacing: calc(0.05rem + 0.05vw);
 }
 h4 {
     font-weight: 700;
@@ -52,13 +53,13 @@ h4 {
 }
 h5 {
     font-weight: 100;
-    font-size: calc(0.5rem + 0.5vw);
-    letter-spacing: calc(0.03rem + 0.04vw);
+    font-size: calc(0.6rem + 0.6vw);
+    letter-spacing: calc(0.04rem + 0.04vw);
     opacity: 0.7;
 }
 p {
     font-weight: 100;
-    font-size: calc(0.5rem + 0.5vw);
+    font-size: calc(0.6rem + 0.6vw);
     letter-spacing: calc(0.03rem + 0.04vw);
 }
 

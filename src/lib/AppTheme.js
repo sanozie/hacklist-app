@@ -16,13 +16,13 @@ theme.typography.h1 = {
 }
 theme.typography.h2 = {
     fontWeight: 700,
-    fontSize: 'calc(0.6rem + 0.6vw)',
-    letterSpacing: 'calc(0.03rem + 0.04vw)'
+    fontSize: 'calc(0.8rem + 0.8vw)',
+    letterSpacing: 'calc(0.05rem + 0.05vw)'
 }
 theme.typography.h3 = {
     fontWeight: 300,
-    fontSize: 'calc(0.6rem + 0.6vw)',
-    letterSpacing: 'calc(0.03rem + 0.04vw)'
+    fontSize: 'calc(0.8rem + 0.8vw)',
+    letterSpacing: 'calc(0.05rem + 0.05vw)'
 }
 theme.typography.h4 = {
     fontWeight: 700,
@@ -31,18 +31,18 @@ theme.typography.h4 = {
 }
 theme.typography.h5 = {
     fontWeight: 100,
-    fontSize: 'calc(0.5rem + 0.5vw)',
-    letterSpacing: 'calc(0.03rem + 0.04vw)',
+    fontSize: 'calc(0.6rem + 0.6vw)',
+    letterSpacing: 'calc(0.04rem + 0.04vw)',
     opacity: 0.7
 }
 theme.typography.body1 = { // p
     fontWeight: 300,
-    fontSize: 'calc(0.5rem + 0.5vw)',
+    fontSize: 'calc(0.6rem + 0.5vw)',
     letterSpacing: 'calc(0.03rem + 0.04vw)'
 }
 theme.typography.body2 = { // p
     fontWeight: 100,
-    fontSize: 'calc(0.5rem + 0.5vw)',
+    fontSize: 'calc(0.6rem + 0.5vw)',
     letterSpacing: 'calc(0.03rem + 0.04vw)'
 }
 
