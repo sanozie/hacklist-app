@@ -42,7 +42,7 @@ const updater = async (params, state) => {
 const deleter = async (update, state) => {
     let { hackId } = update
 
-    fetch(`/api/hacks?type=submission`, {
+    await fetch(`/api/hacks?type=submission`, {
         method: 'DELETE',
         body: JSON.stringify(update)
     })

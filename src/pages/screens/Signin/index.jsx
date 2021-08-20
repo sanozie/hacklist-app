@@ -12,24 +12,24 @@ import styles from './Signin.module.scss'
 // Firebase
 import { auth, firebase } from 'db/client'
 
-let Signin = () => {
+const Signin = () => {
     useEffect(() => {
         localStorage.setItem('lastVisited', 'Signin')
     }, [])
 
-    let handleGoogleSignIn = () => {
-        var provider = new firebase.auth.GoogleAuthProvider();
+    const handleGoogleSignIn = () => {
+        const provider = new firebase.auth.GoogleAuthProvider()
         auth.signInWithPopup(provider)
             .then(() => {
                 Router.push('/[screen]', '/Dashboard')
             })
             .catch(err => {
-                alert('There was a problem with your signin. Please try again or contact us.');
+                alert('There was a problem with your signin. Please try again or contact us.')
             });
     }
 
-    let handleGithubSignIn = () => {
-        var provider = new firebase.auth.GithubAuthProvider();
+    const handleGithubSignIn = () => {
+        const provider = new firebase.auth.GithubAuthProvider();
         auth.signInWithPopup(provider)
             .then(() => {
                 Router.push('/[screen]', '/Dashboard')
@@ -50,15 +50,15 @@ let Signin = () => {
                                     <h1 id={styles.logo}>HACKLIST</h1>
                                 </Row>
                                 <Row className="justify-content-center w-100 px-5 py-2">
-                                    <Col md="3" className="text-center">
+                                    <Col md="3" sm="4" className="text-center">
                                         <img src='signin/google.png' alt="Google SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleGoogleSignIn}/>
                                     </Col>
-                                    <Col md="3" className="text-center">
+                                    <Col md="3" sm="4" className="text-center">
                                         <img src='signin/github.png' alt="Github SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleGithubSignIn}/>
                                     </Col>
                                 </Row>
-                                <Row className="justify-content-center">
-                                    <p className={styles.copy}>Copywrite 2020</p>
+                                <Row className="justify-content-center py-1">
+                                    <p className={styles.copy}>© 2021</p>
                                 </Row>
                             </Col>
                         </Row>
@@ -67,7 +67,6 @@ let Signin = () => {
             </Container>
         </Layout>
     )
-
 }
 
 export default Signin

@@ -162,7 +162,7 @@ export default async (req, res) => {
             // Delete a submission
             case 'submission':
                 firebase.collection('Submissions').doc(hackId).delete().then(() => {
-                    res.status(202)
+                    res.status(202).send()
                 }).catch(e => {
                     console.error("Error removing document: ", e);
                 })
