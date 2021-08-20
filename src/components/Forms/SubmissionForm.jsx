@@ -202,15 +202,12 @@ let SubmissionForm = props => {
         }
     }
 
-    useEffect(() =>{
-        console.log(form.hackTitleErr.state)
-    }, [form.hackTitleErr])
-
     return (
         <Col>
             <Row className="justify-content-center">
                 <FormControl required variant="outlined" classes={classesFormControl}
-                             onMouseDown={() => setFocus('industry')}>
+                             onMouseDown={() => setFocus('industry')}
+                             onClick={() => setFocus('industry')}>
                     <TextField
                         variant="outlined"
                         value={form.industry.state}
@@ -228,7 +225,8 @@ let SubmissionForm = props => {
                     </TextField>
                 </FormControl>
                 <FormControl required variant="outlined" classes={classesFormControl}
-                             onMouseDown={() => setFocus('contribution')}>
+                             onMouseDown={() => setFocus('contribution')}
+                             onClick={() => setFocus('contribution')}>
                     <TextField
                         variant="outlined"
                         value={form.contribution.state}
@@ -249,7 +247,9 @@ let SubmissionForm = props => {
                         </MenuItem>
                     </TextField>
                 </FormControl>
-                <FormControl variant="outlined" classes={classesFormControl} onMouseDown={() => setFocus('title')}>
+                <FormControl variant="outlined" classes={classesFormControl}
+                             onMouseDown={() => setFocus('title')}
+                             onClick={() => setFocus('title')}>
                     <TextField
                         variant="outlined"
                         value={form.hackTitle.state}
@@ -260,8 +260,14 @@ let SubmissionForm = props => {
                         error={form.hackTitleErr.state} />
                 </FormControl>
             </Row>
+            { props.usage === 'add' && (
+                <Row className="justify-content-center flex-column py-3 text-center">
+                    <p>The below sliders are used to notate the number of hackers you'd like to sign up to your hack.</p>
+                    <p>See description for detail</p>
+                </Row>
+            )}
             <Row className="justify-content-center">
-                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('eng')}>
+                <FormControl classes={classesFormControl} onFocus={() => setFocus('eng')}>
                     <label id="eng-range" className="slider-label">
                         <Typography>Engineering</Typography>
                     </label>
@@ -275,7 +281,7 @@ let SubmissionForm = props => {
                         color="primary"
                     />
                 </FormControl>
-                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('design')}>
+                <FormControl classes={classesFormControl} onFocus={() => setFocus('design')}>
                     <label id="design-range" className="slider-label">
                         <Typography>Design</Typography>
                     </label>
@@ -289,7 +295,7 @@ let SubmissionForm = props => {
                         color='secondary'
                     />
                 </FormControl>
-                <FormControl classes={classesFormControl} onMouseDown={() => setFocus('pm')}>
+                <FormControl classes={classesFormControl} onFocus={() => setFocus('pm')}>
                     <label id="pm-range" className="slider-label">
                         <Typography>Product Managers</Typography>
                     </label>

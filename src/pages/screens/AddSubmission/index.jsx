@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 // Styles
 import styles from './Submission.module.scss'
+import { SwitchTransition, CSSTransition } from 'react-transition-group'
 // Components
 import Layout from 'components/Layout'
 import SubmissionForm from 'components/Forms/SubmissionForm'
@@ -13,7 +14,7 @@ import SubmissionForm from 'components/Forms/SubmissionForm'
 let explainer = {
     default: {
         title: "Submitting Hacks",
-        desc: "Hacklist will never steal your idea ( because you don't have to tell us what it is )!"
+        desc: "Hacklist will never steal your idea ( because you don't have to tell us what it is )! \nDefine how many people you want to sign up to your hack here."
     },
     industry: {
         title: "Industry",
@@ -21,7 +22,7 @@ let explainer = {
     },
     contribution: {
         title: "Contribution",
-        desc: "Will you be contributing techncally? If so, put your role! If not, you may leave this blank."
+        desc: "You'll be counted as a hacker for this project, and this is the skill you'll be bringing to the table."
     },
     title: {
         title: "Title",
@@ -29,15 +30,15 @@ let explainer = {
     },
     eng: {
         title: "Engineers",
-        desc: "Please select the min and max number of engineers you'd like to sign up to your hack! (Keep in mind that you'll have to talk to those that sign up!)"
+        desc: "Please select the min (leftmost point) and max number (rightmost point) of engineers you'd like to sign up to your hack!"
     },
     design: {
         title: "Designers",
-        desc: "Please select the min and max number of designers you'd like to sign up to your hack! (Keep in mind that you'll have to talk to those that sign up!)"
+        desc: "Please select the min (leftmost point) and max number (rightmost point) of designers you'd like to sign up to your hack!"
     },
     pm: {
         title: "Product Managers",
-        desc: "Please select the min and max number of product managers you'd like to sign up to your hack! (Keep in mind that you'll have to talk to those that sign up!)"
+        desc: "Please select the min (leftmost point) and max number (rightmost point) of product managers you'd like to sign up to your hack!"
     }
 }
 
@@ -68,24 +69,39 @@ let AddSubmission = () => {
                         <Row className="flex-column-reverse flex-md-row">
                             <SubmissionForm focusListener={field => setFocus(field)} usage='add' />
                             <Col className="mb-3 mb-md-0">
-                                <Row className={styles.desc_wrapper}>
-                                    <Col>
-                                        <Row>
+
+                                <SwitchTransition mode="out-in">
+                                    <CSSTransition
+                                        key={focus}
+                                        addEndListener={(node, done) => {
+                                            node.addEventListener("transitionend", done, false);
+                                        }}
+                                        classNames="fade"
+                                    >
+                                        <Row className={styles.desc_wrapper}>
                                             <Col>
-                                                <h2>{title}</h2>
+                                                <Row>
+                                                    <Col>
+                                                        <h2>{title}</h2>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <p>{desc}</p>
+                                                    </Col>
+                                                </Row>
                                             </Col>
                                         </Row>
-                                        <Row>
-                                            <Col>
-                                                <p>{desc}</p>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
+                                    </CSSTransition>
+                                </SwitchTransition>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
+                {/*<Carousel autoplay={false} label='Get started'>*/}
+                {/*    <Slide title="hello" />*/}
+                {/*    <Slide title="goodbye" />*/}
+                {/*</Carousel>*/}
             </Container>
         </Layout>
     )

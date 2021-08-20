@@ -67,7 +67,7 @@ const SubmissionDash = ({user}) => {
                             ) : Object.entries(submissionsState).map(([id, hack]) => {
                                 return (
                                     <Row className="my-3">
-                                        <SubmissionConfig hack={hack} uid={user.uid} hackId={id} dash={true}
+                                        <SubmissionConfig key={id} hack={hack} uid={user.uid} hackId={id} dash={true}
                                                           confirmDelete={handleDelete} confirmEdit={handleEdit}/>
                                     </Row>
                                 )

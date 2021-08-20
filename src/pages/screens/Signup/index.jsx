@@ -94,7 +94,7 @@ let Signup = ({user}) => {
                             <Col xs="12" md="8" className="mt-3 mt-md-0">
                                 <Row>
                                     {(filteredHacks.length !== 0) && filteredHacks.map(([id, hack]) => (
-                                        <SignupConfig hack={hack} hackId={id} uid={user.uid}
+                                        <SignupConfig key={id} hack={hack} hackId={id} uid={user.uid}
                                                           emitSignup={() => setSignup(!signup)} />
                                     ))}
                                     {(filteredHacks.length === 0) && (

@@ -10,7 +10,7 @@ import {
 import { mapUserData } from './mapUserData'
 
 const useUser = () => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState(undefined)
     const router = useRouter()
 
     const logout = async () => {
@@ -19,9 +19,9 @@ const useUser = () => {
             .signOut()
             .then(() => {
                 // Sign-out successful.
-                router.push('/Signin')
+                router.push('https://hacklist.co')
             })
-            .catch((e) => {
+            .catch(e => {
                 console.error(e)
             })
     }
