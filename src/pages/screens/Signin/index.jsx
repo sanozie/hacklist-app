@@ -69,7 +69,7 @@ const Signin = () => {
                                         <img src='signin/facebook.png' alt="Facebook SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleFacebookSignIn}/>
                                     </Col>
                                     <Col md="3" sm="4" className="text-center">
-                                        <img src='signin/twitter.png' alt="Facebook SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleTwitterSignIn}/>
+                                        <img src='signin/twitter.png' alt="Twitter SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleTwitterSignIn}/>
                                     </Col>
                                 </Row>
                                 <Row className="justify-content-center py-1">
