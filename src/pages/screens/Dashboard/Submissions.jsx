@@ -43,7 +43,7 @@ let Submissions = ({ data }) => {
                                 {item.title}
                             </h4>
                         </Col>
-                        <Col lg="7" xs="12" className="align-items-center py-1 pr-0 ">
+                        <Col lg="7" xs="12" className="align-items-center center py-1 pr-0 ">
                             <SubmissionGraphRow sizeData={item.sizeData} />
                         </Col>
                         <Col lg="3" className="d-none d-lg-block">
