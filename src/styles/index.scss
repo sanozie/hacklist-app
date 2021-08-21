@@ -8,7 +8,6 @@
 body,
 html {
     height: 100%;
-    cursor: pointer;
 }
 
 body {
@@ -99,6 +98,7 @@ p {
     transition: 0.3s ease-in-out;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 
     .status-title {
         width: 100%;

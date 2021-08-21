@@ -1,6 +1,6 @@
 // React & Next
 import { useEffect } from 'react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 //Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -13,30 +13,39 @@ import styles from './Signin.module.scss'
 import { auth, firebase } from 'db/client'
 
 const Signin = () => {
+    const router = useRouter()
     useEffect(() => {
         localStorage.setItem('lastVisited', 'Signin')
     }, [])
 
-    const handleGoogleSignIn = () => {
-        const provider = new firebase.auth.GoogleAuthProvider()
+    const handlePopup = provider => {
         auth.signInWithPopup(provider)
             .then(() => {
-                Router.push('/[screen]', '/Dashboard')
+                router.push('/[screen]', '/Dashboard')
             })
             .catch(err => {
                 alert('There was a problem with your signin. Please try again or contact us.')
             });
     }
 
+    const handleGoogleSignIn = () => {
+        const provider = new firebase.auth.GoogleAuthProvider()
+        handlePopup(provider)
+    }
+
     const handleGithubSignIn = () => {
-        const provider = new firebase.auth.GithubAuthProvider();
-        auth.signInWithPopup(provider)
-            .then(() => {
-                Router.push('/[screen]', '/Dashboard')
-            })
-            .catch(err => {
-                alert('There was a problem with your signin. Please try again or contact us.');
-            });
+        const provider = new firebase.auth.GithubAuthProvider()
+        handlePopup(provider)
+    }
+
+    const handleFacebookSignIn = () => {
+        const provider = new firebase.auth.FacebookAuthProvider()
+        handlePopup(provider)
+    }
+
+    const handleTwitterSignIn = () => {
+        const provider = new firebase.auth.TwitterAuthProvider()
+        handlePopup(provider)
     }
     return (
         <Layout title="Signin | Hacklist" nav={false} signin={true}>
@@ -55,6 +64,12 @@ const Signin = () => {
                                     </Col>
                                     <Col md="3" sm="4" className="text-center">
                                         <img src='signin/github.png' alt="Github SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleGithubSignIn}/>
+                                    </Col>
+                                    <Col md="3" sm="4" className="text-center">
+                                        <img src='signin/facebook.png' alt="Facebook SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleFacebookSignIn}/>
+                                    </Col>
+                                    <Col md="3" sm="4" className="text-center">
+                                        <img src='signin/twitter.png' alt="Facebook SignIn" className={`${styles.signin_icon} img-fluid py-1`} onClick={handleTwitterSignIn}/>
                                     </Col>
                                 </Row>
                                 <Row className="justify-content-center py-1">
