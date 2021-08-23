@@ -1,55 +1,41 @@
 {
-    "accommodation": {
-        "name": "Accommodation"
+    "tech": {
+        "name": "Technology"
     },
-    "agriculture": {
-        "name": "Agriculture"
+    "energy": {
+        "name": "Energy"
     },
-    "foodservices": {
-        "name": "Food Services"
+    "legislation": {
+        "name": "Legislation"
     },
-    "trans": {
-        "name": "Transportation"
-    },
-    "entertainment": {
-        "name": "Entertainment"
-    },
-    "clothing": {
-        "name": "Clothing"
-    },
-    "manufacturing": {
-        "name": "Manufacturing"
-    },
-    "construction": {
-        "name": "Construction"
-    },
-    "education": {
-        "name": "Education"
-    },
-    "electronics": {
-        "name": "Electronics"
-    },
-    "finance": {
-        "name": "Finance"
-    },
-    "dataanalytics": {
-        "name": "Data Analytics"
-    },
-    "internet": {
-        "name": "Internet"
-    },
-    "machinery": {
-        "name": "Machinery"
+    "environment": {
+        "name": "Environment"
     },
     "management": {
         "name": "Enterprise Management"
     },
-    "sports": {
-        "name": "Sports"
+    "blockchain": {
+        "name": "Blockchain"
     },
-    "environment": {
-        "name": "Environment"
+    "education": {
+        "name": "Education"
+    },
+    "transportation": {
+        "name": "Transportation"
+    },
+    "recruitment": {
+        "name": "Recruitment"
+    },
+    "entertainment": {
+        "name": "Entertainment"
+    },
+    "finance": {
+        "name": "Finance"
+    },
+    "data-analytics": {
+        "name": "Data Analytics"
+    },
+    "machinery": {
+        "name": "Machinery"
     }
 }
-
-// Make some surveys to make list better
