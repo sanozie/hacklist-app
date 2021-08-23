@@ -11,12 +11,18 @@ function formatSubmissionData(data, platform) {
         tempDataTotal = { eng: 0, design: 0, pm: 0 },
         { limits } = data
 
+    let hasIdeator = false
+
     for (const value of Object.values(data.signups)) {
         let { skill } = value
-        if (tempDataMin[skill] < limits[skill].min) {
-            tempDataMin[skill] += 1
+        if (skill !== 'ideator') {
+            if (tempDataMin[skill] < limits[skill].min) {
+                tempDataMin[skill] += 1
+            }
+            tempDataTotal[skill] += 1
+        } else {
+            hasIdeator = true
         }
-        tempDataTotal[skill] += 1
     }
 
     for (const key of Object.keys(tempDataMin)) {
@@ -27,8 +33,12 @@ function formatSubmissionData(data, platform) {
             circleFill: (tempDataTotal[key] / limits[key].max) * 100
         }
     }
-    sizeData.overflowWidth = (Object.keys(data.signups).length - limits.min) / limits.max * 100
-    data.sizeData = sizeData;
+
+    let sizer = Object.keys(data.signups).length - limits.min
+    hasIdeator ? sizer-- : null
+    sizeData.overflowWidth = sizer / limits.max * 100
+    data.sizeData = sizeData
+
     if (platform === 'server') {
         data.submit_date = data.submit_date.toDate()
     }
