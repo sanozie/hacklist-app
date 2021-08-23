@@ -87,8 +87,8 @@ let Signup = ({user}) => {
                     </Col>
                 </Row>
                 <Row>
-                    {!fetched && (<MainProgression message="Fetching data" />)}
-                    {fetched && (
+                    { !fetched && <MainProgression message="Fetching hacks" /> }
+                    { fetched && (
                         <>
                             <Filters setFilterData={filterData => setFilterData(filterData)} />
                             <Col xs="12" md="8" className="mt-3 mt-md-0">
@@ -104,7 +104,6 @@ let Signup = ({user}) => {
                             </Col>
                         </>
                     )}
-
                 </Row>
             </Container>
         </Layout>
