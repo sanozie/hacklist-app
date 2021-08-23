@@ -7,6 +7,8 @@ import Col from 'react-bootstrap/Col'
 import { SubmissionCircleRow, SubmissionGraphRow } from 'components/Graphs'
 // Styles
 import styles from './Hack.module.scss'
+// Data
+import industries from 'data/industries.json'
 
 
 let Hack = props => {
@@ -16,7 +18,7 @@ let Hack = props => {
                 <Row>
                     <Col className="text-left">
                         <h2>{props.title}</h2>
-                        <h3 className={`align-items-end ${styles.industry_label} mx-0`}>{props.industry}</h3>
+                        <h3 className={`align-items-end ${styles.industry_label} mx-0`}>{industries[props.industry].name}</h3>
                     </Col>
                 </Row>
                 <Row className="d-none d-sm-flex my-1">

@@ -11,9 +11,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import AddIcon from '@material-ui/icons/Add'
 import Popover from '@material-ui/core/Popover'
 import { makeStyles } from '@material-ui/core/styles'
-
-//Styles
-let addIcon = makeStyles({
+import Typography from '@material-ui/core/Typography'
+// Data
+import industries from 'data/industries.json'
+// Styles
+const addIcon = makeStyles({
     root: {
         color: "white",
         opacity: 0.5
@@ -183,8 +185,11 @@ let Filters = ({ setFilterData }) => {
                                             size="small"
                                             select
                                         >
-                                            <MenuItem value='Marketing'>Marketing</MenuItem>
-                                            <MenuItem value='Recruitment & Staffing'>Recruitment & Staffing</MenuItem>
+                                            { Object.entries(industries).map(([key, value]) => (
+                                                <MenuItem value={key}>
+                                                    <Typography>{value.name}</Typography>
+                                                </MenuItem>
+                                            ))}
                                         </TextField>
                                     </FormControl>
                                 </Row>
