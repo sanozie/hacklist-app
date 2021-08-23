@@ -16,6 +16,7 @@ const useFormControl = makeStyles(() => ({
 const useStylesInput = makeStyles(() => ({
     root: {
         minWidth: 200,
+        maxHeight: 50,
         boxShadow: '0px 2px 3px rgba(0,0,0,0.2)',
     }
 }))

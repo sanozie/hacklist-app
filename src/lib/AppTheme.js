@@ -2,6 +2,13 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     palette: { type: 'dark' },
+    overrides: {
+        MuiMenu: {
+            paper: {
+                maxHeight: 200
+            }
+        }
+    }
 })
 theme.palette.primary = theme.palette.augmentColor({ main: "#9D67E3" })
 theme.palette.secondary = theme.palette.augmentColor({ main: "#50E3C1" })
