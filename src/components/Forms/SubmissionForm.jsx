@@ -154,6 +154,9 @@ const SubmissionForm = props => {
                         <MenuItem value='pm'>
                             <Typography>Product Management</Typography>
                         </MenuItem>
+                        <MenuItem value='ideator'>
+                            <Typography>Ideator</Typography>
+                        </MenuItem>
                     </TextField>
                 </FormControl>
                 <FormControl variant="outlined" classes={classesFormControl}
