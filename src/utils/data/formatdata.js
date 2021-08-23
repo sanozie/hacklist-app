@@ -5,23 +5,29 @@
  * @returns {*}
  */
 function formatSubmissionData(data, platform) {
-    let sizeData = {}, tempDataMin = { eng: 0, design: 0, pm: 0 }, tempDataTotal = { eng: 0, design: 0, pm: 0 }, { limits } = data;
-    for (let [key, value] of Object.entries(data.signups)) {
+    // Minimums are displayed differently than maximums (totals), so they are put in different places
+    const sizeData = {},
+        tempDataMin = { eng: 0, design: 0, pm: 0 },
+        tempDataTotal = { eng: 0, design: 0, pm: 0 },
+        { limits } = data
+
+    for (const value of Object.values(data.signups)) {
         let { skill } = value
         if (tempDataMin[skill] < limits[skill].min) {
             tempDataMin[skill] += 1
         }
         tempDataTotal[skill] += 1
     }
-    for (let [key, value] of Object.entries(tempDataMin)) {
+
+    for (const key of Object.keys(tempDataMin)) {
         sizeData[key] = {
-            min_signup_num: tempDataMin[key],
-            total_signup_num: tempDataTotal[key],
+            minSignups: tempDataMin[key],
+            totalSignups: tempDataTotal[key],
             width: (tempDataMin[key] / limits.min) * 100,
             circleFill: (tempDataTotal[key] / limits[key].max) * 100
         }
     }
-    sizeData.overflow_width = (Object.keys(data.signups).length - limits.min) / limits.max * 100
+    sizeData.overflowWidth = (Object.keys(data.signups).length - limits.min) / limits.max * 100
     data.sizeData = sizeData;
     if (platform === 'server') {
         data.submit_date = data.submit_date.toDate()

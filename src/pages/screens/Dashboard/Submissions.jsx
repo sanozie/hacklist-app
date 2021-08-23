@@ -26,9 +26,10 @@ let Submissions = ({ data }) => {
             </Col>
             <Col xs="12" md="10" className="align-items-center my-auto align-items-center p-0">
                 {(submissionCount === 0) && (
-                    <p className={styles.new_info}>Data on hacks you submit will be here.
-                        <br />
-                        You can submit up to 3 hacks at once.</p>
+                    <p className={styles.new_info}>
+                        Data on hacks you submit will be here.
+                        <br />Each submission counts as a signup.
+                        <br />You can be signed up to 3 hacks at once.</p>
                 )}
                 {(submissionCount > 0) && (
                     <Row className="justify-content-end mt-n4 pb-2 d-none d-lg-flex">

@@ -28,18 +28,25 @@ function useBadgeOverlay() {
 /**
  * Parent component for Dashboard
  */
-let Dashboard = () => {
-    let [submissionBadges, setSubmissionBadges, signupBadges, setSignupBadges] = useBadgeOverlay()
+const Dashboard = () => {
+    const [submissionBadges, setSubmissionBadges, signupBadges, setSignupBadges] = useBadgeOverlay()
 
     // Set global context for submissions & signups
-    let signupsState = useContext(SignupContext.State)?.state
-    let submissionsState = useContext(SubmissionContext.State)?.state
-    let portfolioState = useContext(PortfolioContext.State)?.state
+    const signupsState = useContext(SignupContext.State)?.state
+    const submissionsState = useContext(SubmissionContext.State)?.state
+    const portfolioState = useContext(PortfolioContext.State)?.state
+
+    const [signupCount, setSignupCount] = useState(0)
 
     useEffect(() => {
         // TODO: Replace this with history API eventually if needed
         localStorage.setItem('lastVisited', 'Dashboard')
     }, [])
+
+    // Used for determining whether or not users have signed up to the maximum amount of hacks
+    useEffect(() => {
+        signupsState ? setSignupCount(Object.keys(signupsState).length) : null
+    }, [signupsState])
 
     const showSubmissionBadges = () => {
         setSubmissionBadges(true)
@@ -80,7 +87,7 @@ let Dashboard = () => {
                             <Badge title="Edit Submissions" display={submissionBadges} type="edit" link="/SubmissionDash/"
                                    placement="tr" />
                             <Badge title="Add Submissions" display={submissionBadges} type="add" link="/AddSubmission/"
-                                   placement="br" />
+                                   placement="br" signupCount={signupCount}/>
                             <Col className="d-flex flex-column">
                                 <Row>
                                     <h2 className="pl-0 pl-md-4 pt-4 status-title">Hack Submissions</h2>
@@ -101,7 +108,7 @@ let Dashboard = () => {
                              onMouseLeave={closeSignupBadges}
                              onClick={showSignupBadges}>
                             <Badge title="Signup For A Hack" display={signupBadges}
-                                   link="/Signup/" placement="br" type="add" />
+                                   link="/Signup/" placement="br" type="add" signupCount={signupCount} />
                             <Badge title="Edit Your Signups" display={signupBadges}
                                    link="/SignupDash/" placement="tr" type="edit" />
                             <Col>

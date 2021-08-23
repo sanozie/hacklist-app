@@ -104,10 +104,10 @@ const CircleGraph = props => {
 const SubmissionGraphRow = ({sizeData}) => {
     return (
         <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative mr-0`}>
-            <SubmissionGraph classes={styles.eng_graph} width={`${sizeData.eng.width}%`} type="eng" signups={sizeData.eng.min_signup_num} />
-            <SubmissionGraph classes={styles.design_graph} width={`${sizeData.design.width}%`} type="design" signups={sizeData.design.min_signup_num} />
-            <SubmissionGraph classes={styles.pm_graph} width={`${sizeData.pm.width}%`} type="pm" signups={sizeData.pm.min_signup_num} />
-            <SubmissionGraphOverflow width={`${sizeData.overflow_width}%`} />
+            <SubmissionGraph classes={styles.eng_graph} width={`${sizeData.eng.width}%`} type="eng" signups={sizeData.eng.minSignups} />
+            <SubmissionGraph classes={styles.design_graph} width={`${sizeData.design.width}%`} type="design" signups={sizeData.design.minSignups} />
+            <SubmissionGraph classes={styles.pm_graph} width={`${sizeData.pm.width}%`} type="pm" signups={sizeData.pm.minSignups} />
+            <SubmissionGraphOverflow width={`${sizeData.overflowWidth}%`} />
         </Row>
     )
 }
@@ -118,21 +118,21 @@ const SubmissionCircleRow = ({sizeData}) => {
             {(sizeData.eng.circleFill !== 0) && (
                 <Col className={styles.submissions_circle_wrapper}>
                     <div className={styles.submissions_circle}>
-                        <CircleGraph value={sizeData.eng.circleFill} type="eng" signups={sizeData.eng.total_signup_num} />
+                        <CircleGraph value={sizeData.eng.circleFill} type="eng" signups={sizeData.eng.totalSignups} />
                     </div>
                 </Col>
             )}
             {(sizeData.design.circleFill !== 0) && (
                 <Col className={styles.submissions_circle_wrapper}>
                     <div className={styles.submissions_circle}>
-                        <CircleGraph value={sizeData.design.circleFill} type="design" signups={sizeData.design.total_signup_num} />
+                        <CircleGraph value={sizeData.design.circleFill} type="design" signups={sizeData.design.totalSignups} />
                     </div>
                 </Col>
             )}
             {(sizeData.pm.circleFill !== 0) && (
                 <Col className={styles.submissions_circle_wrapper}>
                     <div className={styles.submissions_circle}>
-                        <CircleGraph value={sizeData.pm.circleFill} type="pm" signups={sizeData.pm.total_signup_num} />
+                        <CircleGraph value={sizeData.pm.circleFill} type="pm" signups={sizeData.pm.totalSignups} />
                     </div>
                 </Col>
             )}
