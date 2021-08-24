@@ -10,28 +10,28 @@ import Calendar from 'react-calendar'
  * Information on current and past hacks of user.
  * @param {*} data
  */
-let Portfolio = ({ data }) => {
-    let activeHackValues = Object.values(data.actives)
-    let activeHackCount = activeHackValues.length
-    let archivedHackValues = Object.values(data.archive)
-    let archivedHackLength = archivedHackValues.length
+const Portfolio = ({ data }) => {
+    const activeHackValues = Object.values(data.actives)
+    const activeHackCount = activeHackValues.length
+    const archivedHackValues = Object.values(data.archive)
+    const archivedHackLength = archivedHackValues.length
 
-    let activeCalendarData = activeHackValues.map(item => {
+    const activeCalendarData = activeHackValues.map(item => {
         return new Date(item.date)
     })
 
-    let archiveCalendarData = archivedHackValues.map(item => {
+    const archiveCalendarData = archivedHackValues.map(item => {
         return new Date(item.date)
     })
 
     // eventualy use the difference between active and past calendar data
     // to have different styling
     // but for now, dump them together. Watch to make sure sort is working
-    let calendarData = [...activeCalendarData]
+    const calendarData = [...activeCalendarData]
 
-    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     return (
-        <Row className="py-4">
+        <Row className="py-4 position-relative">
             <Col lg="4" className="d-flex flex-column text-center">
                 <Row className="justify-content-center">
                     {(activeHackCount === 0) && (
@@ -53,8 +53,8 @@ let Portfolio = ({ data }) => {
                     <Row className="my-3">
                         <Col xs="12">
                             {activeHackValues.map(item => {
-                                let newDate = new Date(item.date)
-                                let monthNum = newDate.getMonth();
+                                const newDate = new Date(item.date)
+                                const monthNum = newDate.getMonth();
                                 return (
                                     <Row>
                                         <Col xs="12">
@@ -74,7 +74,6 @@ let Portfolio = ({ data }) => {
                         </Col>
                     </Row>
                 )}
-
             </Col>
             <Col lg="4" className="center">
                 <Calendar value={calendarData[0]}
@@ -95,15 +94,15 @@ let Portfolio = ({ data }) => {
                 </Row>
                 {(archivedHackLength == 0) && (
                     <Row className="center flex-grow-1">
-                        <p className={styles.new_info}>Once you've completed a hack, it will be viewable here!</p>
+                        <p className={styles.new_info}>Once you've started a hack, it will be viewable here!</p>
                     </Row>
                 )}
                 {(archivedHackLength > 0) && (
                     <Row className="my-3">
                         <Col xs="12">
                             {archivedHackValues.map(item => {
-                                let newDate = new Date(item.date)
-                                let monthNum = newDate.getMonth();
+                                const newDate = new Date(item.date)
+                                const monthNum = newDate.getMonth();
                                 return (
                                     <Row>
                                         <Col xs="12">

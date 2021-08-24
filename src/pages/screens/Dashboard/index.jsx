@@ -120,8 +120,11 @@ const Dashboard = () => {
                         </Row>
                     </Col>
                     <Col md="12" className={`${styles.status_env} my-2 my-md-0`}>
-                        <Row className="status-wrapper">
-                            <Col>
+                        <Row className="status-wrapper position-relative">
+                            <span className="cover feature-wall center text-center">
+                                <h3>This feature is coming soon! <br/>Join our Slack for updates.</h3>
+                            </span>
+                            <Col className="feature-wall-background">
                                 <Row>
                                     <h2 className="pl-4 pt-4">Portfolio</h2>
                                 </Row>
