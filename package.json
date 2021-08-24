@@ -23,7 +23,6 @@
         "next": "^11.1.0",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
-        "react-backdrop-filter": "^2.1.0",
         "react-bootstrap": "1.0.1",
         "react-calendar": "git+https://github.com/sanozie/react-calendar.git#diyhacks-styles",
         "react-circular-progressbar": "^2.0.3",
