@@ -10,6 +10,8 @@ import { SwitchTransition, CSSTransition } from 'react-transition-group'
 // Components
 import Layout from 'components/Layout'
 import SubmissionForm from 'components/Forms/SubmissionForm'
+// Utils
+import back from 'utils/route/back'
 
 let explainer = {
     default: {
@@ -62,6 +64,9 @@ let AddSubmission = () => {
                 <Row className="mt-5 pt-5">
                     <Col className="text-center">
                         <h1>SUBMIT A HACK</h1>
+                    </Col>
+                    <Col sm="1" className="ml-auto center">
+                        <p className="back-button" onClick={back}>{'< Back'}</p>
                     </Col>
                 </Row>
                 <Row className="flex-grow-1">

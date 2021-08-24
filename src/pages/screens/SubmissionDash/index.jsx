@@ -16,7 +16,8 @@ import EditDialog from './EditDialog'
 // Store
 import { Submissions } from 'store'
 import SubmissionConfig from 'components/Hacks/SubmissionConfig'
-import { useDialog } from 'utils/materialui'
+import { useDialog } from 'utils/ui'
+import back from '../../../utils/route/back'
 
 
 const SubmissionDash = ({user}) => {
@@ -48,14 +49,19 @@ const SubmissionDash = ({user}) => {
 
     if (!submissionsState) return <MainProgression />
 
-    // TODO: It looks like hovering causes a rerender.... this should be fixed
+    // TODO: It looks like hovering causes a rerender.... this should be fixed. Then again, state is changing on hover so ig it makes sense
     return (
         <Layout title="Submissions | Hacklist" nav={true}>
             <Container>
                 <Row className="my-2 pt-5 pb-3">
                     <Col className="text-center">
                         <Row>
-                            <h1 className="page-header">Your Submissions</h1>
+                            <Col>
+                                <h1 className="page-header">Your Submissions</h1>
+                            </Col>
+                            <Col sm="1" className="ml-auto center">
+                                <p className="back-button" onClick={back}>{'< Back'}</p>
+                            </Col>
                         </Row>
                             { Object.keys(submissionsState).length === 0 ? (
                                 <Row className="my-5">

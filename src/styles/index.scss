@@ -149,3 +149,9 @@ p {
 .fade-exit-active {
     transition-timing-function: ease-in;
 }
+
+// Misc
+.back-button {
+    white-space: nowrap;
+    cursor: pointer;
+}
