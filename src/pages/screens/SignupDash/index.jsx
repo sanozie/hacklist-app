@@ -20,7 +20,8 @@ import { MainProgression } from 'components/Progression'
 // Store
 import { Signups } from 'store'
 // Utils
-import { useDialog } from 'utils/materialui'
+import { useDialog } from 'utils/ui'
+import back from '../../../utils/route/back'
 
 
 const SignupDash = ({user}) => {
@@ -48,7 +49,12 @@ const SignupDash = ({user}) => {
                 <Row className="my-2 pt-5 pb-3">
                     <Col className="text-center">
                         <Row>
-                            <h1 className="page-header">Your Signups</h1>
+                            <Col>
+                                <h1 className="page-header">Your Signups</h1>
+                            </Col>
+                            <Col sm="1" className="ml-auto center">
+                                <p className="back-button" onClick={back}>{'< Back'}</p>
+                            </Col>
                         </Row>
                         { Object.keys(signupsState).length === 0 ? (
                             <Row className="my-5">

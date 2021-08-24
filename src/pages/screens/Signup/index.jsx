@@ -12,6 +12,7 @@ import Filters from './Filters'
 import { MainProgression } from 'components/Progression'
 // Utils
 import dateMap from 'utils/data/datemap'
+import back from 'utils/route/back'
 // Process
 const MAX_TIMELINE = process.env.MAX_TIMELINE
 
@@ -84,6 +85,9 @@ let Signup = ({user}) => {
                 <Row className="mt-5 pt-5">
                     <Col className="text-center">
                         <h1>SIGNUP FOR HACKS</h1>
+                    </Col>
+                    <Col sm="1" className="ml-auto center">
+                        <p className="back-button" onClick={back}>{'< Back'}</p>
                     </Col>
                 </Row>
                 <Row>
