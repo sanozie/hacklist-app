@@ -11,8 +11,6 @@ function formatHackData(data, platform) {
         tempDataTotal = { eng: 0, design: 0, pm: 0 },
         { limits } = data
 
-    sizeData.circle = (Object.keys(data.signups).length / limits.max) * 100
-
     let hasIdeator = false
 
     for (const value of Object.values(data.signups)) {
@@ -36,9 +34,13 @@ function formatHackData(data, platform) {
         }
     }
 
+    data.quotaFull = Object.keys(data.signups).length === limits.min
+
     let sizer = Object.keys(data.signups).length - limits.min
     hasIdeator ? sizer-- : null
     sizeData.overflowWidth = sizer / limits.max * 100
+
+    sizeData.circle = (Object.keys(data.signups).length / limits.max) * 100
 
     data.sizeData = sizeData
 

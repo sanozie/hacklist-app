@@ -148,11 +148,11 @@ export default async (req, res) => {
                 let { hackId, skill } = JSON.parse(req.body)
                 firebase.collection('Submissions').doc(hackId).get()
                     .then(result => {
-                        const signups = { ...result.data().signups, [uid]: { query: true, skill }}
-                        const { sizeData } = formatHackData({ signups }, 'client')
+                        const { limits, signups: prevSignups } = result.data()
+                        const signups = { ...prevSignups, [uid]: { query: true, skill }}
+                        const { sizeData, quotaFull } = formatHackData({ signups, limits }, 'client')
                         firebase.collection('Submissions').doc(hackId).update({
-                            signups,
-                            sizeData
+                            signups, sizeData, quotaFull
                         }).then(() => {
                             res.status(202).send("Updated")
                         }).catch(e => {
@@ -180,10 +180,12 @@ export default async (req, res) => {
             case 'signup':
                 firebase.collection('Submissions').doc(hackId).get()
                     .then(result => {
-                        let data = result.data().signups
-                        delete data[uid]
+                        const { limits, signups } = result.data()
+                        delete signups[uid]
+                        const { sizeData, quotaFull } = formatHackData({ signups, limits }, 'client')
+
                         firebase.collection('Submissions').doc(hackId).update({
-                            signups: data
+                            signups, sizeData, quotaFull
                         }).then(() => {
                             res.status(202).send("Updated")
                         }).catch(e => {
