@@ -4,12 +4,14 @@
  * @param platform
  * @returns {*}
  */
-function formatSubmissionData(data, platform) {
+function formatHackData(data, platform) {
     // Minimums are displayed differently than maximums (totals), so they are put in different places
     const sizeData = {},
         tempDataMin = { eng: 0, design: 0, pm: 0 },
         tempDataTotal = { eng: 0, design: 0, pm: 0 },
         { limits } = data
+
+    sizeData.circle = (Object.keys(data.signups).length / limits.max) * 100
 
     let hasIdeator = false
 
@@ -37,25 +39,10 @@ function formatSubmissionData(data, platform) {
     let sizer = Object.keys(data.signups).length - limits.min
     hasIdeator ? sizer-- : null
     sizeData.overflowWidth = sizer / limits.max * 100
+
     data.sizeData = sizeData
 
-    if (platform === 'server') {
-        data.submit_date = data.submit_date.toDate()
-    }
     return data
 }
 
-/**
- * Format signup data retrieved from database to be used on dashboard
- * @param data
- * @param platform
- * @returns {*}
- */
-function formatSignupData(data, platform) {
-    //find a way to display the min signups while also accounting for signups outside of mins (where min=0)
-    let { limits } = data;
-    data.circle = (Object.keys(data.signups).length / limits.max) * 100
-    return formatSubmissionData(data, platform)
-}
-
-export { formatSignupData, formatSubmissionData }
+export { formatHackData }

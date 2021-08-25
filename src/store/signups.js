@@ -2,7 +2,7 @@ import { createContext } from 'react'
 import ProviderDecorator from './provider'
 import { getUserFromCookie } from 'utils/auth/userCookies'
 import produce from 'immer'
-import { formatSignupData } from 'utils/data/formatdata'
+import { formatHackData } from 'utils/data/formatdata'
 
 const initializer = async () => {
     try {
@@ -24,13 +24,13 @@ const updater = async (update, state) => {
     })
 
     return produce(state, draftState => {
-        if(!draftState.state[hackId]) {
+        if (!draftState.state[hackId]) {
             draftState.state[hackId] = hack
             draftState.state[hackId].signups[uid] = { query: true }
         }
 
         draftState.state[hackId].signups[uid].skill = skill
-        draftState.state[hackId] = formatSignupData(draftState.state[hackId], 'client')
+        draftState.state[hackId] = formatHackData(draftState.state[hackId], 'client')
 
         draftState.headers.updated.last = hackId
         draftState.headers.updated.method = 'update'

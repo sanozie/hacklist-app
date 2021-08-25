@@ -1,5 +1,5 @@
 import firebase from 'db/server'
-import { formatSignupData, formatSubmissionData } from 'utils/data/formatdata'
+import { formatHackData } from 'utils/data/formatdata'
 import dateMap from 'utils/data/datemap'
 
 
@@ -29,7 +29,7 @@ export default async (req, res) => {
                     .where('submit_date', '<', new Date())
                     .where('submit_date', '>', new Date(queryDate)).get()
                     .then(snapshot => {
-                        res.status(200).send(formatDBSubmissionData(snapshot))
+                        res.status(200).send(formatDBHackData(snapshot))
                     })
                 break
 
@@ -40,7 +40,7 @@ export default async (req, res) => {
                     .orderBy('submit_date', 'desc')
                     .get()
                     .then(snapshot => {
-                        res.status(200).send(formatDBSubmissionData(snapshot))
+                        res.status(200).send(formatDBHackData(snapshot))
                     })
                 break
 
@@ -71,7 +71,7 @@ export default async (req, res) => {
                     .where(`signups.${uid}.query`, '==', true)
                     .get()
                     .then(snapshot => {
-                        res.status(200).send(formatDBSignupData(snapshot))
+                        res.status(200).send(formatDBHackData(snapshot))
                     })
                 break
 
@@ -80,7 +80,7 @@ export default async (req, res) => {
                     .where('id', '==', hackId)
                     .get()
                     .then(snapshot => {
-                        res.status(200).send(formatDBSubmissionData(snapshot))
+                        res.status(200).send(formatDBHackData(snapshot))
                     })
         }
     }
@@ -92,7 +92,7 @@ export default async (req, res) => {
             // Add a new submission.
             case 'submission':
                 const body = JSON.parse(req.body)
-                const hack = {
+                let hack = {
                     submitter_name: body.submitter_name,
                     submitter: body.submitter,
                     title: body.hackTitle,
@@ -107,9 +107,11 @@ export default async (req, res) => {
                     }
                 }
 
+                hack = formatHackData(hack, 'client')
+
                 firebase.collection('Submissions').add(hack).then(result => {
                     const { id } = result
-                    res.status(200).send({ hackId: id, hackData: formatSubmissionData(hack,'client' ) })
+                    res.status(200).send({ hackId: id, hackData: hack })
                 }).catch(err => {
                     res.status(501).send({msg: "Server-side Error. Your hack wasn't saved."})
                 })
@@ -124,12 +126,14 @@ export default async (req, res) => {
             // Update a submission
             case 'submission':
                 const body = JSON.parse(req.body)
-                const hackUpdate = {
+                let hackUpdate = {
                     title: body.hackTitle,
                     industry: body.industry,
                     limits: body.limits,
                     signups: { ...body.signups, [uid]: { query: true, skill: body.contribution }}
                 }
+
+                hackUpdate = formatHackData(hackUpdate)
 
                 //Remember to generate a random hack title if there is none
                 firebase.collection('Submissions').doc(body.hackId).update(hackUpdate).then(() => {
@@ -144,8 +148,11 @@ export default async (req, res) => {
                 let { hackId, skill } = JSON.parse(req.body)
                 firebase.collection('Submissions').doc(hackId).get()
                     .then(result => {
+                        const signups = { ...result.data().signups, [uid]: { query: true, skill }}
+                        const { sizeData } = formatHackData({ signups }, 'client')
                         firebase.collection('Submissions').doc(hackId).update({
-                            signups: { ...result.data().signups, [uid]: { query: true, skill }}
+                            signups,
+                            sizeData
                         }).then(() => {
                             res.status(202).send("Updated")
                         }).catch(e => {
@@ -154,6 +161,7 @@ export default async (req, res) => {
                     }).catch(e => { throw e })
         }
     }
+
     function deleteHandler() {
         let { type, uid } = req.query
         let { hackId } = JSON.parse(req.body)
@@ -205,18 +213,11 @@ function fetchPortfolio(data, timeframe, snapshot, uid)  {
     })
 }
 
-function formatDBSubmissionData(snapshot) {
+function formatDBHackData(snapshot) {
     let data = {}
     snapshot.forEach(doc => {
-        data[doc.id] = formatSubmissionData(doc.data(), 'server')
-    })
-    return data
-}
-
-function formatDBSignupData(snapshot) {
-    let data = {}
-    snapshot.forEach(doc => {
-        data[doc.id] = formatSignupData(doc.data(), 'server')
+        data[doc.id] = doc.data()
+        data[doc.id].submit_date = data[doc.id].submit_date.toDate()
     })
     return data
 }

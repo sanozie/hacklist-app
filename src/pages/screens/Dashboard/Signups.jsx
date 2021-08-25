@@ -46,7 +46,7 @@ let Signups = ({ data }) => {
                                 </Row>
                             </Col>
                             <Col xs="2" style={{ padding: 0 }}>
-                                <CircleGraph value={hack.circle} type="signup" signups={Object.keys(hack.signups).length} />
+                                <CircleGraph value={hack.sizeData.circle} type="signup" signups={Object.keys(hack.signups).length} />
                             </Col>
                         </Row>
                     ))}
