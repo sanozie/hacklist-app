@@ -12,13 +12,22 @@ function formatHackData(data, platform) {
         { limits } = data
 
     let hasIdeator = false
+    const quotaFullSkills = {
+        eng: false,
+        design: false,
+        pm: false
+    }
 
     for (const value of Object.values(data.signups)) {
         let { skill } = value
         if (skill !== 'ideator') {
             if (tempDataMin[skill] < limits[skill].min) {
                 tempDataMin[skill] += 1
+                if (tempDataMin[skill] >= limits[skill].min) {
+                    quotaFullSkills[skill] = true
+                }
             }
+
             tempDataTotal[skill] += 1
         } else {
             hasIdeator = true
@@ -34,7 +43,14 @@ function formatHackData(data, platform) {
         }
     }
 
-    data.quotaFull = Object.keys(data.signups).length === limits.min
+    let quotaFull = true
+    Object.values(quotaFullSkills).forEach(skill => {
+        if (!skill) {
+            quotaFull = false
+        }
+    })
+
+    data.quotaFull = quotaFull
 
     let sizer = Object.keys(data.signups).length - limits.min
     hasIdeator ? sizer-- : null

@@ -9,6 +9,8 @@ import Dialog from '@material-ui/core/Dialog'
 import Typography from '@material-ui/core/Typography'
 // Bootstrap
 import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 // Store
 import { Submissions } from 'store'
 
@@ -17,13 +19,15 @@ const StartDialog = props => {
     const submissionsState = useContext(Submissions.State).state
 
     const getUsers = async (id) => {
-        const users = Object.keys(submissionsState[id].signups).map(uid => ({ uid }))
-        console.log(users)
-        const userData = await fetch('/api/user?type=users', {
-            method: 'PUT',
-            body: JSON.stringify(users)
-        })
-        setSignups(await userData.json())
+        if (signups.length === 0) {
+            const users = Object.keys(submissionsState[id].signups).map(uid => ({ uid }))
+            console.log(users)
+            const userData = await fetch('/api/user?type=users', {
+                method: 'PUT',
+                body: JSON.stringify(users)
+            })
+            setSignups(await userData.json())
+        }
     }
 
     useEffect(() => {
@@ -36,6 +40,9 @@ const StartDialog = props => {
         console.log(signups)
     }, [signups])
 
+    const handleClose = () => {
+        window.open('https://join.slack.com/t/hacklistworkspace/shared_invite/zt-uhfdw4qs-xfqJej0fOsd7tX86ycmv_g', '_blank')
+    }
     return (
         <Dialog
             open={props.open}
@@ -50,12 +57,21 @@ const StartDialog = props => {
                 <DialogContentText id="alert-dialog-description" className="text-center">
                     Wohoo! You've got your signups! <br /> Add these people to a Slack group and explain your idea.
                 </DialogContentText>
-                { signups.map(user => (
-                    <p>{ user.displayName }</p>
-                ))}
+                <Row className="justify-content-center">
+                    <Col xs={6}>
+                        { signups.map(user => (
+                            <Row className="py-1">
+                                <Col>
+                                    <h3>{ user.displayName }</h3>
+                                    <p>{ user.email }</p>
+                                </Col>
+                            </Row>
+                        ))}
+                    </Col>
+                </Row>
             </DialogContent>
             <DialogActions className="justify-content-center">
-                <Button onClick={props.handleClose} variant="outline-light" color="primary">
+                <Button onClick={handleClose} variant="outline-light" color="primary">
                     JOIN SLACK
                 </Button>
             </DialogActions>
