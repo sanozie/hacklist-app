@@ -45,7 +45,7 @@ let Submissions = ({ data }) => {
                             </h4>
                         </Col>
                         <Col lg="7" xs="12" className="align-items-center center py-1 pr-0 ">
-                            <SubmissionGraphRow sizeData={item.sizeData} />
+                            <SubmissionGraphRow sizeData={item.sizeData} quotaFull={item.quotaFull} />
                         </Col>
                         <Col lg="3" className="d-none d-lg-block">
                             <SubmissionCircleRow sizeData={item.sizeData} />

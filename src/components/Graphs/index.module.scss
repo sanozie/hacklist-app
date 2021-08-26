@@ -7,6 +7,12 @@
     border-radius: 10px;
     margin-right: 10px;
     overflow: hidden;
+
+    &_full {
+        padding: 2px;
+        border: 2px solid $tertColor;
+        border-radius: 15px;
+    }
 }
 
 .submissions_graph {

@@ -13,6 +13,7 @@ import Layout from 'components/Layout'
 import { MainProgression } from 'components/Progression'
 import DeleteDialog from './DeleteDialog'
 import EditDialog from './EditDialog'
+import StartDialog from './StartDialog'
 // Store
 import { Submissions } from 'store'
 import SubmissionConfig from 'components/Hacks/SubmissionConfig'
@@ -23,12 +24,13 @@ import back from '../../../utils/route/back'
 const SubmissionDash = ({user}) => {
     const router = useRouter()
     const submissionsState = useContext(Submissions.State)?.state
-    let [focusedHack, setFocusedHack] = useState(null)
+    const [focusedHack, setFocusedHack] = useState(null)
 
-    let [deleteDialogOpen, deleteDialogHandleOpen, deleteDialogHandleClose, deleteDialogHandleSubmit] = useDialog()
-    let [editDialogOpen, editDialogHandleOpen, editDialogHandleClose, editDialogHandleSubmit] = useDialog()
+    const [deleteDialogOpen, deleteDialogHandleOpen, deleteDialogHandleClose, deleteDialogHandleSubmit] = useDialog()
+    const [editDialogOpen, editDialogHandleOpen, editDialogHandleClose, editDialogHandleSubmit] = useDialog()
+    const [startDialogOpen, startDialogHandleOpen, startDialogHandleClose, startDialogHandleSubmit] = useDialog()
 
-    let handleDelete = async hack => {
+    const handleDelete = async hack => {
         setFocusedHack(hack)
         deleteDialogHandleOpen()
         return new Promise((resolve, reject) => {
@@ -45,7 +47,16 @@ const SubmissionDash = ({user}) => {
                 .then(() => resolve(window.dialogConf.data))
                 .catch(() => reject())
         })
-    }
+    },
+        handleStart = async hack => {
+            setFocusedHack(hack)
+            startDialogHandleOpen()
+            return new Promise((resolve, reject) => {
+                window.dialogConf.progress
+                    .then(() => resolve(window.dialogConf.data))
+                    .catch(() => reject())
+            })
+        }
 
     if (!submissionsState) return <MainProgression />
 
@@ -63,30 +74,32 @@ const SubmissionDash = ({user}) => {
                                 <p className="back-button" onClick={back}>{'< Back'}</p>
                             </Col>
                         </Row>
-                            { Object.keys(submissionsState).length === 0 ? (
-                                <Row className="my-5">
-                                    <Col>
-                                        <Typography className="my-3">It looks like you haven't submitted any hacks yet.</Typography>
-                                        <Button onClick={() => router.push('/[screen]', '/AddSubmission')}>SUBMIT A HACK</Button>
-                                    </Col>
+                        { Object.keys(submissionsState).length === 0 ? (
+                            <Row className="my-5">
+                                <Col>
+                                    <Typography className="my-3">It looks like you haven't submitted any hacks yet.</Typography>
+                                    <Button onClick={() => router.push('/[screen]', '/AddSubmission')}>SUBMIT A HACK</Button>
+                                </Col>
+                            </Row>
+                        ) : Object.entries(submissionsState).map(([id, hack]) => {
+                            return (
+                                <Row className="my-3">
+                                    <SubmissionConfig key={id} hack={hack} uid={user.uid} hackId={id} dash={true}
+                                                      confirmDelete={handleDelete} confirmEdit={handleEdit}
+                                                      confirmStart={handleStart} />
                                 </Row>
-                            ) : Object.entries(submissionsState).map(([id, hack]) => {
-                                return (
-                                    <Row className="my-3">
-                                        <SubmissionConfig key={id} hack={hack} uid={user.uid} hackId={id} dash={true}
-                                                          confirmDelete={handleDelete} confirmEdit={handleEdit}/>
-                                    </Row>
-                                )
-                            })}
+                            )
+                        })}
                     </Col>
                 </Row>
             </Container>
             <DeleteDialog open={deleteDialogOpen} handleOpen={deleteDialogHandleOpen}
                           handleClose={deleteDialogHandleClose} handleSubmit={deleteDialogHandleSubmit}
                           hack={focusedHack} />
-            <EditDialog open={editDialogOpen} handleOpen={editDialogHandleOpen}
-                        handleClose={editDialogHandleClose} handleSubmit={editDialogHandleSubmit} hack={focusedHack}
-                        finished={editDialogHandleClose} />
+            <EditDialog open={editDialogOpen} handleOpen={editDialogHandleOpen} handleClose={editDialogHandleClose}
+                        handleSubmit={editDialogHandleSubmit} hack={focusedHack} finished={editDialogHandleClose} />
+            <StartDialog open={startDialogOpen} handleOpen={startDialogHandleOpen} handleClose={startDialogHandleClose}
+                         handleSubmit={startDialogHandleSubmit} hack={focusedHack} />
         </Layout>
     )
 }

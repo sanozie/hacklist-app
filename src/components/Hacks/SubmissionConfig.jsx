@@ -15,9 +15,9 @@ import { Submissions }  from 'store'
     components for each use-case.
 */
 let SubmissionConfig = props => {
-    let submissionActions = useContext(Submissions.Dispatch)
+    const submissionActions = useContext(Submissions.Dispatch)
 
-    let handleDelete = () => {
+    const handleDelete = () => {
         let hack = { hackId: props.hackId, title: props.hack.title }
         let confirmDelete = new Promise((resolve, reject) => {
             props.confirmDelete(hack).then(() => {
@@ -32,9 +32,9 @@ let SubmissionConfig = props => {
         })
     }
 
-    let handleEdit = () => {
-        let hack = { hackId: props.hackId, title: props.hack.title }
-        let confirmEdit = new Promise((resolve, reject) => {
+    const handleEdit = () => {
+        const hack = { hackId: props.hackId, title: props.hack.title }
+        const confirmEdit = new Promise((resolve, reject) => {
             props.confirmEdit(hack).then(data => {
                 resolve(data)
             }).catch(() => {
@@ -44,6 +44,21 @@ let SubmissionConfig = props => {
 
         confirmEdit.then(data => {
             submissionActions.update(data)
+        })
+    }
+
+    const handleStart = () => {
+        const hack = { hackId: props.hackId, title: props.hack.title }
+        const confirmStart = new Promise((resolve, reject) => {
+            props.confirmStart(hack).then(data => {
+                resolve(data)
+            }).catch(() => {
+                reject()
+            })
+        })
+
+        confirmStart.then(data => {
+           console.log(data)
         })
     }
 
@@ -68,6 +83,13 @@ let SubmissionConfig = props => {
                                     DELETE
                                 </Button>
                             </Row>
+                            { props.hack.quotaFull && (
+                                <Row className="center m-1">
+                                    <Button onClick={handleStart} variant="success" aria-describedby="startButton">
+                                        START HACK
+                                    </Button>
+                                </Row>
+                            )}
                         </Col>
                     </Row>
                 </Col>

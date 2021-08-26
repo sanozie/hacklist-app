@@ -4,7 +4,7 @@
  * @param platform
  * @returns {*}
  */
-function formatSubmissionData(data, platform) {
+function formatHackData(data, platform) {
     // Minimums are displayed differently than maximums (totals), so they are put in different places
     const sizeData = {},
         tempDataMin = { eng: 0, design: 0, pm: 0 },
@@ -12,13 +12,22 @@ function formatSubmissionData(data, platform) {
         { limits } = data
 
     let hasIdeator = false
+    const quotaFullSkills = {
+        eng: false,
+        design: false,
+        pm: false
+    }
 
     for (const value of Object.values(data.signups)) {
         let { skill } = value
         if (skill !== 'ideator') {
             if (tempDataMin[skill] < limits[skill].min) {
                 tempDataMin[skill] += 1
+                if (tempDataMin[skill] >= limits[skill].min) {
+                    quotaFullSkills[skill] = true
+                }
             }
+
             tempDataTotal[skill] += 1
         } else {
             hasIdeator = true
@@ -34,28 +43,24 @@ function formatSubmissionData(data, platform) {
         }
     }
 
+    let quotaFull = true
+    Object.values(quotaFullSkills).forEach(skill => {
+        if (!skill) {
+            quotaFull = false
+        }
+    })
+
+    data.quotaFull = quotaFull
+
     let sizer = Object.keys(data.signups).length - limits.min
     hasIdeator ? sizer-- : null
     sizeData.overflowWidth = sizer / limits.max * 100
+
+    sizeData.circle = (Object.keys(data.signups).length / limits.max) * 100
+
     data.sizeData = sizeData
 
-    if (platform === 'server') {
-        data.submit_date = data.submit_date.toDate()
-    }
     return data
 }
 
-/**
- * Format signup data retrieved from database to be used on dashboard
- * @param data
- * @param platform
- * @returns {*}
- */
-function formatSignupData(data, platform) {
-    //find a way to display the min signups while also accounting for signups outside of mins (where min=0)
-    let { limits } = data;
-    data.circle = (Object.keys(data.signups).length / limits.max) * 100
-    return formatSubmissionData(data, platform)
-}
-
-export { formatSignupData, formatSubmissionData }
+export { formatHackData }

@@ -2,7 +2,6 @@ import { createContext } from 'react'
 import ProviderDecorator from './provider'
 import { getUserFromCookie } from 'utils/auth/userCookies'
 import produce from 'immer'
-import { formatSubmissionData } from 'utils/data/formatdata'
 
 // Mappings
 const methodUsage = {
@@ -12,9 +11,9 @@ const methodUsage = {
 
 const initializer = async () => {
     try {
-        let user = getUserFromCookie()
-        let submissions = await fetch(`/api/hacks?type=usersubmissions&uid=${user.uid}`)
-        let state = await submissions.json(), headers = { updated: { last: null, method: null } }
+        const user = getUserFromCookie()
+        const submissions = await fetch(`/api/hacks?type=usersubmissions&uid=${user.uid}`)
+        const state = await submissions.json(), headers = { updated: { last: null, method: null } }
         return { state, headers }
     } catch {
         return null
@@ -22,9 +21,9 @@ const initializer = async () => {
 }
 
 const updater = async (params, state) => {
-    let { usage, uid, data } = params
+    const { usage, uid, data } = params
 
-    let hack = await fetch(`/api/hacks?type=submission&uid=${uid}`, {
+    const hack = await fetch(`/api/hacks?type=submission&uid=${uid}`, {
         method: methodUsage[usage],
         body: JSON.stringify(data)
     })
@@ -32,7 +31,7 @@ const updater = async (params, state) => {
 
     return produce(state, draftState => {
         draftState.state[hackId] = draftState.state[hackId]
-            ? formatSubmissionData({ ...draftState.state[hackId], ...hackData }, 'client')
+            ? { ...draftState.state[hackId], ...hackData }
             : hackData
         draftState.headers.updated.last = hackId
         draftState.headers.updated.method = 'update'
@@ -40,7 +39,7 @@ const updater = async (params, state) => {
 }
 
 const deleter = async (update, state) => {
-    let { hackId } = update
+    const { hackId } = update
 
     await fetch(`/api/hacks?type=submission`, {
         method: 'DELETE',

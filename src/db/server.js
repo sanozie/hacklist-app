@@ -1,7 +1,7 @@
 import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import admin from 'firebase-admin';
+import 'firebase/auth'
+import 'firebase/firestore'
+import admin from 'firebase-admin'
 
 if(!admin.apps.length) {
   try {
@@ -25,5 +25,5 @@ if(!admin.apps.length) {
   }
 }
 
-
-export default admin.firestore();
+const firestore = admin.firestore()
+export { firestore, admin }
