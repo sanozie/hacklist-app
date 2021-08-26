@@ -1,4 +1,4 @@
-import firebase from 'db/server'
+import { firestore } from 'db/server'
 import { formatHackData } from 'utils/data/formatdata'
 import dateMap from 'utils/data/datemap'
 
@@ -25,7 +25,7 @@ export default async (req, res) => {
             // Get submissions from users (indexed by submission date)
             case 'submissions':
                 const queryDate = dateMap(req.query.timeline)
-                firebase.collection('Submissions')
+                firestore.collection('Submissions')
                     .where('submit_date', '<', new Date())
                     .where('submit_date', '>', new Date(queryDate)).get()
                     .then(snapshot => {
@@ -35,7 +35,7 @@ export default async (req, res) => {
 
             // Get all submissions submitted by current user
             case 'usersubmissions':
-                firebase.collection('Submissions')
+                firestore.collection('Submissions')
                     .where('submitter', '==', uid)
                     .orderBy('submit_date', 'desc')
                     .get()
@@ -48,14 +48,14 @@ export default async (req, res) => {
             case 'portfolio':
                 const data = { actives: {}, archive: {} }
 
-                let activesHandler = firebase.collection('Actives')
+                let activesHandler = firestore.collection('Actives')
                     .where('members', 'array-contains', uid)
                     .get()
                     .then(activeSnapshot => {
                         fetchPortfolio(data.actives, 'active', activeSnapshot, uid)
                     })
 
-                let archiveHandler = firebase.collection('Archive')
+                let archiveHandler = firestore.collection('Archive')
                     .where('members', 'array-contains', uid).get().then(archiveSnapshot => {
                     fetchPortfolio(data.archive, 'past', archiveSnapshot, uid)
                 })
@@ -67,7 +67,7 @@ export default async (req, res) => {
 
             // Get signups of current user
             case 'usersignups':
-                firebase.collection('Submissions')
+                firestore.collection('Submissions')
                     .where(`signups.${uid}.query`, '==', true)
                     .get()
                     .then(snapshot => {
@@ -76,7 +76,7 @@ export default async (req, res) => {
                 break
 
             case 'submission':
-                firebase.collection('Submissions')
+                firestore.collection('Submissions')
                     .where('id', '==', hackId)
                     .get()
                     .then(snapshot => {
@@ -109,7 +109,7 @@ export default async (req, res) => {
 
                 hack = formatHackData(hack, 'client')
 
-                firebase.collection('Submissions').add(hack).then(result => {
+                firestore.collection('Submissions').add(hack).then(result => {
                     const { id } = result
                     res.status(200).send({ hackId: id, hackData: hack })
                 }).catch(err => {
@@ -136,7 +136,7 @@ export default async (req, res) => {
                 hackUpdate = formatHackData(hackUpdate)
 
                 //Remember to generate a random hack title if there is none
-                firebase.collection('Submissions').doc(body.hackId).update(hackUpdate).then(() => {
+                firestore.collection('Submissions').doc(body.hackId).update(hackUpdate).then(() => {
                     res.status(202).send({ hackId: body.hackId, hackData: hackUpdate })
                 }).catch(e => {
                     throw e
@@ -146,12 +146,12 @@ export default async (req, res) => {
             // Signup to a specific hack
             case 'signup':
                 let { hackId, skill } = JSON.parse(req.body)
-                firebase.collection('Submissions').doc(hackId).get()
+                firestore.collection('Submissions').doc(hackId).get()
                     .then(result => {
                         const { limits, signups: prevSignups } = result.data()
                         const signups = { ...prevSignups, [uid]: { query: true, skill }}
                         const { sizeData, quotaFull } = formatHackData({ signups, limits }, 'client')
-                        firebase.collection('Submissions').doc(hackId).update({
+                        firestore.collection('Submissions').doc(hackId).update({
                             signups, sizeData, quotaFull
                         }).then(() => {
                             res.status(202).send("Updated")
@@ -169,7 +169,7 @@ export default async (req, res) => {
         switch(type) {
             // Delete a submission
             case 'submission':
-                firebase.collection('Submissions').doc(hackId).delete().then(() => {
+                firestore.collection('Submissions').doc(hackId).delete().then(() => {
                     res.status(202).send()
                 }).catch(e => {
                     console.error("Error removing document: ", e);
@@ -178,13 +178,13 @@ export default async (req, res) => {
 
             // Withdraw from a signup
             case 'signup':
-                firebase.collection('Submissions').doc(hackId).get()
+                firestore.collection('Submissions').doc(hackId).get()
                     .then(result => {
                         const { limits, signups } = result.data()
                         delete signups[uid]
                         const { sizeData, quotaFull } = formatHackData({ signups, limits }, 'client')
 
-                        firebase.collection('Submissions').doc(hackId).update({
+                        firestore.collection('Submissions').doc(hackId).update({
                             signups, sizeData, quotaFull
                         }).then(() => {
                             res.status(202).send("Updated")
@@ -201,7 +201,7 @@ export default async (req, res) => {
  * Manipulating portfolio hack data.
  * @param data Object to be edited
  * @param timeframe past or active
- * @param snapshot Firebase snapshot
+ * @param snapshot firestore snapshot
  * @param uid
  */
 function fetchPortfolio(data, timeframe, snapshot, uid)  {

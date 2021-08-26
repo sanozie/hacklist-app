@@ -27,7 +27,7 @@ let Hack = props => {
                 </Row>
                 <Row>
                     <Col sm={12} md={8} className="my-1 my-sm-0" >
-                        <SubmissionGraphRow sizeData={props.sizeData} />
+                        <SubmissionGraphRow sizeData={props.sizeData} quotaFull={props.quotaFull}/>
                     </Col>
                     <Col sm={4} className="d-none d-sm-block">
                         <SubmissionCircleRow sizeData={props.sizeData} />

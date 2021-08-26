@@ -9,7 +9,9 @@
     overflow: hidden;
 
     &_full {
-        border: 2.5px solid $tertColor;
+        padding: 2px;
+        border: 2px solid $tertColor;
+        border-radius: 15px;
     }
 }
 

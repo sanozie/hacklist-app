@@ -100,17 +100,19 @@ const CircleGraph = props => {
     )
 }
 
-const SubmissionGraphRow = ({ sizeData }) => {
+const SubmissionGraphRow = ({ sizeData, quotaFull }) => {
     return (
-        <Row className={`flex-grow-1 ${styles.submissions_graph_wrapper} position-relative mr-0`}>
-            <SubmissionGraph classes={styles.eng_graph} width={`${sizeData.eng.width}%`} type="eng"
-                             signups={sizeData.eng.minSignups} complete={sizeData.complete} />
-            <SubmissionGraph classes={styles.design_graph} width={`${sizeData.design.width}%`} type="design"
-                             signups={sizeData.design.minSignups} complete={sizeData.complete} />
-            <SubmissionGraph classes={styles.pm_graph} width={`${sizeData.pm.width}%`} type="pm" signups={sizeData.pm.minSignups}
-                             complete={sizeData.complete}/>
-            <SubmissionGraphOverflow width={`${sizeData.overflowWidth}%`} />
-        </Row>
+        <div className={`flex-grow-1 ${quotaFull && styles.submissions_graph_wrapper_full}`}>
+            <Row className={`${styles.submissions_graph_wrapper} position-relative mr-0`}>
+                    <SubmissionGraph classes={styles.eng_graph} width={`${sizeData.eng.width}%`} type="eng"
+                                     signups={sizeData.eng.minSignups} complete={sizeData.complete} />
+                    <SubmissionGraph classes={styles.design_graph} width={`${sizeData.design.width}%`} type="design"
+                                     signups={sizeData.design.minSignups} complete={sizeData.complete} />
+                    <SubmissionGraph classes={styles.pm_graph} width={`${sizeData.pm.width}%`} type="pm"
+                                     signups={sizeData.pm.minSignups} complete={sizeData.complete} />
+                    <SubmissionGraphOverflow width={`${sizeData.overflowWidth}%`} />
+            </Row>
+        </div>
     )
 }
 
