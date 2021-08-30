@@ -41,7 +41,7 @@ const StartDialog = props => {
     }, [signups])
 
     const handleClose = () => {
-        window.open('https://join.slack.com/t/hacklistworkspace/shared_invite/zt-uhfdw4qs-xfqJej0fOsd7tX86ycmv_g', '_blank')
+        window.open('https://join.slack.com/t/hacklistapp/shared_invite/zt-uhfdw4qs-xfqJej0fOsd7tX86ycmv_g', '_blank')
     }
     return (
         <Dialog

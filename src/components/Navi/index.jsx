@@ -46,7 +46,7 @@ let Navi = () => {
                     <Nav className="ml-auto ">
                         <Nav.Link href="https://gmail.us4.list-manage.com/subscribe?u=10220f4953ebea0edf51592fb&id=e01dbaccaa"
                                   className={[styles.navlink, 'px-3']}>Mailing List</Nav.Link>
-                        <Nav.Link href="https://join.slack.com/t/hacklistworkspace/shared_invite/zt-uhfdw4qs-xfqJej0fOsd7tX86ycmv_g"
+                        <Nav.Link href="https://join.slack.com/t/hacklistapp/shared_invite/zt-uhfdw4qs-xfqJej0fOsd7tX86ycmv_g"
                                   className={[styles.navlink, 'px-3']}>Slack</Nav.Link>
                         {/*<Nav.Item className='px-3'>*/}
                         {/*    <button id={styles.support} className='btn'>Support</button>*/}
